@@ -16,9 +16,11 @@ uB.ui = 0x23;
 uZ.p = p16_add(uA.p, uB.p);
 
 //To check answer
+
 double dZ = convertP16ToDec_f(uZ.p);
 
 //To print result in binary
+
 printBinary(&uZ.ui, 16);
 
 ------------------------------------------
