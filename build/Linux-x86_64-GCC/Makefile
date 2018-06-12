@@ -96,7 +96,7 @@ OBJS_OTHERS = \
 OBJS_ALL = $(OBJS_PRIMITIVES) $(OBJS_SPECIALIZE) $(OBJS_OTHERS)
 
 $(OBJS_ALL): \
-  platform.h \  
+  platform.h \
   $(SOURCE_DIR)/include/primitives.h
 $(OBJS_SPECIALIZE) $(OBJS_OTHERS): \
   $(SOURCE_DIR)/include/softposit_types.h $(SOURCE_DIR)/include/internals.h \
