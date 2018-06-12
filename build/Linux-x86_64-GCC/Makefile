@@ -1,0 +1,119 @@
+#============================================================================
+#
+#This C source file is part of the SoftPosit Posit Arithmetic Package
+#by S. H. Leong (Cerlane).
+#
+#Copyright 2017, 2018 A*STAR.  All rights reserved.
+#
+#This C source file was based on SoftFloat IEEE Floating-Point Arithmetic
+#Package, Release 3d, by John R. Hauser.
+#
+#
+# Copyright 2011, 2012, 2013, 2014, 2015, 2016, 2017 The Regents of the
+# University of California.  All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+#  1. Redistributions of source code must retain the above copyright notice,
+#     this list of conditions, and the following disclaimer.
+#
+#  2. Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions, and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+#
+#  3. Neither the name of the University nor the names of its contributors
+#     may be used to endorse or promote products derived from this software
+#     without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS "AS IS", AND ANY
+# EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE, ARE
+# DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE FOR ANY
+# DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+# ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+# THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#=============================================================================
+
+SOURCE_DIR ?= ../../source
+SPECIALIZE_TYPE ?= 8086-SSE
+
+SOFTPOSIT_OPTS ?= \
+  -DINLINE_LEVEL=5 
+#  -DSOFTPOSIT_ROUND_ODD -DINLINE_LEVEL=5 -DSOFTPOSIT_FAST_DIV32TO16 \
+#  -DSOFTPOSIT_FAST_DIV64TO32 #-DSOFTPOSIT_EXACT
+#-lquadmath 
+DELETE = rm -f
+C_INCLUDES = -I. -I$(SOURCE_DIR)/$(SPECIALIZE_TYPE) -I$(SOURCE_DIR)/include
+OPTIMISATION  = -march=core-avx2 -O2
+COMPILE_C = \
+  gcc -c -Werror-implicit-function-declaration -DSOFTPOSIT_FAST_INT64 -DQUADSUPPORT \
+    $(SOFTPOSIT_OPTS) $(C_INCLUDES) $(OPTIMISATION) \
+    -o $@ 
+MAKELIB = ar crs $@
+
+OBJ = .o
+LIB = .a
+
+.PHONY: all
+all: softposit$(LIB)
+
+OBJS_PRIMITIVES = 
+
+OBJS_SPECIALIZE = 
+
+OBJS_OTHERS = \
+  s_addMagsP16$(OBJ) \
+  s_subMagsP16$(OBJ) \
+  s_mulAddP16$(OBJ) \
+  p16_to_ui32$(OBJ) \
+  p16_to_ui64$(OBJ) \
+  p16_to_i32$(OBJ) \
+  p16_to_i64$(OBJ) \
+  p16_to_p32$(OBJ) \
+  p16_roundToInt$(OBJ) \
+  p16_add$(OBJ) \
+  p16_sub$(OBJ) \
+  p16_mul$(OBJ) \
+  p16_mulAdd$(OBJ) \
+  p16_div$(OBJ) \
+  p16_eq$(OBJ) \
+  p16_le$(OBJ) \
+  p16_lt$(OBJ) \
+  p16_sqrt$(OBJ) \
+  quire16_fdp_add$(OBJ) \
+  quire16_fdp_sub$(OBJ) \
+  quire_helper$(OBJ) \
+  s_approxRecipSqrt_1Ks$(OBJ) \
+  c_convertDecToPosit16$(OBJ) \
+  c_convertPosit16ToDec$(OBJ) \
+  c_convertQuire16ToPosit16$(OBJ) 
+
+OBJS_ALL = $(OBJS_PRIMITIVES) $(OBJS_SPECIALIZE) $(OBJS_OTHERS)
+
+$(OBJS_ALL): \
+  platform.h $(SOURCE_DIR)/include/primitiveTypes.h \
+  $(SOURCE_DIR)/include/primitives.h
+$(OBJS_SPECIALIZE) $(OBJS_OTHERS): \
+  $(SOURCE_DIR)/include/softposit_types.h $(SOURCE_DIR)/include/internals.h \
+  $(SOURCE_DIR)/$(SPECIALIZE_TYPE)/specialize.h \
+  $(SOURCE_DIR)/include/softposit.h 
+
+$(OBJS_PRIMITIVES) $(OBJS_OTHERS): %$(OBJ): $(SOURCE_DIR)/%.c
+	$(COMPILE_C) $(SOURCE_DIR)/$*.c
+
+$(OBJS_SPECIALIZE): %$(OBJ): $(SOURCE_DIR)/$(SPECIALIZE_TYPE)/%.c
+	$(COMPILE_C) $(SOURCE_DIR)/$(SPECIALIZE_TYPE)/$*.c
+
+softposit$(LIB): $(OBJS_ALL)
+	$(DELETE) $@
+	$(MAKELIB) $^
+
+.PHONY: clean
+clean:
+	$(DELETE) $(OBJS_ALL) softposit$(LIB)
+
