@@ -45,7 +45,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "primitiveTypes.h"
 
 extern const uint_fast16_t softposit_approxRecipSqrt0[16];
 extern const uint_fast16_t softposit_approxRecipSqrt1[16];
