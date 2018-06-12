@@ -49,7 +49,7 @@ void printBinary(uint64_t * s, int size) {
 	{
 		if(i%8 == 0)
 			putchar(' ');
-		printf("%d", (number >> (bitSize-i))&1);
+		printf("%lld", (number >> (bitSize-i))&1);
 	}
 	printf("\n");
 
