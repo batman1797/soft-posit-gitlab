@@ -11,6 +11,7 @@ An example on how to use the code to add:
 union ui16_p16 uA, uB, uZ;
 
 uA.ui = 0x42;
+
 uB.ui = 0x23;
 
 uZ.p = p16_add(uA.p, uB.p);
@@ -28,6 +29,7 @@ Build - softposit.a
 ------------------------------------------
 
 cd SoftPosit/build/Linux-x86_64-GCC
+
 make -j6 all
 
 Please link to the archive to use.
