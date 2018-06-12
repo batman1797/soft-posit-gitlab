@@ -1,7 +1,11 @@
-
 /*============================================================================
 
-This C header file is part of the SoftFloat IEEE Floating-Point Arithmetic
+This C header file is part of the SoftPosit Posit Arithmetic Package
+by S. H. Leong (Cerlane).
+
+Copyright 2017 2018 A*STAR.  All rights reserved.
+
+This C header file was based on SoftFloat IEEE Floating-Point Arithmetic
 Package, Release 3d, by John R. Hauser.
 
 Copyright 2011, 2012, 2013, 2014, 2015, 2016 The Regents of the University of
