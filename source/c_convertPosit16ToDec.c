@@ -42,21 +42,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "internals.h"
 #include "specialize.h"
 
-/*#include <stdio.h>
-void printstringasbinary0(uint64_t * s, int size) {
-    int bitSize = size-1;
-    int i;
-    for (i = bitSize; i >= 0; --i){
-        putchar( (*s & (1 << i)) ? '1' : '0' );
-    }
-    putchar('\n');
-}*/
+
 double convertP16ToDec_f(posit16_t a){
 	posit16 b = convertP16ToDec(a);
 	return b.f;//
 }
 posit16 convertP16ToDec(posit16_t a){
-//printstringasbinary0(&a, 16);
+
 	union ui16_p16 uZ;
 	posit16 p16;
 	uZ.p = a;

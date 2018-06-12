@@ -1,12 +1,12 @@
 
 /*============================================================================
 
-This C source file is part of the SoftPosit Posit Arithmetic Package
+This C header file is part of the SoftPosit Posit Arithmetic Package
 by S. H. Leong (Cerlane).
 
 Copyright 2017, 2018 A*STAR.  All rights reserved.
 
-This C source file is part of the SoftFloat IEEE Floating-Point Arithmetic
+This C header file is part of the SoftFloat IEEE Floating-Point Arithmetic
 Package, Release 3d, by John R. Hauser.
 
 Copyright 2011, 2012, 2013, 2014, 2015, 2016, 2017 The Regents of the
@@ -44,7 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "primitives.h"
+
 #include "softposit_types.h"
 
 #include <stdio.h>
@@ -85,15 +85,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		quire32_t q;
 	};
 #endif
-
-#ifndef max
-	#define max( a, b ) ( ((int_fast8_t)(a) > (int_fast8_t)(b)) ? (a) : (b) )
-#endif
-
-//#ifdef SOFTPOSIT_FAST_INT64
-//union extP80M_extP80 { struct extPosit80M pM; extPosit80_t p; };
-//union ui128_p128 { struct uint128 ui; posit128_t p; };
-//#endif
 
 enum {
     softposit_mulAdd_subC    = 1,
@@ -158,7 +149,6 @@ posit16 convertP16ToDec(posit16_t);
 posit16_t convertDecToP16(posit16);
 posit16_t convertfloatToP16(float);
 posit16_t convertdoubleToP16(double);
-//posit16_t convertdoubleToP16(double);
 //__float128 convertP16ToQuadDec(posit16_t);
 //posit16_t convertQuadToP16(__float128);
 
@@ -173,9 +163,6 @@ float p16_dec_mul_f(float, float );
 int_fast64_t p16_to_i64_2( posit16_t );
 
 //Quire 16
-//quire16_t quire16_add(quire16_t, quire16_t);
-//quire16_t quire16_sub(quire16_t, quire16_t);
-//quire16_t quire16_mul(posit16_t, posit16_t);
 quire16_t q16_fdp_add(quire16_t, posit16_t, posit16_t);
 quire16_t q16_fdp_sub(quire16_t, posit16_t, posit16_t);
 posit16_t convertQ16ToP16(quire16_t);
@@ -188,9 +175,6 @@ void printBinary(uint64_t*, int);
 	q.v[1]=0;\
 	q;\
 })
-
-//posit16_t softposit_roundPackToP16( bool, bool, uint_fast16_t, int_fast16_t, uint_fast16_t);
-//posit16_t c_roundPackToP16( bool, bool, int_fast16_t, int_fast8_t, uint_fast16_t, bool, bool );
 
 posit16_t softposit_addMagsP16( uint_fast16_t, uint_fast16_t );
 posit16_t softposit_subMagsP16( uint_fast16_t, uint_fast16_t );

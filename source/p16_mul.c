@@ -42,12 +42,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "include/softposit.h"
+#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
 #include "specialize.h"
-
-//#include <stdio.h>
 
 float p16_dec_mul_f(float fA, float fB ){
 	//union ui16_p16 uZ;
@@ -79,31 +77,14 @@ posit16_t p16_mul( posit16_t pA, posit16_t pB ){
 	uB.p = pB;
 	uiB = uB.ui;
 
-#ifdef SOFTPOSIT_EXACT
-		uZ.ui.exact = (uiA.ui.exact & uiB.ui.exact);
-#endif
+
 	//NaR or Zero
 	if ( uiA==0x8000 || uiB==0x8000 ){
-
-#ifdef SOFTPOSIT_EXACT
-		uZ.ui.v = 0x8000;
-		uZ.ui.exact = 0;
-#else
 		uZ.ui = 0x8000;
-#endif
 		return uZ.p;
 	}
 	else if (uiA==0 || uiB==0){
-#ifdef SOFTPOSIT_EXACT
-
-		uZ.ui.v = 0;
-		if ( (uiA==0 && uiA.ui.exact) || (uiB==0 && uiB.ui.exact) )
-			uZ.ui.exact = 1;
-		else
-			uZ.ui.exact = 0;
-#else
 		uZ.ui = 0;
-#endif
 		return uZ.p;
 	}
 
@@ -193,13 +174,11 @@ posit16_t p16_mul( posit16_t pA, posit16_t pB ){
 		if (regA==14 && expA) bitNPlusOne = 1;
 
 		//sign is always zero
-		//uZ.ui = (uint16_t) (regime) |  ((uint16_t) (expA)<< (13-regA)) |  ((uint16_t)(fracA));
 		uZ.ui = packToP16UI(regime, regA, expA, fracA);
 		//n+1 frac bit is 1. Need to check if another bit is 1 too if not round to even
 		if (bitNPlusOne){
 			(0x7FFF & frac32Z) ? (bitsMore=1) : (bitsMore=0);
 			uZ.ui += (uZ.ui&1) | bitsMore;
-			//uZ.ui += (bitNPlusOne & (uZ.ui&1)) | ( bitNPlusOne & bitsMore);
 		}
 	}
 

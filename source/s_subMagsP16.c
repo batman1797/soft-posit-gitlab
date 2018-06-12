@@ -64,11 +64,6 @@ posit16_t softposit_subMagsP16( uint_fast16_t uiA, uint_fast16_t uiB ){
     //Make both positive
     sign = signP16UI( uiA );
     (sign)?(uiA = (-uiA & 0xFFFF)): (uiB = (-uiB & 0xFFFF));
-    /*if(uiA>>15)// uiA is negative so uiB is actually positive
-    	uiA = (-uiA & 0xFFFF);
-
-    else //uiA is positive so uiB is actually negative
-    	uiB = (-uiB & 0xFFFF);*/
 
     if (uiA==uiB){ //essential, if not need special handling
 		uZ.ui = 0;
@@ -109,7 +104,6 @@ posit16_t softposit_subMagsP16( uint_fast16_t uiA, uint_fast16_t uiB ){
 			shiftRight--;
 			tmp= (tmp<<1) & 0xFFFF;
 		}
-		//frac32B = (0x4000 | tmp) <<16;
 	}
 	else{
 		shiftRight++;
@@ -118,7 +112,6 @@ posit16_t softposit_subMagsP16( uint_fast16_t uiA, uint_fast16_t uiB ){
 			tmp= (tmp<<1) & 0xFFFF;
 		}
 		tmp&=0x7FFF;
-		//frac32B = ( (0x4000 | tmp) <<16 ) & 0x7FFFFFFF;
 	}
 	frac32B = (0x4000 | tmp) <<16;
 	//This is 2kZ + expZ; (where kZ=kA-kB and expZ=expA-expB)

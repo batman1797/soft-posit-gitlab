@@ -43,7 +43,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdbool.h>
 #include <stdint.h>
 
-#include "include/softposit.h"
+#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
 
@@ -62,15 +62,7 @@ posit16 p16_dec_sub(posit16 a, posit16 b ){
 	return convertP16ToDec(p16);
 }
 
-posit16_t p16_sub( posit16_t a, posit16_t b )
-{
-
-	//Easy convenient way
-	/*union ui16_p16 uB;
-	uB.p = b;
-	uB.ui = (-uB.ui) & 0XFFFF;
-	return p16_add(a, uB.p);*/
-
+posit16_t p16_sub( posit16_t a, posit16_t b ){
 
     union ui16_p16 uA, uB;
     uint_fast16_t uiA, uiB;
@@ -80,8 +72,6 @@ posit16_t p16_sub( posit16_t a, posit16_t b )
 	uiA = uA.ui;
 	uB.p = b;
 	uiB = uB.ui;
-
-
 
 #ifdef SOFTPOSIT_EXACT
 		uZ.ui.exact = (uiA.ui.exact & uiB.ui.exact);
@@ -109,15 +99,8 @@ posit16_t p16_sub( posit16_t a, posit16_t b )
 	}
 
 	//different signs
-	if ((uiA^uiB)>>15){
-		/*if (uiA>>15){
-			uZ.p = softposit_addMagsP16((-uiA & 0xFFFF), uiB);
-			uZ.ui = (-uZ.ui) & 0xFFFF;
-			return  uZ.p;
-		}
-		else*/
-			return softposit_addMagsP16(uiA, (-uiB & 0xFFFF));
-	}
+	if ((uiA^uiB)>>15)
+		return softposit_addMagsP16(uiA, (-uiB & 0xFFFF));
 	else
 		return softposit_subMagsP16(uiA, (-uiB & 0xFFFF));
 

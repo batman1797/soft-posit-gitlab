@@ -46,9 +46,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-//#include <stdio.h>
-
-
 float p16_dec_add_f(float a, float b ){
 	union ui16_p16 uZ;
 	posit16 x = {.f = a};
@@ -62,8 +59,7 @@ posit16 p16_dec_add(posit16 a, posit16 b ){
 	return convertP16ToDec(p16);
 }
 
-posit16_t p16_add( posit16_t a, posit16_t b )
-{
+posit16_t p16_add( posit16_t a, posit16_t b ){
     union ui16_p16 uA, uB;
     uint_fast16_t uiA, uiB;
     union ui16_p16 uZ;
@@ -83,7 +79,6 @@ posit16_t p16_add( posit16_t a, posit16_t b )
 		uZ.ui = 0x8000;
 		return uZ.p;
 	}
-
 
 	//different signs
 	if ((uiA^uiB)>>15)

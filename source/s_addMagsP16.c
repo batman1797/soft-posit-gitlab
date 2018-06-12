@@ -51,8 +51,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "stdlib.h"
 #include <math.h>
 
-//#include "time.h"
-
 #ifdef SOFTPOSIT_EXACT
 posit16_t softposit_addMagsP16( uint_fast16_t uiA, uint_fast16_t uiB, bool isExact){
 #else
@@ -67,7 +65,6 @@ posit16_t softposit_addMagsP16( uint_fast16_t uiA, uint_fast16_t uiB ){
 	int_fast16_t shiftRight;
 	union ui16_p16 uZ;
 
-//clock_t begin = clock();
 	sign = signP16UI( uiA ); //sign is always positive.. actually don't have to do this.
 	if (sign){
 		uiA = -uiA & 0xFFFF;
@@ -77,12 +74,8 @@ posit16_t softposit_addMagsP16( uint_fast16_t uiA, uint_fast16_t uiB ){
 	if ((int_fast16_t)uiA < (int_fast16_t)uiB){
 		uiX = uiA;
 		uiY = uiB;
-
 		uiA = uiY;
 		uiB = uiX;
-	//	uiA ^= uiB;
-	//	uiB ^= uiA;
-	//	uiA ^= uiB;
 	}
 	regSA = signregP16UI( uiA );
 	regSB = signregP16UI( uiB );
@@ -179,10 +172,6 @@ posit16_t softposit_addMagsP16( uint_fast16_t uiA, uint_fast16_t uiB ){
 	}
 
 	if (sign) uZ.ui = -uZ.ui & 0xFFFF;
-
-//clock_t end = clock();
-//double time_spent = ((double)(end - begin) / CLOCKS_PER_SEC);
-//printf("%.26f\n", time_spent);
 	return uZ.p;
 }
 

@@ -86,10 +86,6 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 	regSB = signregP16UI(uiB);
 	regSC = signregP16UI(uiC);
 
-//printf("uiA, uiB, uiC\n");
-//printBinary(&uiA, 16);
-//printBinary(&uiB, 16);
-//printBinary(&uiC, 16);
 	tmp = (uiA<<2) & 0xFFFF;
 	if (regSA){
 		while (tmp>>15){
@@ -107,7 +103,7 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 	}
 	expA = tmp>>14;
 	fracA = (0x8000 | (tmp<<1)); //use first bit here for hidden bit to get more bits
-//printf("kA: %d expA: %d\n", kA, expA);
+
 	tmp = (uiB<<2) & 0xFFFF;
 	if (regSB){
 		while (tmp>>15){
@@ -126,9 +122,6 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 	expA += tmp>>14;
 	frac32Z = (uint_fast32_t) fracA * (0x8000 | (tmp <<1)); // first bit hidden bit
 
-//printf("after multiply: \n");
-//printf("kA: %d expA: %d\n", kA, expA);
-//printBinary(&frac32Z, 32);
 	if (expA>1){
 		kA++;
 		expA ^=0x2;
@@ -141,7 +134,6 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 		frac32Z>>=1;
 	}
 
-//printBinary(&frac32Z, 32);
 	//Add
 	if (uiC!=0){
 		tmp = (uiC<<2) & 0xFFFF;
@@ -162,8 +154,6 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 		expC = tmp>>14;
 		frac32C = (0x4000 | tmp) << 16;
 		shiftRight = ((kA-kC)<<1) + (expA-expC); //actually this is the scale
-//printBinary(&frac32C, 32);
-//printf("shiftRight: %d\n", shiftRight);
 
 		if (shiftRight<0){ // |uiC| > |Prod|
 			if (shiftRight<=-31){
@@ -183,7 +173,7 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 
 		}
 		else if (shiftRight>0){// |uiC| < |Prod|
-			//if (frac32C&((1<<shiftRight)-1)) bitsMore = 1;
+
 			if(shiftRight>=31){
 				bitsMore = 1;
 				frac32C = 0;
@@ -221,8 +211,6 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 			expZ = expA; //same here
 		}
 
-//printBinary(&frac32Z, 32);
-//printf("kZ: %d, expZ: %d shiftRight: %d\n", kZ, expZ, shiftRight);
 		rcarry = 0x80000000 & frac32Z; //first left bit
 		if(rcarry){
 			if (expZ) kZ ++;
@@ -238,7 +226,6 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 				}
 			}
 			bool ecarry = (0x40000000 & frac32Z)>>30;
-	//printf("ecarry: %d\n", ecarry);
 			if(!ecarry){
 				if (expZ==0) kZ--;
 				expZ^=1;
@@ -261,9 +248,7 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 		regSZ=1;
 		regime = 0x7FFF - (0x7FFF>>regZ);
 	}
-//printf("After add: \n");
-//printf("kZ: %d, expZ:%d regSZ: %d  regZ: %d\n", kZ, expZ, regSZ, regZ);
-//printBinary(&frac32Z, 32);
+
 	if(regZ>14){
 		//max or min pos. exp and frac does not matter.
 		(regSZ) ? (uZ.ui= 0x7FFF): (uZ.ui=0x1);
@@ -271,8 +256,8 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 	else{
 		//remove hidden bits
 		frac32Z &= 0x3FFFFFFF;
-		fracZ = frac32Z >> (regZ + 17);//frac32Z>>16;
-//printPositQuireAsBinary(&fracZ, 16);
+		fracZ = frac32Z >> (regZ + 17);
+
 		if (regZ!=14) bitNPlusOne = (frac32Z>>regZ) & 0x10000;
 		else if (frac32Z>0){
 			fracZ=0;
@@ -285,7 +270,7 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 			uZ.ui += (uZ.ui&1) | bitsMore;
 		}
 	}
-//printf("signZ:%d, bitNPlusOne: %d, bitsMore:%d\n", signZ, bitNPlusOne, bitsMore);
+
 	if (signZ) uZ.ui = -uZ.ui & 0xFFFF;
 	return uZ.p;
 

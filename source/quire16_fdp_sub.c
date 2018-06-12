@@ -42,8 +42,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "internals.h"
 #include "specialize.h"
 
-//#include <stdio.h>
-
 quire16_t q16_fdp_sub( quire16_t q, posit16_t pA, posit16_t pB ){
 
 	union ui16_p16 uA, uB;

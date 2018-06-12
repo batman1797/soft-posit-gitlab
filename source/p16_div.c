@@ -44,7 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdint.h>
 #include <stdlib.h>
 
-#include "include/softposit.h"
+#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
 #include "specialize.h"
@@ -167,7 +167,7 @@ posit16_t p16_div( posit16_t pA, posit16_t pB ) {
 		frac32Z &= 0x3FFF;
 		fracA = (uint_fast16_t)frac32Z >> (regA+1);
 
-		if (regA!=14) bitNPlusOne = (frac32Z >> regA) & 0x1;//|= 0x8000 & frac32Z ;
+		if (regA!=14) bitNPlusOne = (frac32Z >> regA) & 0x1;
 		else if (fracA>0){
 			fracA=0;
 			bitsMore =1;
@@ -176,7 +176,7 @@ posit16_t p16_div( posit16_t pA, posit16_t pB ) {
 
 		//sign is always zero
 		uZ.ui = packToP16UI(regime, regA, expA, fracA);
-		//uZ.ui = (uint16_t) (regime) + ((uint16_t) (expA)<< (13-regA)) + ((uint16_t)(fracA));
+
 		if (bitNPlusOne){
 			( ((1<<regA)-1) & frac32Z ) ? (bitsMore=1) : (bitsMore=0);
 			if (rem) bitsMore =1;

@@ -39,8 +39,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-
 #include <stdio.h>
+
 void printBinary(uint64_t * s, int size) {
 	int i;
 	uint64_t number = *s;
@@ -64,18 +64,10 @@ quire16_t q16_TwosComplement(quire16_t q){
 			q.v[0] = ~q.v[0];
 		}
 	}
-
-	//printQuireAsBinary(&q.v[0], 64);
-	//printQuireAsBinary(&q.v[1], 64);
 	return q;
 
 }
 
-/*void q16_ToZero(quire16_t * q){
-	quire16_t q16 = *q;
-	q16.v[0]=0;
-	q16.v[1]=0;
-}*/
 
 
 

@@ -91,9 +91,6 @@ uint_fast16_t convertFractionP16(double f16, uint_fast8_t fracLength, bool * bit
 		}
 	}
 
-
-	//printf("convertfloat: frac:%d f16: %.26f  bitsNPlusOne: %d, bitsMore: %d\n", frac, f16, bitsNPlusOne, bitsMore);
-
 	return frac;
 }
 posit16_t convertfloatToP16(float a){
@@ -108,20 +105,14 @@ posit16_t convertdoubleToP16(double a){
 
 posit16_t convertDecToP16(posit16 a){
 	union ui16_p16 uZ;
-	bool sign, regS;//, bitsNPlusOne=0, bitsMore=0;
+	bool sign, regS;
 	uint_fast16_t reg, frac=0;
 	int_fast8_t exp=0;
 	double f16 = a.f;
 	bool bitNPlusOne=0, bitsMore=0;
 
 	(f16>=0) ? (sign=0) : (sign=1);
-	// sign: 1 bit, frac: 8 bits, mantisa: 23 bits
-	//sign = a.parts.sign;
-	//frac = a.parts.fraction;
-	//exp = a.parts.exponent;
 
-	/*printf("float to p16: %.26f \n",f16);
-	printf("sign: %d \n",sign);*/
 	if (f16 == 0 ){
 		uZ.ui = 0;
 		return uZ.p;
@@ -163,7 +154,7 @@ posit16_t convertDecToP16(posit16 a){
 			//Make negative numbers positive for easier computation
 			f16 = -f16;
 		}
-		//printf("float to p16: %.16f \n",f16);
+
 		regS = 1;
 		reg = 1; //because k = m-1; so need to add back 1
 		// minpos
@@ -182,12 +173,11 @@ posit16_t convertDecToP16(posit16 a){
 			}
 
 			int8_t fracLength = 13-reg;
-			//printf("f16: %.16f  fracLength: %d\n", f16, fracLength);
+
 			if (fracLength<0){
 				//reg == 14, means rounding bits is exp and just the rest.
-				//printf("bitsMore: %d\n", bitsMore);
 				if (f16>1) 	bitsMore = 1;
-				//bitsMore = 0;
+
 			}
 			else
 				frac = convertFractionP16 (f16, fracLength, &bitNPlusOne, &bitsMore);
@@ -208,8 +198,6 @@ posit16_t convertDecToP16(posit16 a){
 				uZ.ui += (bitNPlusOne & (uZ.ui&1)) | ( bitNPlusOne & bitsMore);
 			}
 			if (sign) uZ.ui = -uZ.ui & 0xFFFF;
-			//uZ.p = c_roundPackToP16(sign, regS, reg, exp, frac, bitNPlusOne, bitsMore);
-
 		}
 	}
 	else if (f16 < 1 || f16 > -1 ){
@@ -222,7 +210,6 @@ posit16_t convertDecToP16(posit16 a){
 		reg = 0;
 
 		//regime
-		//printf("here we go\n");
 		while (f16<1){
 			f16 *= 4;
 			reg++;
@@ -231,7 +218,6 @@ posit16_t convertDecToP16(posit16 a){
 			f16/=2;
 			exp++;
 		}
-		//printf("f16: %.16f\n", f16);
 		if (reg==14){
 			bitNPlusOne = exp;
 			if (frac>1) bitsMore = 1;
@@ -240,7 +226,6 @@ posit16_t convertDecToP16(posit16 a){
 			//only possible combination for reg=15 to reach here is 7FFF (maxpos) and FFFF (-minpos)
 			//but since it should be caught on top, so no need to handle
 			uint_fast8_t fracLength = 13-reg;
-			//printf("f16: %.26f, fracLength=%d reg: %d\n", f16, fracLength, reg);
 			frac = convertFractionP16 (f16, fracLength, &bitNPlusOne, &bitsMore);
 		}
 
@@ -259,8 +244,6 @@ posit16_t convertDecToP16(posit16 a){
 			uZ.ui += (bitNPlusOne & (uZ.ui&1)) | ( bitNPlusOne & bitsMore);
 		}
 		if (sign) uZ.ui = -uZ.ui & 0xFFFF;
-		//uZ.p = c_roundPackToP16(sign, regS, reg, exp, frac, bitNPlusOne, bitsMore);
-
 	}
 	else {
 		//NaR - for NaN, INF and all other combinations

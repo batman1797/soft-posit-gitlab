@@ -1,12 +1,12 @@
 
 /*============================================================================
 
-This C source file is part of the SoftPosit Posit Arithmetic Package
+This C header file is part of the SoftPosit Posit Arithmetic Package
 by S. H. Leong (Cerlane).
 
 Copyright 2017, 2018 A*STAR.  All rights reserved.
 
-This C source file is part of the SoftFloat IEEE Floating-Point Arithmetic
+This C header file is part of the SoftFloat IEEE Floating-Point Arithmetic
 Package, Release 3d, by John R. Hauser.
 
 
@@ -46,12 +46,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdbool.h>
 #include <stdint.h>
 #include "primitiveTypes.h"
-
-
-
-extern const uint_fast16_t softposit_approxRecip_1k0s[16];
-extern const uint_fast16_t softposit_approxRecip_1k1s[16];
-
 
 extern const uint_fast16_t softposit_approxRecipSqrt0[16];
 extern const uint_fast16_t softposit_approxRecipSqrt1[16];
