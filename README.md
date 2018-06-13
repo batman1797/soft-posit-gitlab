@@ -4,6 +4,11 @@ This code is tested on
 
  GNU gcc (SUSE Linux) 4.8.5
  Apple LLVM version 9.1.0 (clang-902.0.39.2)
+ 
+ Add, minus, multiply and divide are exhaustively tested. 
+ 
+ Note: 
+ [13 June 2018] Using a HPC resource to exhaustively test p16_mulAdd, reveals a bug that we are now working to fix.
 
 ------------------------------------------
 An example on how to use the code to add:
