@@ -155,7 +155,7 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 		frac32C = (0x4000 | tmp) << 16;
 		shiftRight = ((kA-kC)<<1) + (expA-expC); //actually this is the scale
 
-		if (shiftRight<0){ // |uiC| > |Prod|
+		if (shiftRight<0){ // |uiC| > |Prod Z|
 			if (shiftRight<=-31){
 				bitsMore = 1;
 				frac32Z = 0;
@@ -173,7 +173,7 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 
 		}
 		else if (shiftRight>0){// |uiC| < |Prod|
-
+			//if (frac32C&((1<<shiftRight)-1)) bitsMore = 1;
 			if(shiftRight>=31){
 				bitsMore = 1;
 				frac32C = 0;
@@ -183,7 +183,7 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 				frac32Z = frac32Z + (frac32C>>shiftRight);
 			else{
 				frac32Z = frac32Z - (frac32C>>shiftRight);
-				if (bitsMore) frac32C-=1;
+				if (bitsMore) frac32Z-=1;
 			}
 			kZ = kA;
 			expZ = expA;
@@ -215,6 +215,7 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 		if(rcarry){
 			if (expZ) kZ ++;
 			expZ^=1;
+			if (frac32Z&0x1) bitsMore = 1;
 			frac32Z=(frac32Z>>1)&0x7FFFFFFF;
 		}
 		else {
@@ -226,6 +227,7 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 				}
 			}
 			bool ecarry = (0x40000000 & frac32Z)>>30;
+
 			if(!ecarry){
 				if (expZ==0) kZ--;
 				expZ^=1;
