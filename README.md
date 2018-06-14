@@ -1,4 +1,4 @@
-This version supports a 16-bit with one exponent bit (posit16_t). 
+This version supports a 16-bit with one exponential bit (posit16_t). 
 
 This code is tested on 
 
