@@ -1,0 +1,11 @@
+V0.2:
+
+Full posit16_t (16-bit posit with 1 exponent bit) support
+Added four functions:
+1) convert unsigned int to posit16_t
+2) convert unsigned long int to posit16_t
+3) convert int to posit16_t
+4) convert long int to posit16_t
+
+Bug fix:
+1) Fixed p16_mulAdd bug (https://gitlab.com/cerlane/SoftPosit/issues/1) 
