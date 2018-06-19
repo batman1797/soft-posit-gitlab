@@ -84,6 +84,10 @@ OBJS_OTHERS = \
   p16_le$(OBJ) \
   p16_lt$(OBJ) \
   p16_sqrt$(OBJ) \
+  ui32_to_p16$(OBJ) \
+  ui64_to_p16$(OBJ) \
+  i32_to_p16$(OBJ) \
+  i64_to_p16$(OBJ) \
   quire16_fdp_add$(OBJ) \
   quire16_fdp_sub$(OBJ) \
   quire_helper$(OBJ) \

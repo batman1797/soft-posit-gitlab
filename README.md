@@ -87,6 +87,14 @@ Convert p16 to integer (32 bits) : int_fast32_t p16_to_i32( posit16_t )
 
 Convert p16 to long integer (64 bits) : int_fast64_t p16_to_i64( posit16_t)
 
+Convert unsigned integer (32 bits) : posit16_t ui32_to_p16( uint32_t a )
+
+Convert unsigned long int (64 bits) : posit16_t ui64_to_p16( uint64_t a )
+
+Convert integer (32 bits) : posit16_t i32_to_p16( int32_t a )
+
+Convert long integer (64 bits) : posit16_t i64_to_p16( int64_t a )
+
 Convert p16 to unsigned integer (32 bits) : uint_fast32_t p16_to_ui32( posit16_t )
 
 Convert p16 to unsigned long integer (64 bits) : uint_fast64_t p16_to_ui64( posit16_t)
