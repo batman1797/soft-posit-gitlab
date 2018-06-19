@@ -160,7 +160,10 @@ float p16_dec_sub_f(float, float );
 float p16_dec_mul_f(float, float );
 #define isNaRP16UI( a ) ( ((a) ^ 0x8000) == 0 )
 
-int_fast64_t p16_to_i64_2( posit16_t );
+posit16_t ui32_to_p16( uint32_t);
+posit16_t ui64_to_p16( uint64_t);
+posit16_t i32_to_p16( int32_t);
+posit16_t i64_to_p16( int64_t);
 
 //Quire 16
 quire16_t q16_fdp_add(quire16_t, posit16_t, posit16_t);
