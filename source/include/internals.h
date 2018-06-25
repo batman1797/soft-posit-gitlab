@@ -42,12 +42,14 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef internals_h
 #define internals_h 1
 
-#include <stdbool.h>
-#include <stdint.h>
 #include "primitives.h"
-#include "softposit_types.h"
+#include "softposit.h"
 
 #include <stdio.h>
+
+#ifdef SOFTPOSIT_QUAD
+#include <quadmath.h>
+#endif
 
 #ifdef SOFTPOSIT_EXACT
 	typedef struct { uint8_t v; bool exact; } uint8e_t;
@@ -94,16 +96,10 @@ enum {
 
 /*----------------------------------------------------------------------------
 *----------------------------------------------------------------------------*/
-/*#define signP8UI( a ) ((bool) ((uint8_t) (a)>>7))
+#define signP8UI( a ) ((bool) ((uint8_t) (a)>>7))
 #define signregP8UI( a ) ((bool) (((uint8_t) (a)>>6) & 0x1))
 #define packToP8UI( regime, fracA) ((uint8_t) regime + ((uint8_t)(fracA)) )
-uint_fast16_t reglengthP8UI (uint8_t);
-int regkP8UI (uint8_t);
-#define regP8UI( a ) (( ((uint8_t) (a) & (0x7F)) >> max(0, 6-reglengthP8UI(a) ) ))
-#define useed8P 2;
-#define expP8UI(a) ((int_fast8_t)  0)
-#define expP8sizeUI 0;
-uint_fast16_t fracP8UI(uint8_t);
+
 
 #define isNaRP8UI( a ) ( ((a) ^ 0x80) == 0 )
 
@@ -111,12 +107,9 @@ posit8_t softposit_addMagsP8( uint_fast8_t, uint_fast8_t );
 posit8_t softposit_subMagsP8( uint_fast8_t, uint_fast8_t );
 posit8_t softposit_mulAddP8( uint_fast8_t, uint_fast8_t, uint_fast8_t, uint_fast8_t );
 
-double convertP8ToDec_f(posit8_t);
-posit8 convertP8ToDec(posit8_t);
-posit8_t convertDoubleToP8(double);
-posit8_t convertDecToP8(posit8);
 
 
+/*
 //Quire 8
 quire8_t q8_fdp_add(quire8_t, posit8_t, posit8_t);
 quire8_t q8_fdp_sub(quire8_t, posit8_t, posit8_t);
@@ -135,22 +128,15 @@ posit8_t convertQ8ToP8(quire8_t);
 #define signregP16UI( a ) ( (bool) (((uint16_t) (a)>>14) & 0x1) )
 #define expP16UI( a, regA ) ((int_fast8_t) ((a)>>(13-regA) & 0x0001))
 #define packToP16UI( regime, regA, expA, fracA) ((uint16_t) regime + ((uint16_t) (expA)<< (13-regA)) + ((uint16_t)(fracA)) )
-uint_fast16_t reglengthP16UI ( uint_fast16_t );
-int_fast8_t regkP16UI ( bool , uint_fast16_t );
-uint_fast16_t fracP16UI( uint_fast16_t, uint_fast16_t);
-#define regP16UI( a, regLen )  ( ( uint_fast16_t ) (((a) & (0x7FFF)) >> (14-regLen)) )
-#define USEED16P 4;
-#define MAXPOS16P 0x7FFF; //integer value (not actual posit computed value)
+//uint_fast16_t reglengthP16UI ( uint_fast16_t );
+//int_fast8_t regkP16UI ( bool , uint_fast16_t );
+//uint_fast16_t fracP16UI( uint_fast16_t, uint_fast16_t);
+//#define regP16UI( a, regLen )  ( ( uint_fast16_t ) (((a) & (0x7FFF)) >> (14-regLen)) )
+//#define USEED16P 4;
+//#define MAXPOS16P 0x7FFF; //integer value (not actual posit computed value)
 
-#define expP16sizeUI 1;
+//#define expP16sizeUI 1;
 
-double convertP16ToDec_f(posit16_t);
-posit16 convertP16ToDec(posit16_t);
-posit16_t convertDecToP16(posit16);
-posit16_t convertfloatToP16(float);
-posit16_t convertdoubleToP16(double);
-//__float128 convertP16ToQuadDec(posit16_t);
-//posit16_t convertQuadToP16(__float128);
 
 posit16 p16_dec_add(posit16, posit16 );
 posit16 p16_dec_sub(posit16, posit16 );
@@ -160,10 +146,10 @@ float p16_dec_sub_f(float, float );
 float p16_dec_mul_f(float, float );
 #define isNaRP16UI( a ) ( ((a) ^ 0x8000) == 0 )
 
-posit16_t ui32_to_p16( uint32_t);
+/*posit16_t ui32_to_p16( uint32_t);
 posit16_t ui64_to_p16( uint64_t);
 posit16_t i32_to_p16( int32_t);
-posit16_t i64_to_p16( int64_t);
+posit16_t i64_to_p16( int64_t);*/
 
 //Quire 16
 quire16_t q16_fdp_add(quire16_t, posit16_t, posit16_t);
@@ -185,10 +171,10 @@ posit16_t softposit_mulAddP16( uint_fast16_t, uint_fast16_t, uint_fast16_t, uint
 
 /*----------------------------------------------------------------------------
 *----------------------------------------------------------------------------*/
-/*#define signP32UI( a ) ((bool) ((uint32_t) (a)>>31))
+#define signP32UI( a ) ((bool) ((uint32_t) (a)>>31))
 #define signregP32UI( a ) ((bool) (((uint32_t) (a)>>30) & 0x1))
 #define packToP32UI(regime, expA, fracA) ( (uint32_t) regime + (uint32_t) expA + ((uint32_t)(fracA)) )
-uint_fast16_t reglengthP32UI (uint32_t);
+/*uint_fast16_t reglengthP32UI (uint32_t);
 int_fast16_t regkP32UI(bool, uint_fast32_t);
 #define expP32UI( a, regA ) ((int_fast16_t) ((a>>(28-regA)) & 0x2))
 #define regP32UI( a, regLen ) (  ((( uint_fast32_t ) (a) & (0x7FFFFFFF)) >> (30-regLen))) )
@@ -196,11 +182,11 @@ int_fast16_t regkP32UI(bool, uint_fast32_t);
 #define useed32P 16;
 //int_fast16_t expP32UI(uint32_t);
 #define expP32sizeUI 2;
-uint_fast32_t fracP32UI(uint_fast32_t, uint_fast16_t);
+uint_fast32_t fracP32UI(uint_fast32_t, uint_fast16_t);*/
 
-double convertP32ToDec_f(posit32_t);
-posit32 convertP32ToDec(posit32_t);
-posit32_t convertDecToP32(posit32);
+
+
+/*posit32_t convertDecToP32(posit32);
 posit32_t convertfloatToP32(float);
 posit32_t convertdoubleToP32(double );
 //posit32_t convertQuadToP32(__float128);

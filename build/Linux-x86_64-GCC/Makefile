@@ -43,9 +43,10 @@ SOURCE_DIR ?= ../../source
 SPECIALIZE_TYPE ?= 8086-SSE
 
 SOFTPOSIT_OPTS ?= \
-  -DINLINE_LEVEL=5 
+  -DINLINE_LEVEL=5 #\
+  -DSOFTPOSIT_QUAD -lquadmath 
 
-#-lquadmath 
+
 DELETE = rm -f
 C_INCLUDES = -I. -I$(SOURCE_DIR)/$(SPECIALIZE_TYPE) -I$(SOURCE_DIR)/include
 OPTIMISATION  = -march=core-avx2 -O2
@@ -61,11 +62,39 @@ LIB = .a
 .PHONY: all
 all: softposit$(LIB)
 
+quad: SOFTPOSIT_OPTS+= -DSOFTPOSIT_QUAD -lquadmath
+quad: all
+
 OBJS_PRIMITIVES = 
 
 OBJS_SPECIALIZE = 
 
 OBJS_OTHERS = \
+  s_addMagsP8$(OBJ) \
+  s_subMagsP8$(OBJ) \
+  s_mulAddP8$(OBJ) \
+  p8_add$(OBJ) \
+  p8_sub$(OBJ) \
+  p8_mul$(OBJ) \
+  p8_div$(OBJ) \
+  p8_sqrt$(OBJ) \
+  p8_to_p16$(OBJ) \
+  p8_to_p32$(OBJ) \
+  p8_to_i32$(OBJ) \
+  p8_to_i64$(OBJ) \
+  p8_to_ui32$(OBJ) \
+  p8_to_ui64$(OBJ) \
+  p8_roundToInt$(OBJ) \
+  p8_mulAdd$(OBJ) \
+  p8_eq$(OBJ) \
+  p8_le$(OBJ) \
+  p8_lt$(OBJ) \
+  quire8_fdp_add$(OBJ) \
+  quire8_fdp_sub$(OBJ) \
+  ui32_to_p8$(OBJ) \
+  ui64_to_p8$(OBJ) \
+  i32_to_p8$(OBJ) \
+  i64_to_p8$(OBJ) \
   s_addMagsP16$(OBJ) \
   s_subMagsP16$(OBJ) \
   s_mulAddP16$(OBJ) \
@@ -73,6 +102,7 @@ OBJS_OTHERS = \
   p16_to_ui64$(OBJ) \
   p16_to_i32$(OBJ) \
   p16_to_i64$(OBJ) \
+  p16_to_p8$(OBJ) \
   p16_to_p32$(OBJ) \
   p16_roundToInt$(OBJ) \
   p16_add$(OBJ) \
@@ -84,17 +114,22 @@ OBJS_OTHERS = \
   p16_le$(OBJ) \
   p16_lt$(OBJ) \
   p16_sqrt$(OBJ) \
+  quire16_fdp_add$(OBJ) \
+  quire16_fdp_sub$(OBJ) \
+  quire_helper$(OBJ) \
   ui32_to_p16$(OBJ) \
   ui64_to_p16$(OBJ) \
   i32_to_p16$(OBJ) \
   i64_to_p16$(OBJ) \
-  quire16_fdp_add$(OBJ) \
-  quire16_fdp_sub$(OBJ) \
-  quire_helper$(OBJ) \
   s_approxRecipSqrt_1Ks$(OBJ) \
+  c_convertDecToPosit8$(OBJ) \
+  c_convertPosit8ToDec$(OBJ) \
   c_convertDecToPosit16$(OBJ) \
   c_convertPosit16ToDec$(OBJ) \
-  c_convertQuire16ToPosit16$(OBJ) 
+  c_convertQuire8ToPosit8$(OBJ) \
+  c_convertQuire16ToPosit16$(OBJ) \
+  c_convertDecToPosit32$(OBJ) \
+  c_convertPosit32ToDec$(OBJ) 
 
 OBJS_ALL = $(OBJS_PRIMITIVES) $(OBJS_SPECIALIZE) $(OBJS_OTHERS)
 

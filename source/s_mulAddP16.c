@@ -39,13 +39,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include <stdbool.h>
-#include <stdint.h>
-
-#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
-#include "specialize.h"
 
 //softposit_mulAdd_subC => (uiA*uiB)-uiC
 //softposit_mulAdd_subProd => uiC - (uiA*uiB)

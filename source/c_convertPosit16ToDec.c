@@ -33,17 +33,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include <stdbool.h>
-#include <stdint.h>
 #include <math.h>
 
-#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
-#include "specialize.h"
 
 
-double convertP16ToDec_f(posit16_t a){
+double convertP16ToDouble(posit16_t a){
 	posit16 b = convertP16ToDec(a);
 	return b.f;//
 }
@@ -112,4 +108,73 @@ posit16 convertP16ToDec(posit16_t a){
 
 	return p16;
 }
+
+#ifdef SOFTPOSIT_QUAD
+	__float128 convertP16ToQuadDec(posit16_t a){
+
+		union ui16_p16 uZ;
+		__float128 p16;
+		uZ.p = a;
+
+		if (uZ.ui==0){
+			p16 = 0;
+			return p16;
+		}
+		else if(uZ.ui==0x7FFF){ //maxpos -> 32767
+			p16 = 268435456;
+			return p16;
+		}
+		else if (uZ.ui==0x8001){ //-maxpos -> 32769
+			p16 = -268435456;
+			return p16;
+		}
+		else if (uZ.ui == 0x8000){ //NaR -> 32768
+			p16 = INFINITY;
+			return p16;
+		}
+
+		bool regS, sign;
+		uint_fast16_t reg, shift=2, frac;
+		int_fast16_t k=0;
+		int_fast8_t exp;
+		__float128 fraction_max;
+
+		sign = signP16UI( uZ.ui );
+		if (sign)
+			uZ.ui = -uZ.ui & 0xFFFF;
+		regS = signregP16UI( uZ.ui );
+
+		uint_fast16_t tmp = (uZ.ui<<2) & 0xFFFF;
+		if (regS){
+			while (tmp>>15){
+				k++;
+				shift++;
+				tmp= (tmp<<1) & 0xFFFF;
+			}
+			reg = k+1;
+		}
+		else{
+			k=-1;
+			while (!(tmp>>15)){
+				k--;
+				shift++;
+				tmp= (tmp<<1) & 0xFFFF;
+			}
+			tmp&=0x7FFF;
+			reg =-k;
+		}
+		exp = tmp>>14;
+		frac = (tmp & 0x3FFF) >> shift;
+
+
+		fraction_max = pow(2, 13-reg) ;
+		p16 = (__float128)( pow(4, k)* pow(2, exp) * (1+((__float128)frac/fraction_max)) );
+
+		if (sign)
+			p16 = -p16;
+
+		return p16;
+
+	}
+#endif
 

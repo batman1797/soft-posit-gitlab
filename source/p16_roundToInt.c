@@ -39,13 +39,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include <stdbool.h>
-#include <stdint.h>
-
-#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
-#include "specialize.h"
 
 
 posit16_t p16_roundToInt( posit16_t pA ) {

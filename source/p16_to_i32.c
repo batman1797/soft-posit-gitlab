@@ -39,13 +39,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include <stdbool.h>
-#include <stdint.h>
-
-#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
-#include "specialize.h"
 
 int_fast32_t p16_to_i32( posit16_t pA ){
 	union ui16_p16 uA;

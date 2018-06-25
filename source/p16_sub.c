@@ -40,13 +40,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 =============================================================================*/
 
 
-#include <stdbool.h>
-#include <stdint.h>
-
-#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
-
 
 float p16_dec_sub_f(float a, float b ){
 	union ui16_p16 uZ;

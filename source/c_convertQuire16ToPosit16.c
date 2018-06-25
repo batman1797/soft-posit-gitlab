@@ -33,18 +33,18 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include <stdbool.h>
-#include <stdint.h>
-
 #include <math.h>
 
-#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
-#include "specialize.h"
 
+//TODO DEPRECATED
 posit16_t convertQ16ToP16(quire16_t qA){
+	return q16_to_p16(qA);
+}
 
+
+posit16_t q16_to_p16(quire16_t qA){
 	union ui128_q16 uZ;
 	union ui16_p16 uA;
 	uint_fast16_t regA, fracA = 0, shift=0, regime;
@@ -151,8 +151,6 @@ posit16_t convertQ16ToP16(quire16_t qA){
 	if (sign) uA.ui = -uA.ui & 0xFFFF;
 
 	return uA.p;
-
-
 }
 
 

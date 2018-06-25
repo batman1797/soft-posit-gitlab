@@ -37,13 +37,8 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
-#include <stdbool.h>
-#include <stdint.h>
-
-#include "include/softposit.h"
 #include "platform.h"
 #include "internals.h"
-#include "specialize.h"
 
 posit32_t p16_to_p32( posit16_t pA ) {
 
@@ -86,16 +81,17 @@ posit32_t p16_to_p32( posit16_t pA ) {
 
 	if(kA<0){
 		regA = -kA;
-		if (regA&0x1) exp_frac32A |= 0x80000000;
+		//if (regA&0x1) exp_frac32A |= 0x80000000;
+		exp_frac32A |= ((uint32_t)(regA&0x1)<<31);
 		regA = (regA+1)>>1;
 		if (regA==0) regA=1;
 		regSA = 0;
 		regime = 0x40000000>>regA;
 	}
 	else{
-		if (kA&0x1) exp_frac32A |= 0x80000000;
-		regA = (kA+2)>>1;
-		if (regA==0) regA=1;
+		exp_frac32A |= ((uint32_t)(kA&0x1)<<31);
+		(kA==0) ? (regA=1) : (regA = (kA+2)>>1);
+
 		regSA=1;
 		regime = 0x7FFFFFFF - (0x7FFFFFFF>>regA);
 	}

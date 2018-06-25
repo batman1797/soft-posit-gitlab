@@ -54,10 +54,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdbool.h>
 #include <stdint.h>
+#ifdef SOFTPOSIT_QUAD
+#include <quadmath.h>
+#endif
+
 
 #include "softposit_types.h"
 
-//#include <stdio.h>
+#include <stdio.h>
+
 
 #ifndef THREAD_LOCAL
 #define THREAD_LOCAL
@@ -89,13 +94,14 @@ posit32_t i64_to_p32( int64_t );
 posit64_t i64_to_p64( int64_t );
 
 
+
 /*----------------------------------------------------------------------------
 | 8-bit (quad-precision) posit operations.
 *----------------------------------------------------------------------------*/
-/*uint_fast32_t p8_to_ui32( posit8_t, uint_fast16_t, bool );
-uint_fast64_t p8_to_ui64( posit8_t, uint_fast16_t, bool );
-int_fast32_t p8_to_i32( posit8_t, uint_fast16_t, bool );
-int_fast64_t p8_to_i64( posit8_t, uint_fast16_t, bool );
+uint_fast32_t p8_to_ui32( posit8_t );
+uint_fast64_t p8_to_ui64( posit8_t );
+int_fast32_t p8_to_i32( posit8_t);
+int_fast64_t p8_to_i64( posit8_t);
 
 posit16_t p8_to_p16( posit8_t );
 posit32_t p8_to_p32( posit8_t );
@@ -108,13 +114,41 @@ posit8_t p8_sub( posit8_t, posit8_t );
 posit8_t p8_mul( posit8_t, posit8_t );
 posit8_t p8_mulAdd( posit8_t, posit8_t, posit8_t );
 posit8_t p8_div( posit8_t, posit8_t );
-posit8_t p8_rem( posit8_t, posit8_t );
 posit8_t p8_sqrt( posit8_t );
 bool p8_eq( posit8_t, posit8_t );
 bool p8_le( posit8_t, posit8_t );
-bool p8_lt( posit8_t, posit8_t );*/
+bool p8_lt( posit8_t, posit8_t );
 
 
+double convertP8ToDouble(posit8_t);
+posit8 convertP8ToDec(posit8_t);
+posit8_t convertDoubleToP8(double);
+posit8_t convertDecToP8(posit8);
+
+
+//Quire 8
+quire8_t q8_fdp_add(quire8_t, posit8_t, posit8_t);
+quire8_t q8_fdp_sub(quire8_t, posit8_t, posit8_t);
+posit8_t q8_to_p8(quire8_t);
+#define isNaRQ8( q ) ( q.v==0x80000000  )
+#define isQ8Zero(q) ( q.v==0 )
+#define q8_clr(q) ({\
+	q.v=0;\
+	q;\
+})
+
+#define castP8(a)({\
+		union ui8_p8 uA;\
+		uA.ui = a;\
+		uA.p;\
+})
+
+
+#define castUI8(a)({\
+		union ui8_p8 uA;\
+		uA.p = a;\
+		uA.ui;\
+})
 /*----------------------------------------------------------------------------
 | 16-bit (half-precision) posit operations.
 *----------------------------------------------------------------------------*/
@@ -122,10 +156,9 @@ uint_fast32_t p16_to_ui32( posit16_t );
 uint_fast64_t p16_to_ui64( posit16_t );
 int_fast32_t p16_to_i32( posit16_t);
 int_fast64_t p16_to_i64( posit16_t );
-
 posit8_t p16_to_p8( posit16_t );
 posit32_t p16_to_p32( posit16_t );
-posit64_t p16_to_p64( posit16_t );
+//posit64_t p16_to_p64( posit16_t );
 
 posit16_t p16_roundToInt( posit16_t);
 posit16_t p16_add( posit16_t, posit16_t );
@@ -139,6 +172,44 @@ bool p16_eq( posit16_t, posit16_t );
 bool p16_le( posit16_t, posit16_t );
 bool p16_lt( posit16_t, posit16_t );
 
+
+double convertP16ToDouble(posit16_t);
+posit16 convertP16ToDec(posit16_t);
+posit16_t convertDecToP16(posit16);
+posit16_t convertFloatToP16(float);
+posit16_t convertDoubleToP16(double);
+
+#ifdef SOFTPOSIT_QUAD
+	__float128 convertP16ToQuadDec(posit16_t);
+	posit16_t convertQuadToP16(__float128);
+#endif
+
+//Quire 16
+quire16_t q16_fdp_add(quire16_t, posit16_t, posit16_t);
+quire16_t q16_fdp_sub(quire16_t, posit16_t, posit16_t);
+posit16_t convertQ16ToP16(quire16_t);
+posit16_t q16_to_p16(quire16_t);
+#define isNaRQ16( q ) ( q.v[0]==0x8000000000000000ULL && q.v[1]==0 )
+#define isQ16Zero(q) (q.v[0]==0 && q.v[1]==0)
+quire16_t q16_TwosComplement(quire16_t);
+void printBinary(uint64_t*, int);
+#define q16_clr(q) ({\
+	q.v[0]=0;\
+	q.v[1]=0;\
+	q;\
+})
+
+#define castP16(a)({\
+		union ui16_p16 uA;\
+		uA.ui = a;\
+		uA.p;\
+})
+
+#define castUI16(a)({\
+		union ui16_p16 uA;\
+		uA.p = a;\
+		uA.ui;\
+})
 
 /*----------------------------------------------------------------------------
 | 32-bit (single-precision) posit operations.
@@ -165,6 +236,16 @@ bool p32_eq( posit32_t, posit32_t );
 bool p32_le( posit32_t, posit32_t );
 bool p32_lt( posit32_t, posit32_t );*/
 
+
+double convertP32ToDouble(posit32_t);
+posit32 convertP32ToDec(posit32_t);
+posit32_t convertDecToP32(posit32);
+posit32_t convertFloatToP32(float);
+posit32_t convertDoubleToP32(double);
+
+#ifdef SOFTPOSIT_QUAD
+	posit32_t convertQuadToP32(__float128);
+#endif
 
 /*----------------------------------------------------------------------------
 | 64-bit (double-precision) floating-point operations.

@@ -32,15 +32,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include <stdbool.h>
-#include <stdint.h>
 #include <inttypes.h>
 
-
-#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
-#include "specialize.h"
 
 quire16_t q16_fdp_sub( quire16_t q, posit16_t pA, posit16_t pB ){
 

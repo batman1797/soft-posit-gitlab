@@ -39,13 +39,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include <stdbool.h>
-#include <stdint.h>
-
-#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
-#include "specialize.h"
 
 extern const uint_fast16_t softposit_approxRecipSqrt0[];
 extern const uint_fast16_t softposit_approxRecipSqrt0[];
