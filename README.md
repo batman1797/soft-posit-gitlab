@@ -17,6 +17,7 @@ This code is tested on
 A 8-bit example on how to use the code to add:
 -----------------------------------------------------
 
+```
 #include "softposit.h"
 
 int main (int argc, char *argv[]){
@@ -42,12 +43,13 @@ int main (int argc, char *argv[]){
     return 0;
 
 }
-
+```
 
 -----------------------------------------------------
 A 16-bit example on how to use the code to multiply:
 -----------------------------------------------------
 
+```
 #include "softposit.h"
 
 int main (int argc, char *argv[]){
@@ -71,6 +73,8 @@ int main (int argc, char *argv[]){
     printBinary(&uiZ, 16);
 
 }
+```
+
 ------------------------------------------
 Build - softposit.a
 ------------------------------------------
@@ -88,12 +92,15 @@ Features
 Main Posit Functionalities:
 
 ------------------------------------------
+
 Add : 
+
      posit16_t p16_add(posit16_t, posit16_t)
      
      posit8_t p8_add(posit8_t, posit8_t)
 
 Subtract : 
+
     posit16_t p16_sub(posit16_t, posit16_t)
     
     posit8_t p8_sub(posit8_t, posit8_t)
