@@ -70,11 +70,24 @@ int main (int argc, char *argv[]){
 Build - softposit.a
 ------------------------------------------
 
+```
 cd SoftPosit/build/Linux-x86_64-GCC
-
 make -j6 all
 
-Please link to the archive to use.
+```
+
+------------------------------------------
+Link - softposit.a
+------------------------------------------
+
+If your source code is for example "main.c" and you want to create an executable "main".
+Assume that SoftPosit is installed and installed in the same directory (installing in the same directory is NOT recommended).
+
+```
+gcc -lm -o main \
+    main.c SoftPosit/build/Linux-x86_64-GCC/softposit.a  -I../../SoftPosit/source/include -O2 
+
+```
 
 ------------------------------------------
 Features
