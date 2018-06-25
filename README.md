@@ -38,6 +38,8 @@ int main (int argc, char *argv[]){
     uint8_t uiZ = castUI8(pZ);
     
     printBinary(&uiZ, 8);
+    
+    return 0;
 
 }
 
