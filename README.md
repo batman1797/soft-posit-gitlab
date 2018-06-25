@@ -23,21 +23,16 @@ A 8-bit example on how to use the code to add:
 int main (int argc, char *argv[]){
 
     posit8_t pA, pB, pZ;
-
     pA = castP8(0xF2);
-
     pB = castP8(0x23);
 
     pZ = p8_add(pA, pB);
 
-    //To check answer
-
+    //To check answer by converting it to double
     double dZ = convertP8ToDouble(pZ);
 
     //To print result in binary
-
     uint8_t uiZ = castUI8(pZ);
-    
     printBinary(&uiZ, 8);
     
     return 0;
@@ -55,25 +50,19 @@ A 16-bit example on how to use the code to multiply:
 int main (int argc, char *argv[]){
 
     posit16_t pA, pB, pZ;
-
     pA = castP16(0x0FF2);
-
     pB = castP16(0x2123);
 
     pZ = p8_mul(pA, pB);
 
-    //To check answer
-
+   //To check answer by converting it to double
     double dZ = convertP16ToDouble(pZ);
 
     //To print result in binary
-
     uint16_t uiZ = castUI16(pZ);
-    
     printBinary(&uiZ, 16);
     
     return 0;
-
 }
 ```
 
