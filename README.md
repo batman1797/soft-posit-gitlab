@@ -1,4 +1,9 @@
-This version supports a 16-bit with one exponential bit (posit16_t). 
+This version supports:
+
+    16-bit with one exponential bit (posit16_t). 
+    
+    8-bit with zero exponential bit (posit8_t). 
+    
 
 This code is tested on 
 
@@ -7,28 +12,63 @@ This code is tested on
  
  Add, minus, multiply and divide are exhaustively tested. 
  
- Note: 
- [13 June 2018] Using a HPC resource to exhaustively test p16_mulAdd, reveals a bug that we are now working to fix.
 
-------------------------------------------
-An example on how to use the code to add:
-------------------------------------------
-union ui16_p16 uA, uB, uZ;
+-----------------------------------------------------
+A 8-bit example on how to use the code to add:
+-----------------------------------------------------
 
-uA.ui = 0x42;
+#include "softposit.h"
 
-uB.ui = 0x23;
+int main (int argc, char *argv[]){
 
-uZ.p = p16_add(uA.p, uB.p);
+    posit8_t pA, pB, pZ;
 
-//To check answer
+    pA = castP8(0xF2);
 
-double dZ = convertP16ToDec_f(uZ.p);
+    pB = castP8(0x23);
 
-//To print result in binary
+    pZ = p8_add(pA, pB);
 
-printBinary(&uZ.ui, 16);
+    //To check answer
 
+    double dZ = convertP8ToDouble(pZ);
+
+    //To print result in binary
+
+    uint8_t uiZ = castUI8(pZ);
+    
+    printBinary(&uiZ, 8);
+
+}
+
+
+-----------------------------------------------------
+A 16-bit example on how to use the code to multiply:
+-----------------------------------------------------
+
+#include "softposit.h"
+
+int main (int argc, char *argv[]){
+
+    posit16_t pA, pB, pZ;
+
+    pA = castP16(0x0FF2);
+
+    pB = castP16(0x2123);
+
+    pZ = p8_mul(pA, pB);
+
+    //To check answer
+
+    double dZ = convertP16ToDouble(pZ);
+
+    //To print result in binary
+
+    uint16_t uiZ = castUI16(pZ);
+    
+    printBinary(&uiZ, 16);
+
+}
 ------------------------------------------
 Build - softposit.a
 ------------------------------------------
@@ -46,61 +86,199 @@ Features
 Main Posit Functionalities:
 
 ------------------------------------------
-Add : posit16_t p16_add(posit16_t, posit_16)
+Add : 
+     posit16_t p16_add(posit16_t, posit16_t)
+     
+     posit8_t p8_add(posit8_t, posit8_t)
 
-Subtract : posit16_t p16_sub(posit16_t, posit_16)
+Subtract : 
+    posit16_t p16_sub(posit16_t, posit16_t)
+    
+    posit8_t p8_sub(posit8_t, posit8_t)
+    
 
-Divide : posit16_t p16_div(posit16_t, posit_16)
+Divide : 
 
-Multiply : posit16_t p16_mul(posit16_t, posit_16)
+    posit16_t p16_div(posit16_t, posit16_t)
+    
+    posit8_t p8_div(posit8_t, posit8_t)
 
-Fused Multiply Add : posit16_t p16_mulAdd(posit16_t, posit_16, posit_16)
-p16_mulAdd(a, b, c) <=> a*b + c
+Multiply : 
+
+    posit16_t p16_mul(posit16_t, posit16_t)
+    
+    posit8_t p8_mul(posit8_t, posit8_t)
+    
+
+Fused Multiply Add : 
+    
+    posit16_t p16_mulAdd(posit16_t, posit16_t, posit16_t)
+    
+    posit8_t p8_mulAdd(posit8_t, posit8_t, posit8_t)
+    
+    
+    Note: p16_mulAdd(a, b, c) <=> a*b + c
 
 
 Main Quire Functionalities
 ------------------------------------------
 
-Fused dot product-add  : quire16_t q16_fdp_add(quire16_t, posit_16, posit_16)
+Fused dot product-add  : 
 
-Fused dot product-subtract  : quire16_t q16_fdp_sub(quire16_t, posit_16, posit_16)
+    quire16_t q16_fdp_add(quire16_t, posit16_t, posit16_t)
+    
+    quire8_t q16_fdp_add(quire8_t, posit8_t, posit8_t)
+    
+    Note: q8_fdp_add (a, b, c) <=> a + b*c
 
-Set quire variable to zero : quire16_t q16_clr(quire16_t)
+Fused dot product-subtract  : 
 
-Convert quire to posit : posit_16 convertQ16ToP16(quire16_t)
+    quire16_t q16_fdp_sub(quire16_t, posit16_t, posit16_t)
+    
+    quire8_t q8_fdp_sub(quire8_t, posit8_t, posit8_t)
+
+Set quire variable to zero : 
+
+    quire16_t q16_clr(quire16_t)
+    
+    quire8_t q8_clr(quire8_t)
+
+Convert quire to posit : 
+
+    posit16_t q16_to_p16(quire16_t)
+    
+    posit8_t q8_to_p8(quire8_t)
 
 
-Additional Posit Functionalites
+Functionalites in Posit Standard
 ------------------------------------------
 
-Square root : posit16_t p16_sqrt(posit16_t)
+Square root : 
 
-Round to nearest integer : posit16_t p16_roundToInt(posit16_t)
+    posit16_t p16_sqrt(posit16_t)
+    
+    posit8_t p8_sqrt(posit8_t)
 
-Check equal : bool p16_eq( posit16_t, posit16_t )
+Round to nearest integer : 
 
-Check less than equal : bool p16_le( posit16_t, posit16_t )
+    posit16_t p16_roundToInt(posit16_t)
+    
+    posit8_t p8_roundToInt(posit8_t)
 
-Check less than : bool p16_lt( posit16_t, posit16_t )
+Check equal : 
 
-Convert p16 to integer (32 bits) : int_fast32_t p16_to_i32( posit16_t )
+    bool p16_eq( posit16_t, posit16_t )
+    
+    bool p8_eq( posit8_t, posit8_t )
 
-Convert p16 to long integer (64 bits) : int_fast64_t p16_to_i64( posit16_t)
+Check less than equal : 
 
-Convert unsigned integer (32 bits) : posit16_t ui32_to_p16( uint32_t a )
+    bool p16_le( posit16_t, posit16_t )
+    
+    bool p8_le( posit8_t, posit8_t )
 
-Convert unsigned long int (64 bits) : posit16_t ui64_to_p16( uint64_t a )
+Check less than : 
 
-Convert integer (32 bits) : posit16_t i32_to_p16( int32_t a )
+    bool p16_lt( posit16_t, posit16_t )
+    
+    bool p8_lt( posit8_t, posit8_t )
 
-Convert long integer (64 bits) : posit16_t i64_to_p16( int64_t a )
+Convert posit to integer (32 bits) : 
 
-Convert p16 to unsigned integer (32 bits) : uint_fast32_t p16_to_ui32( posit16_t )
+    int_fast32_t p16_to_i32( posit16_t )
+    
+    int_fast32_t p8_to_i32( posit8_t )
 
-Convert p16 to unsigned long integer (64 bits) : uint_fast64_t p16_to_ui64( posit16_t)
+Convert posit to long long integer (64 bits) : 
 
-Convert p16 to p32 (posit<32, 2>) : posit32_t p16_to_p32( posit16_t )
+    int_fast64_t p16_to_i64( posit16_t)
+    
+    int_fast64_t p8_to_i64( posit8_t)
 
-Convert p16 to double (64 bits) : double convertP16ToDec_f(posit16_t)
+Convert unsigned integer (32 bits) to posit: 
 
-Convert double (64 bits) to posit  : posit16_t convertdoubleToP16(double)
+    posit16_t ui32_to_p16( uint32_t a )
+    
+    posit8_t ui32_to_p8( uint32_t a )
+
+Convert unsigned long long int (64 bits) to posit: 
+
+    posit16_t ui64_to_p16( uint64_t a )
+    
+    posit8_t ui64_to_p8( uint64_t a )
+
+Convert integer (32 bits) to posit: 
+
+    posit16_t i32_to_p16( int32_t a )
+    
+    posit8_t i32_to_p8( uint32_t a )
+
+Convert long integer (64 bits) to posit: 
+
+    posit16_t i64_to_p16( int64_t a )
+    
+    posit8_t i64_to_p8( uint64_t a )
+
+Convert posit to unsigned integer (32 bits) : 
+
+    uint_fast32_t p16_to_ui32( posit16_t )
+    
+    uint_fast32_t p8_to_ui32( posit8_t )
+
+Convert posit to unsigned long long integer (64 bits) : 
+
+    uint_fast64_t p16_to_ui64( posit16_t)
+    
+    uint_fast64_t p8_to_ui64( posit8_t)
+    
+Convert posit to integer (32 bits) : 
+
+    uint_fast32_t p16_to_i32( posit16_t )
+    
+    uint_fast32_t p8_to_i32( posit8_t )
+
+Convert posit to long long integer (64 bits) : 
+
+    uint_fast64_t p16_to_i64( posit16_t)
+    
+    uint_fast64_t p8_to_i64( posit8_t)
+
+Convert posit to posit of another size : 
+
+    posit8_t p16_to_p8( posit16_t )
+    
+    posit32_t p16_to_p32( posit16_t )
+    
+    posit16_t p8_to_p16( posit8_t )
+    
+    posit32_t p8_to_p32( posit8_t )
+
+
+
+Helper Functionalites (NOT in Posit Standard)
+---------------------------------------------
+
+Convert posit to double (64 bits) : 
+
+    double convertP16ToDouble(posit16_t)
+    
+    double convertP8ToDouble(posit8_t)
+
+Convert double (64 bits) to posit  : 
+
+    posit16_t convertDoubleToP16(double)
+    
+    posit8_t convertDoubleToP8(double)
+    
+Cast binary expressed in unsigned integer to posit :
+
+    posit16_t castP16(uint16_t)
+    
+    posit8_t castP8(uint8_t)
+    
+Cast posit into binary expressed in unsigned integer
+
+    uint16_t castUI16(posit16_t)
+    
+    uint8_t castUI8(posit8_t)
+    
