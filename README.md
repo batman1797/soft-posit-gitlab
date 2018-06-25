@@ -71,6 +71,8 @@ int main (int argc, char *argv[]){
     uint16_t uiZ = castUI16(pZ);
     
     printBinary(&uiZ, 16);
+    
+    return 0;
 
 }
 ```
