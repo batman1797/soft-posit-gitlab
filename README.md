@@ -104,6 +104,9 @@ double dZ = convertP16ToDouble(pZ);
 Build - softposit.a
 ------------------------------------------
 
+Please note that only 64-bit systems are supported. For Mac OSX and Linux, the same Makefile is used. 
+
+
 ```
 cd SoftPosit/build/Linux-x86_64-GCC
 make -j6 all
