@@ -30,10 +30,11 @@ int main (int argc, char *argv[]){
 
     //To check answer by converting it to double
     double dZ = convertP8ToDouble(pZ);
+    printf("dZ: %.15f\n", dZ);
 
     //To print result in binary
     uint8_t uiZ = castUI8(pZ);
-    printBinary(&uiZ, 8);
+    printBinary((uint64_t*)&uiZ, 8);
     
     return 0;
 
@@ -57,6 +58,7 @@ int main (int argc, char *argv[]){
 
    //To check answer by converting it to double
     double dZ = convertP16ToDouble(pZ);
+    printf("dZ: %.15f\n", dZ);
 
     //To print result in binary
     uint16_t uiZ = castUI16(pZ);
@@ -85,7 +87,7 @@ Assume that SoftPosit is installed and installed in the same directory (installi
 
 ```
 gcc -lm -o main \
-    main.c SoftPosit/build/Linux-x86_64-GCC/softposit.a  -I../../SoftPosit/source/include -O2 
+    main.c SoftPosit/build/Linux-x86_64-GCC/softposit.a  -ISoftPosit/source/include -O2 
 
 ```
 
