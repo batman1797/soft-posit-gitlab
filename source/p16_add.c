@@ -42,19 +42,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-float p16_dec_add_f(float a, float b ){
-	union ui16_p16 uZ;
-	posit16 x = {.f = a};
-	posit16 y = {.f = b};
-	posit16 ans = p16_dec_add(x, y);
-	return ans.f;
-}
-posit16 p16_dec_add(posit16 a, posit16 b ){
-
-	posit16_t p16 =  p16_add( convertDecToP16(a), convertDecToP16(b) );
-	return convertP16ToDec(p16);
-}
-
 posit16_t p16_add( posit16_t a, posit16_t b ){
     union ui16_p16 uA, uB;
     uint_fast16_t uiA, uiB;

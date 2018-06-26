@@ -44,6 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "primitives.h"
 #include "softposit.h"
+#include "softposit_types.h"
 
 #include <stdio.h>
 
@@ -51,42 +52,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <quadmath.h>
 #endif
 
-#ifdef SOFTPOSIT_EXACT
-	typedef struct { uint8_t v; bool exact; } uint8e_t;
-	typedef struct { uint16_t v; bool exact; } uint16e_t;
-	typedef struct { uint32_t v; bool exact; } uint32e_t;
-	typedef struct { uint64_t v; bool exact; } uint64e_t;
-	typedef struct { uint64_t v[2]; bool exact; } uint128e_t;
 
-	union ui8_p8   { uint8e_t ui; posit8_t p; };
-	union ui16_p16 { uint16e_t ui; posit16_t p; };
-	union ui32_p32 { uint32e_t ui; posit32_t p; };
-	union ui64_p64 { uint64e_t ui; posit64_t p; };
-
-	union ui128_q16 { uint64_t ui[2]; quire16_t q; };
-#else
-	union ui8_p8   { uint8_t ui; posit8_t p; };
-	union ui16_p16 { uint16_t ui; posit16_t p; };
-	union ui32_p32 { uint32_t ui; posit32_t p; };
-	union ui64_p64 { uint64_t ui; posit64_t p; };
-	union ui128_p128c {uint64_t ui[2]; posit128_t p;}; //c to differentiate from original implementation
-	union ui32_q8 {
-		uint32_t ui;
-		quire8_t q;
-	};
-	union ui128_q16 {
-		struct{
-			uint64_t left64;
-			uint64_t right64;
-		} ui;
-		quire16_t q;
-	};
-
-	union ui512_q32 {
-		uint64_t ui[8];
-		quire32_t q;
-	};
-#endif
 
 enum {
     softposit_mulAdd_subC    = 1,
@@ -101,17 +67,13 @@ enum {
 #define packToP8UI( regime, fracA) ((uint8_t) regime + ((uint8_t)(fracA)) )
 
 
-#define isNaRP8UI( a ) ( ((a) ^ 0x80) == 0 )
-
 posit8_t softposit_addMagsP8( uint_fast8_t, uint_fast8_t );
 posit8_t softposit_subMagsP8( uint_fast8_t, uint_fast8_t );
 posit8_t softposit_mulAddP8( uint_fast8_t, uint_fast8_t, uint_fast8_t, uint_fast8_t );
 
 
-
-/*
 //Quire 8
-quire8_t q8_fdp_add(quire8_t, posit8_t, posit8_t);
+/*quire8_t q8_fdp_add(quire8_t, posit8_t, posit8_t);
 quire8_t q8_fdp_sub(quire8_t, posit8_t, posit8_t);
 posit8_t convertQ8ToP8(quire8_t);
 #define isNaRQ8( q ) ( q.v==0x80000000  )
@@ -128,42 +90,6 @@ posit8_t convertQ8ToP8(quire8_t);
 #define signregP16UI( a ) ( (bool) (((uint16_t) (a)>>14) & 0x1) )
 #define expP16UI( a, regA ) ((int_fast8_t) ((a)>>(13-regA) & 0x0001))
 #define packToP16UI( regime, regA, expA, fracA) ((uint16_t) regime + ((uint16_t) (expA)<< (13-regA)) + ((uint16_t)(fracA)) )
-//uint_fast16_t reglengthP16UI ( uint_fast16_t );
-//int_fast8_t regkP16UI ( bool , uint_fast16_t );
-//uint_fast16_t fracP16UI( uint_fast16_t, uint_fast16_t);
-//#define regP16UI( a, regLen )  ( ( uint_fast16_t ) (((a) & (0x7FFF)) >> (14-regLen)) )
-//#define USEED16P 4;
-//#define MAXPOS16P 0x7FFF; //integer value (not actual posit computed value)
-
-//#define expP16sizeUI 1;
-
-
-posit16 p16_dec_add(posit16, posit16 );
-posit16 p16_dec_sub(posit16, posit16 );
-posit16 p16_dec_mul(posit16, posit16 );
-float p16_dec_add_f(float, float );
-float p16_dec_sub_f(float, float );
-float p16_dec_mul_f(float, float );
-#define isNaRP16UI( a ) ( ((a) ^ 0x8000) == 0 )
-
-/*posit16_t ui32_to_p16( uint32_t);
-posit16_t ui64_to_p16( uint64_t);
-posit16_t i32_to_p16( int32_t);
-posit16_t i64_to_p16( int64_t);*/
-
-//Quire 16
-quire16_t q16_fdp_add(quire16_t, posit16_t, posit16_t);
-quire16_t q16_fdp_sub(quire16_t, posit16_t, posit16_t);
-posit16_t convertQ16ToP16(quire16_t);
-#define isNaRQ16( q ) ( q.v[0]==0x8000000000000000ULL && q.v[1]==0 )
-#define isQ16Zero(q) (q.v[0]==0 && q.v[1]==0)
-quire16_t q16_TwosComplement(quire16_t);
-void printBinary(uint64_t*, int);
-#define q16_clr(q) ({\
-	q.v[0]=0;\
-	q.v[1]=0;\
-	q;\
-})
 
 posit16_t softposit_addMagsP16( uint_fast16_t, uint_fast16_t );
 posit16_t softposit_subMagsP16( uint_fast16_t, uint_fast16_t );

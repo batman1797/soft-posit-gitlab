@@ -54,10 +54,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdbool.h>
 #include <stdint.h>
+
 #ifdef SOFTPOSIT_QUAD
 #include <quadmath.h>
 #endif
-
 
 #include "softposit_types.h"
 
@@ -98,6 +98,8 @@ posit64_t i64_to_p64( int64_t );
 /*----------------------------------------------------------------------------
 | 8-bit (quad-precision) posit operations.
 *----------------------------------------------------------------------------*/
+#define isNaRP8UI( a ) ( ((a) ^ 0x80) == 0 )
+
 uint_fast32_t p8_to_ui32( posit8_t );
 uint_fast64_t p8_to_ui64( posit8_t );
 int_fast32_t p8_to_i32( posit8_t);
@@ -106,7 +108,6 @@ int_fast64_t p8_to_i64( posit8_t);
 posit16_t p8_to_p16( posit8_t );
 posit32_t p8_to_p32( posit8_t );
 //posit64_t p8_to_p64( posit8_t );
-
 
 posit8_t p8_roundToInt( posit8_t );
 posit8_t p8_add( posit8_t, posit8_t );
@@ -118,12 +119,6 @@ posit8_t p8_sqrt( posit8_t );
 bool p8_eq( posit8_t, posit8_t );
 bool p8_le( posit8_t, posit8_t );
 bool p8_lt( posit8_t, posit8_t );
-
-
-double convertP8ToDouble(posit8_t);
-posit8 convertP8ToDec(posit8_t);
-posit8_t convertDoubleToP8(double);
-posit8_t convertDecToP8(posit8);
 
 
 //Quire 8
@@ -149,9 +144,18 @@ posit8_t q8_to_p8(quire8_t);
 		uA.p = a;\
 		uA.ui;\
 })
+
+//Helper
+double convertP8ToDouble(posit8_t);
+posit8 convertP8ToDec(posit8_t);
+posit8_t convertDoubleToP8(double);
+posit8_t convertDecToP8(posit8);
+
 /*----------------------------------------------------------------------------
 | 16-bit (half-precision) posit operations.
 *----------------------------------------------------------------------------*/
+#define isNaRP16UI( a ) ( ((a) ^ 0x8000) == 0 )
+
 uint_fast32_t p16_to_ui32( posit16_t );
 uint_fast64_t p16_to_ui64( posit16_t );
 int_fast32_t p16_to_i32( posit16_t);
@@ -172,12 +176,6 @@ bool p16_eq( posit16_t, posit16_t );
 bool p16_le( posit16_t, posit16_t );
 bool p16_lt( posit16_t, posit16_t );
 
-
-double convertP16ToDouble(posit16_t);
-posit16 convertP16ToDec(posit16_t);
-posit16_t convertDecToP16(posit16);
-posit16_t convertFloatToP16(float);
-posit16_t convertDoubleToP16(double);
 
 #ifdef SOFTPOSIT_QUAD
 	__float128 convertP16ToQuadDec(posit16_t);
@@ -210,6 +208,14 @@ void printBinary(uint64_t*, int);
 		uA.p = a;\
 		uA.ui;\
 })
+
+//Helper
+
+double convertP16ToDouble(posit16_t);
+posit16 convertP16ToDec(posit16_t);
+posit16_t convertDecToP16(posit16);
+posit16_t convertFloatToP16(float);
+posit16_t convertDoubleToP16(double);
 
 /*----------------------------------------------------------------------------
 | 32-bit (single-precision) posit operations.

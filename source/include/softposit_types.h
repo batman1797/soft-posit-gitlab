@@ -80,5 +80,43 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 
+#ifdef SOFTPOSIT_EXACT
+	typedef struct { uint8_t v; bool exact; } uint8e_t;
+	typedef struct { uint16_t v; bool exact; } uint16e_t;
+	typedef struct { uint32_t v; bool exact; } uint32e_t;
+	typedef struct { uint64_t v; bool exact; } uint64e_t;
+	typedef struct { uint64_t v[2]; bool exact; } uint128e_t;
+
+	union ui8_p8   { uint8e_t ui; posit8_t p; };
+	union ui16_p16 { uint16e_t ui; posit16_t p; };
+	union ui32_p32 { uint32e_t ui; posit32_t p; };
+	union ui64_p64 { uint64e_t ui; posit64_t p; };
+
+	union ui128_q16 { uint64_t ui[2]; quire16_t q; };
+#else
+	union ui8_p8   { uint8_t ui; posit8_t p; };
+	union ui16_p16 { uint16_t ui; posit16_t p; };
+	union ui32_p32 { uint32_t ui; posit32_t p; };
+	union ui64_p64 { uint64_t ui; posit64_t p; };
+	union ui128_p128c {uint64_t ui[2]; posit128_t p;}; //c to differentiate from original implementation
+	union ui32_q8 {
+		uint32_t ui;
+		quire8_t q;
+	};
+	union ui128_q16 {
+		struct{
+			uint64_t left64;
+			uint64_t right64;
+		} ui;
+		quire16_t q;
+	};
+
+	union ui512_q32 {
+		uint64_t ui[8];
+		quire32_t q;
+	};
+#endif
+
+
 #endif
 
