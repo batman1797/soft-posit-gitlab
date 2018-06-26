@@ -44,13 +44,10 @@ quire8_t q8_fdp_sub( quire8_t q, posit8_t pA, posit8_t pB ){
 	union ui8_p8 uA, uB;
 	union ui32_q8 uqZ, uqZ1, uqZ2;
 	uint_fast8_t uiA, uiB;
-	uint_fast8_t regA, fracA, regime, tmp;
-	bool signA, signB, signZ2, regSA, regSB, bitNPlusOne=0, bitsMore=0, rcarry;
-	int_fast8_t expA, expB;
+	uint_fast8_t fracA, tmp;
+	bool signA, signB, signZ2, regSA, regSB, rcarry;
 	int_fast8_t kA=0, shiftRight=0;
 	uint_fast32_t frac32Z;
-	//For add
-	bool rcarryb, b1, b2, rcarryZ, rcarrySignZ;
 
 	uqZ1.q = q;
 

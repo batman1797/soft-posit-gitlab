@@ -35,6 +35,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
+
 void printBinary(uint64_t * s, int size) {
 	int i;
 	uint64_t number = *s;
@@ -46,6 +47,11 @@ void printBinary(uint64_t * s, int size) {
 		printf("%lld", (number >> (bitSize-i))&1);
 	}
 	printf("\n");
+
+}
+
+void printHex(uint64_t * s) {
+	printf("0x%x\n", s);
 
 }
 quire16_t q16_TwosComplement(quire16_t q){

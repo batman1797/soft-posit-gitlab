@@ -98,7 +98,7 @@ posit64_t i64_to_p64( int64_t );
 /*----------------------------------------------------------------------------
 | 8-bit (quad-precision) posit operations.
 *----------------------------------------------------------------------------*/
-#define isNaRP8UI( a ) ( ((a) ^ 0x80) == 0 )
+#define isNaRP8UI( a ) ( (a ^ 0x80) == 0 )
 
 uint_fast32_t p8_to_ui32( posit8_t );
 uint_fast64_t p8_to_ui64( posit8_t );
@@ -154,7 +154,7 @@ posit8_t convertDecToP8(posit8);
 /*----------------------------------------------------------------------------
 | 16-bit (half-precision) posit operations.
 *----------------------------------------------------------------------------*/
-#define isNaRP16UI( a ) ( ((a) ^ 0x8000) == 0 )
+#define isNaRP16UI( a ) ( (a ^ 0x8000) == 0 )
 
 uint_fast32_t p16_to_ui32( posit16_t );
 uint_fast64_t p16_to_ui64( posit16_t );
@@ -190,7 +190,10 @@ posit16_t q16_to_p16(quire16_t);
 #define isNaRQ16( q ) ( q.v[0]==0x8000000000000000ULL && q.v[1]==0 )
 #define isQ16Zero(q) (q.v[0]==0 && q.v[1]==0)
 quire16_t q16_TwosComplement(quire16_t);
+
 void printBinary(uint64_t*, int);
+void printHex(uint64_t*);
+
 #define q16_clr(q) ({\
 	q.v[0]=0;\
 	q.v[1]=0;\

@@ -37,13 +37,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 bool p8_lt( posit8_t pA, posit8_t pB ) {
     union ui8_p8 uA, uB;
-    int_fast8_t uiA, uiB;
+    int8_t uiA, uiB;
     bool signA, signB;
 
     uA.p = pA;
-    uiA = (int_fast8_t) uA.ui;
+    uiA = (int8_t) uA.ui;
     uB.p = pB;
-    uiB = (int_fast8_t)uB.ui;
+    uiB = (int8_t)uB.ui;
 
     if (uiA<uiB)
     	return true;

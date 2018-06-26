@@ -42,8 +42,8 @@ quire16_t q16_fdp_add( quire16_t q, posit16_t pA, posit16_t pB ){
 	union ui16_p16 uA, uB;
 	union ui128_q16 uZ, uZ1, uZ2;
 	uint_fast16_t uiA, uiB;
-	uint_fast16_t regA, fracA, regime, tmp;
-	bool signA, signB, signZ2, regSA, regSB, bitNPlusOne=0, bitsMore=0, rcarry;
+	uint_fast16_t fracA, tmp;
+	bool signA, signB, signZ2, regSA, regSB, rcarry;
 	int_fast8_t expA, expB;
 	int_fast16_t kA=0, shiftRight=0;
 	uint_fast32_t frac32Z;

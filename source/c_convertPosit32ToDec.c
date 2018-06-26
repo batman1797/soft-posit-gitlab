@@ -151,7 +151,7 @@ posit32 convertP32ToDec(posit32_t a){
 		uZ.ui = -uZ.ui & 0xFFFFFFFF;
 	regS = signregP32UI( uZ.ui );
 
-	tmp = tmp = (uZ.ui<<2)&0xFFFFFFFF;
+	tmp = (uZ.ui<<2)&0xFFFFFFFF;
 	if (regS){
 		while (tmp>>31){
 			k++;

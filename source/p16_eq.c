@@ -44,13 +44,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 bool p16_eq( posit16_t pA, posit16_t pB ){
 
     union ui16_p16 uA, uB;
-    int_fast16_t uiA, uiB;
+    int16_t uiA, uiB;
     bool signA, signB;
 
     uA.p = pA;
-    uiA = (int_fast16_t) uA.ui;
+    uiA = (int16_t) uA.ui;
     uB.p = pB;
-    uiB = (int_fast16_t)uB.ui;
+    uiB = (int16_t)uB.ui;
 
     if (uiA==uiB)
     	return true;
