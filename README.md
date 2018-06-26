@@ -53,15 +53,15 @@ int main (int argc, char *argv[]){
     pA = castP16(0x0FF2);
     pB = castP16(0x2123);
 
-    pZ = p8_mul(pA, pB);
+    pZ = p16_mul(pA, pB);
 
    //To check answer by converting it to double
     double dZ = convertP16ToDouble(pZ);
 
     //To print result in binary
     uint16_t uiZ = castUI16(pZ);
-    printBinary(&uiZ, 16);
-    
+    printBinary((uint64_t*)&uiZ, 16);
+
     return 0;
 }
 ```
