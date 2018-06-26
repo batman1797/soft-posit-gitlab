@@ -68,6 +68,38 @@ int main (int argc, char *argv[]){
 }
 ```
 
+-----------------------------------------------------
+For deep learning, please use quire.
+-----------------------------------------------------
+
+```
+double a = 1.0278;
+double b = 0.987;
+double c = 0.49987;
+double d = 0.87979;
+
+//Convert double to posit
+posit16_t pA = convertDoubleToP16(a);
+posit16_t pB = convertDoubleToP16(b);
+posit16_t pC = convertDoubleToP16(c);
+posit16_t pD = convertDoubleToP16(d);
+
+quire16_t qZ;
+
+//Set quire to 0
+qZ = q16_clr(qZ);
+
+//accumulate products without roundings
+qZ = q16_fdp_add(qZ, pA, pB);
+qZ = q16_fdp_add(qZ, pC, pD);
+
+//Convert back to posit
+posit16_t pZ = q16_to_p16(qZ);
+
+//To check answer
+double dZ = convertP16ToDouble(pZ);
+```
+
 ------------------------------------------
 Build - softposit.a
 ------------------------------------------
