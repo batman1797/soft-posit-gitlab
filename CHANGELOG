@@ -1,3 +1,8 @@
+V0.3.1:
+
+Changes:
+1) Update include files.
+
 V0.3:
 
 Full posit16_t (es=1) and posit8_t (es=0) support.
