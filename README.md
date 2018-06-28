@@ -73,16 +73,11 @@ For deep learning, please use quire.
 -----------------------------------------------------
 
 ```
-double a = 1.0278;
-double b = 0.987;
-double c = 0.49987;
-double d = 0.87979;
-
 //Convert double to posit
-posit16_t pA = convertDoubleToP16(a);
-posit16_t pB = convertDoubleToP16(b);
-posit16_t pC = convertDoubleToP16(c);
-posit16_t pD = convertDoubleToP16(d);
+posit16_t pA = convertDoubleToP16(1.02783203125 );
+posit16_t pB = convertDoubleToP16(0.987060546875);
+posit16_t pC = convertDoubleToP16(0.4998779296875);
+posit16_t pD = convertDoubleToP16(0.8797607421875);
 
 quire16_t qZ;
 
