@@ -22,9 +22,9 @@ Fast C version
 -----------------------------------------------------
 
 
------------------------------------------------------
-A 8-bit example on how to use the code to add:
------------------------------------------------------
+
+##A 8-bit example on how to use the code to add:
+
 
 ```
 #include "softposit.h"
