@@ -93,18 +93,17 @@ uint_fast16_t convertFractionP8(float f8, uint_fast8_t fracLength, bool * bitsNP
 
 	return frac;
 }
-posit8_t convertDoubleToP8(double a){
-	posit8 b = {.f =  a };
-	return convertDecToP8(b);
-}
+posit8_t convertDoubleToP8(double f8){
+	//posit8 b = {.f =  a };
+	//return convertDecToP8(b);
+//}
 
 
-posit8_t convertDecToP8(posit8 a){
+//posit8_t convertDecToP8(posit8 a){
 	union ui8_p8 uZ;
 	bool sign, regS;//, bitsNPlusOne=0, bitsMore=0;
 	uint_fast8_t reg, frac=0;
 	int_fast8_t exp=0;
-	double f8 = a.f;
 	bool bitNPlusOne=0, bitsMore=0;
 
 	(f8>=0) ? (sign=0) : (sign=1);

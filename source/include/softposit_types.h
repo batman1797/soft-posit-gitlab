@@ -72,10 +72,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	typedef struct { uint64_t v[2]; } quire16_t;
 	typedef struct { uint64_t v[8]; } quire32_t;
 
-	typedef struct {  double f; } posit8;
-	typedef struct {  double f; } posit16;
-	typedef struct {  double f; } posit32;
-	//typedef struct {  __float128 f; } posit32Quad;
 
 #endif
 
@@ -104,10 +100,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 		quire8_t q;
 	};
 	union ui128_q16 {
-		struct{
-			uint64_t left64;
-			uint64_t right64;
-		} ui;
+		uint64_t ui[2];
 		quire16_t q;
 	};
 

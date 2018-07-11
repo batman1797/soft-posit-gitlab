@@ -39,7 +39,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "internals.h"
 
 quire8_t q8_fdp_add( quire8_t q, posit8_t pA, posit8_t pB ){
-
 	union ui8_p8 uA, uB;
 	union ui32_q8 uqZ, uqZ1, uqZ2;
 	uint_fast8_t uiA, uiB;
@@ -131,7 +130,6 @@ quire8_t q8_fdp_add( quire8_t q, posit8_t pA, posit8_t pB ){
 
 	//Addition
 	uqZ.ui = uqZ2.ui + uqZ1.ui;
-
 	//Exception handling
 	if (isNaRQ8(uqZ.q) ) uqZ.q = q8_clr(uqZ.q);
 

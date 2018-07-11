@@ -42,6 +42,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef internals_h
 #define internals_h 1
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 #include "primitives.h"
 #include "softposit.h"
 #include "softposit_types.h"
@@ -72,18 +76,6 @@ posit8_t softposit_subMagsP8( uint_fast8_t, uint_fast8_t );
 posit8_t softposit_mulAddP8( uint_fast8_t, uint_fast8_t, uint_fast8_t, uint_fast8_t );
 
 
-//Quire 8
-/*quire8_t q8_fdp_add(quire8_t, posit8_t, posit8_t);
-quire8_t q8_fdp_sub(quire8_t, posit8_t, posit8_t);
-posit8_t convertQ8ToP8(quire8_t);
-#define isNaRQ8( q ) ( q.v==0x80000000  )
-#define isQ8Zero(q) ( q.v==0 )
-#define q8_clr(q) ({\
-	q.v=0;\
-	q;\
-})*/
-
-
 /*----------------------------------------------------------------------------
 *----------------------------------------------------------------------------*/
 #define signP16UI( a ) ( (bool) ( ( uint16_t ) (a)>>15 ) )
@@ -94,6 +86,7 @@ posit8_t convertQ8ToP8(quire8_t);
 posit16_t softposit_addMagsP16( uint_fast16_t, uint_fast16_t );
 posit16_t softposit_subMagsP16( uint_fast16_t, uint_fast16_t );
 posit16_t softposit_mulAddP16( uint_fast16_t, uint_fast16_t, uint_fast16_t, uint_fast16_t );
+
 
 /*----------------------------------------------------------------------------
 *----------------------------------------------------------------------------*/
@@ -153,6 +146,10 @@ quire32_t q32_TwosComplement(quire32_t);
 	q;\
 })
 */
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #endif

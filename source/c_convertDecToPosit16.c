@@ -90,21 +90,14 @@ uint_fast16_t convertFractionP16(double f16, uint_fast8_t fracLength, bool * bit
 	return frac;
 }
 posit16_t convertFloatToP16(float a){
-	posit16 b = {.f = (double) a };
-	return convertDecToP16(b);
+	return convertDoubleToP16((double) a);
 }
 
-posit16_t convertDoubleToP16(double a){
-	posit16 b = {.f = a };
-	return convertDecToP16(b);
-}
-
-posit16_t convertDecToP16(posit16 a){
+posit16_t convertDoubleToP16(double f16){
 	union ui16_p16 uZ;
 	bool sign, regS;
 	uint_fast16_t reg, frac=0;
 	int_fast8_t exp=0;
-	double f16 = a.f;
 	bool bitNPlusOne=0, bitsMore=0;
 
 	(f16>=0) ? (sign=0) : (sign=1);

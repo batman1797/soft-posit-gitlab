@@ -65,16 +65,16 @@ posit16_t q16_to_p16(quire16_t qA){
 
 	uZ.q = qA;
 
-	sign = uZ.ui.left64>>63;
+	sign = uZ.ui[0]>>63;
 
 	if(sign){
 		//probably need to do two's complement here before the rest.
-		if (uZ.ui.right64==0){
-			uZ.ui.left64 = -uZ.ui.left64;
+		if (uZ.ui[1]==0){
+			uZ.ui[0] = -uZ.ui[0];
 		}
 		else{
-			uZ.ui.right64 = -uZ.ui.right64;
-			uZ.ui.left64 = ~(uZ.ui.left64);
+			uZ.ui[1] = -uZ.ui[1];
+			uZ.ui[0] = ~(uZ.ui[0]);
 		}
 	}
 
@@ -82,9 +82,9 @@ posit16_t q16_to_p16(quire16_t qA){
 
 	int noLZ =0;
 
-	if (uZ.ui.left64 == 0){
+	if (uZ.ui[0] == 0){
 		noLZ+=64;
-		uint_fast64_t tmp = uZ.ui.right64;
+		uint_fast64_t tmp = uZ.ui[1];
 
 		while(!(tmp>>63)){
 			noLZ++;
@@ -93,7 +93,7 @@ posit16_t q16_to_p16(quire16_t qA){
 		frac64A = tmp;
 	}
 	else{
-		uint_fast64_t tmp = uZ.ui.left64;
+		uint_fast64_t tmp = uZ.ui[0];
 		int noLZtmp = 0;
 
 		while(!(tmp>>63)){
@@ -102,8 +102,8 @@ posit16_t q16_to_p16(quire16_t qA){
 		}
 		noLZ+=noLZtmp;
 		frac64A = tmp;
-		frac64A+= ( uZ.ui.right64>>(64-noLZtmp) );
-		if (uZ.ui.right64<<noLZtmp)bitsMore = 1;
+		frac64A+= ( uZ.ui[1]>>(64-noLZtmp) );
+		if (uZ.ui[1]<<noLZtmp)bitsMore = 1;
 	}
 	//default dot is between bit 71 and 72, extreme left bit is bit 0. Last right bit is bit 127.
 	//Equations derived from quire16_mult  last_pos = 71 - (kA<<1) - expA and first_pos = last_pos - frac_len
@@ -149,7 +149,7 @@ posit16_t q16_to_p16(quire16_t qA){
 	}
 
 	if (sign) uA.ui = -uA.ui & 0xFFFF;
-
+printf("uA.ui : %d\n", uA.ui);
 	return uA.p;
 }
 

@@ -40,36 +40,26 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 double convertP8ToDouble(posit8_t a){
-	posit8 b = convertP8ToDec(a);
-	return b.f;//
-}
-posit8 convertP8ToDec(posit8_t a){
-
 	union ui8_p8 uZ;
-	posit8 p8;
+	double d8;
 	uZ.p = a;
 
 	if (uZ.ui==0){
-		p8.f = 0;
-		return p8;
+		return 0;
 	}
 	else if(uZ.ui==0x7F){ //maxpos
-		p8.f = 64;
-		return p8;
+		return 64;
 	}
 	else if (uZ.ui==0x81){ //-maxpos
-		p8.f = -64;
-		return p8;
+		return -64;
 	}
 	else if (uZ.ui == 0x80){ //NaR
-		p8.f = INFINITY;
-		return p8;
+		return INFINITY;
 	}
 
 	bool regS, sign;
 	uint_fast8_t reg, shift=2, frac;
 	int_fast8_t k=0;
-	int_fast8_t exp;
 	double fraction_max;
 
 	sign = signP8UI( uZ.ui );
@@ -99,10 +89,10 @@ posit8 convertP8ToDec(posit8_t a){
 
 
 	fraction_max = pow(2, 6-reg) ;
-	p8.f = (double)( pow(2, k) * (1+((double)frac/fraction_max)) );
+	d8 = (double)( pow(2, k) * (1+((double)frac/fraction_max)) );
 
 	if (sign)
-		p8.f = -p8.f;
+		d8 = -d8;
 
-	return p8;
+	return d8;
 }

@@ -70,5 +70,6 @@ posit16_t p16_add( posit16_t a, posit16_t b ){
 		 return softposit_addMagsP16(uiA, uiB);
 
 
+
 }
 

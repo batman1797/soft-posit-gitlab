@@ -50,7 +50,7 @@ void printBinary(uint64_t * s, int size) {
 
 }
 
-void printHex(uint64_t * s) {
+void printHex(uint64_t s) {
 	printf("0x%x\n", s);
 
 }

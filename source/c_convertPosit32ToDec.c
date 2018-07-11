@@ -42,10 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-double convertP32ToDouble(posit32_t a){
-	posit32 b = convertP32ToDec(a);
-	return b.f;
-}
+
 
 #ifdef SOFTPOSIT_QUAD
 __float128 convertP32ToQuadDec(posit32_t a){
@@ -117,27 +114,23 @@ __float128 convertP32ToQuadDec(posit32_t a){
 
 #endif
 
-posit32 convertP32ToDec(posit32_t a){
 
+double convertP32ToDouble(posit32_t a){
 	union ui32_p32 uZ;
-	posit32 p32;
+	double d32;
 	uZ.p = a;
 
 	if (uZ.ui==0){
-		p32.f = 0;
-		return p32;
+		return  0;
 	}
 	else if(uZ.ui==0x7FFFFFFF){ //maxpos
-		p32.f = 1.329227995784916e+36;
-		return p32;
+		return  1.329227995784916e+36;
 	}
 	else if (uZ.ui==0x80000001){ //-maxpos
-		p32.f = -1.329227995784916e+36;
-		return p32;
+		return -1.329227995784916e+36;
 	}
 	else if (uZ.ui == 0x80000000){
-		p32.f = INFINITY;
-		return p32;
+		return INFINITY;
 	}
 
 	bool regS, sign;
@@ -177,11 +170,11 @@ posit32 convertP32ToDec(posit32_t a){
 	(reg>28) ? (fraction_max=1) : (fraction_max = pow(2, 28-reg) ) ;
 
 
-	p32.f = (double)( pow(16, k)* pow(2, exp) * (1+((double)frac/fraction_max)) );
+	d32 = (double)( pow(16, k)* pow(2, exp) * (1+((double)frac/fraction_max)) );
 	if (sign)
-		p32.f = -p32.f;
+		d32 = -d32;
 
-	return p32;
+	return d32;
 
 }
 

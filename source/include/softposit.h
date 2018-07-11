@@ -52,6 +52,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef softposit_h
 #define softposit_h 1
 
+#ifdef __cplusplus
+extern "C"{
+#endif
+
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -98,7 +102,7 @@ posit64_t i64_to_p64( int64_t );
 /*----------------------------------------------------------------------------
 | 8-bit (quad-precision) posit operations.
 *----------------------------------------------------------------------------*/
-#define isNaRP8UI( a ) ( (a ^ 0x80) == 0 )
+#define isNaRP8UI( a ) ( ((a) ^ 0x80) == 0 )
 
 uint_fast32_t p8_to_ui32( posit8_t );
 uint_fast64_t p8_to_ui64( posit8_t );
@@ -125,36 +129,50 @@ bool p8_lt( posit8_t, posit8_t );
 quire8_t q8_fdp_add(quire8_t, posit8_t, posit8_t);
 quire8_t q8_fdp_sub(quire8_t, posit8_t, posit8_t);
 posit8_t q8_to_p8(quire8_t);
-#define isNaRQ8( q ) ( q.v==0x80000000  )
-#define isQ8Zero(q) ( q.v==0 )
+#define isNaRQ8( q ) ( (q).v==0x80000000  )
+#define isQ8Zero(q) ( (q).v==0 )
 #define q8_clr(q) ({\
-	q.v=0;\
+	(q).v=0;\
 	q;\
 })
 
+#define castQ8(a)({\
+		union ui32_q8 uA;\
+		uA.ui = (a);\
+		uA.q;\
+})
+
+
 #define castP8(a)({\
 		union ui8_p8 uA;\
-		uA.ui = a;\
+		uA.ui = (a);\
 		uA.p;\
 })
 
 
 #define castUI8(a)({\
 		union ui8_p8 uA;\
-		uA.p = a;\
+		uA.p = (a);\
 		uA.ui;\
 })
 
+
+#define negP8(a)({\
+		union ui8_p8 uA;\
+		uA.p = (a);\
+		uiA.ui = -uA.ui&0xFF;\
+		uiA.p; \
+})
+
+
 //Helper
 double convertP8ToDouble(posit8_t);
-posit8 convertP8ToDec(posit8_t);
 posit8_t convertDoubleToP8(double);
-posit8_t convertDecToP8(posit8);
 
 /*----------------------------------------------------------------------------
 | 16-bit (half-precision) posit operations.
 *----------------------------------------------------------------------------*/
-#define isNaRP16UI( a ) ( (a ^ 0x8000) == 0 )
+#define isNaRP16UI( a ) ( ((a) ^ 0x8000) == 0 )
 
 uint_fast32_t p16_to_ui32( posit16_t );
 uint_fast64_t p16_to_ui64( posit16_t );
@@ -170,7 +188,6 @@ posit16_t p16_sub( posit16_t, posit16_t );
 posit16_t p16_mul( posit16_t, posit16_t );
 posit16_t p16_mulAdd( posit16_t, posit16_t, posit16_t );
 posit16_t p16_div( posit16_t, posit16_t );
-posit16_t p16_rem( posit16_t, posit16_t );
 posit16_t p16_sqrt( posit16_t );
 bool p16_eq( posit16_t, posit16_t );
 bool p16_le( posit16_t, posit16_t );
@@ -192,31 +209,44 @@ posit16_t q16_to_p16(quire16_t);
 quire16_t q16_TwosComplement(quire16_t);
 
 void printBinary(uint64_t*, int);
-void printHex(uint64_t*);
+void printHex(uint64_t);
 
 #define q16_clr(q) ({\
-	q.v[0]=0;\
-	q.v[1]=0;\
+	(q).v[0]=0;\
+	(q).v[1]=0;\
 	q;\
 })
 
+#define castQ16(l, r)({\
+		union ui128_q16 uA;\
+		uA.ui[0] = l; \
+		uA.ui[1] = r; \
+		uA.q;\
+})
+
+
 #define castP16(a)({\
 		union ui16_p16 uA;\
-		uA.ui = a;\
+		uA.ui = (a);\
 		uA.p;\
 })
 
 #define castUI16(a)({\
 		union ui16_p16 uA;\
-		uA.p = a;\
+		uA.p = (a);\
 		uA.ui;\
+})
+
+#define negP16(a)({\
+		union ui16_p16 uA;\
+		uA.p = (a);\
+		uiA.ui = -uA.ui&0xFFFF;\
+		uiA.p; \
 })
 
 //Helper
 
 double convertP16ToDouble(posit16_t);
-posit16 convertP16ToDec(posit16_t);
-posit16_t convertDecToP16(posit16);
 posit16_t convertFloatToP16(float);
 posit16_t convertDoubleToP16(double);
 
@@ -247,14 +277,34 @@ bool p32_lt( posit32_t, posit32_t );*/
 
 
 double convertP32ToDouble(posit32_t);
-posit32 convertP32ToDec(posit32_t);
-posit32_t convertDecToP32(posit32);
 posit32_t convertFloatToP32(float);
 posit32_t convertDoubleToP32(double);
 
 #ifdef SOFTPOSIT_QUAD
 	posit32_t convertQuadToP32(__float128);
 #endif
+
+
+#define castP32(a)({\
+		union ui32_p32 uA;\
+		uA.ui = (a);\
+		uA.p;\
+})
+
+
+#define castUI32(a)({\
+		union ui32_p32 uA;\
+		uA.p = (a);\
+		uA.ui;\
+})
+
+
+#define negP32(a)({\
+		union ui32_p32 uA;\
+		uA.p = (a);\
+		uiA.ui = -uA.ui&0xFFFFFFFF;\
+		uiA.p; \
+})
 
 /*----------------------------------------------------------------------------
 | 64-bit (double-precision) floating-point operations.
@@ -278,6 +328,10 @@ posit64_t p64_rem( posit64_t, posit64_t );
 posit64_t p64_sqrt( posit64_t );
 bool p64_eq( posit64_t, posit64_t );
 bool p64_le( posit64_t, posit64_t );*/
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

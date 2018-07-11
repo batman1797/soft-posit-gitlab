@@ -40,30 +40,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 double convertP16ToDouble(posit16_t a){
-	posit16 b = convertP16ToDec(a);
-	return b.f;//
-}
-posit16 convertP16ToDec(posit16_t a){
-
 	union ui16_p16 uZ;
-	posit16 p16;
+	//posit16 p16;
+	double d16;
 	uZ.p = a;
 
 	if (uZ.ui==0){
-		p16.f = 0;
-		return p16;
+		return 0;
 	}
 	else if(uZ.ui==0x7FFF){ //maxpos -> 32767
-		p16.f = 268435456;
-		return p16;
+		return 268435456;
 	}
 	else if (uZ.ui==0x8001){ //-maxpos -> 32769
-		p16.f = -268435456;
-		return p16;
+		return -268435456;
 	}
 	else if (uZ.ui == 0x8000){ //NaR -> 32768
-		p16.f = INFINITY;
-		return p16;
+		return INFINITY;
 	}
 
 	bool regS, sign;
@@ -101,12 +93,12 @@ posit16 convertP16ToDec(posit16_t a){
 
 
 	fraction_max = pow(2, 13-reg) ;
-	p16.f = (double)( pow(4, k)* pow(2, exp) * (1+((double)frac/fraction_max)) );
+	d16 = (double)( pow(4, k)* pow(2, exp) * (1+((double)frac/fraction_max)) );
 
 	if (sign)
-		p16.f = -p16.f;
+		d16 = -d16;
 
-	return p16;
+	return d16;
 }
 
 #ifdef SOFTPOSIT_QUAD

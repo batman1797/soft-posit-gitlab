@@ -43,7 +43,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "internals.h"
 
 extern const uint_fast16_t softposit_approxRecipSqrt0[];
-extern const uint_fast16_t softposit_approxRecipSqrt0[];
+extern const uint_fast16_t softposit_approxRecipSqrt1[];
 
 posit16_t p16_sqrt( posit16_t pA ) {
 

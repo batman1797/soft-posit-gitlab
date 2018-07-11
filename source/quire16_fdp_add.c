@@ -59,8 +59,8 @@ quire16_t q16_fdp_add( quire16_t q, posit16_t pA, posit16_t pB ){
 
 	//NaR
 	if (isNaRQ16(q) || isNaRP16UI(uA.ui) || isNaRP16UI(uB.ui)){
-		uZ2.ui.left64=0x8000000000000000ULL;
-		uZ2.ui.right64 = 0;
+		uZ2.ui[0]=0x8000000000000000ULL;
+		uZ2.ui[1] = 0;
 		return uZ2.q;
 	}
 	else if (uiA==0 || uiB==0)
@@ -132,56 +132,57 @@ quire16_t q16_fdp_add( quire16_t q, posit16_t pA, posit16_t pB ){
 	//No worries about hidden bit moving before position 4 because fraction is right aligned so
 	//there are 16 spare bits
 	if (firstPos>63){ //This means entire fraction is in right 64 bits
-		uZ2.ui.left64 = 0;
+		uZ2.ui[0] = 0;
 		shiftRight = firstPos-99;//99 = 63+ 4+ 32
-		if (shiftRight<0){//shiftLeft
-			uZ2.ui.right64 =  ((uint64_t)frac32Z) << -shiftRight;
+		/*if (shiftRight<0){//shiftLeft
+			uZ2.ui[1] =  ((uint64_t)frac32Z) << -shiftRight;
 		}
 		else
-			uZ2.ui.right64 = (uint64_t) frac32Z >> shiftRight;
+			uZ2.ui[1] = (uint64_t) frac32Z >> shiftRight;*/
+		uZ2.ui[1] = (shiftRight<0) ? ((uint64_t)frac32Z << -shiftRight) : ((uint64_t) frac32Z >> shiftRight);
 	}
 	else{//frac32Z can be in both left64 and right64
 		shiftRight = firstPos - 35;// -35= -3-32
 		if (shiftRight<0)
-			uZ2.ui.left64  = ((uint64_t)frac32Z) << -shiftRight;
+			uZ2.ui[0]  = ((uint64_t)frac32Z) << -shiftRight;
 		else{
-			uZ2.ui.left64 = (uint64_t)frac32Z >> shiftRight;
-			uZ2.ui.right64 =  (uint64_t) frac32Z <<  (64 - shiftRight);
+			uZ2.ui[0] = (uint64_t)frac32Z >> shiftRight;
+			uZ2.ui[1] =  (uint64_t) frac32Z <<  (64 - shiftRight);
 		}
 
 	}
 
 	if (signZ2){
-		if (uZ2.ui.right64>0){
-			uZ2.ui.right64 = - uZ2.ui.right64;
-			uZ2.ui.left64 = ~uZ2.ui.left64;
+		if (uZ2.ui[1]>0){
+			uZ2.ui[1] = - uZ2.ui[1];
+			uZ2.ui[0] = ~uZ2.ui[0];
 		}
 		else{
-			uZ2.ui.left64 = -uZ2.ui.left64;
+			uZ2.ui[0] = -uZ2.ui[0];
 		}
 	}
 
 	//Addition
-	b1 = uZ1.ui.right64&0x1;
-	b2 = uZ2.ui.right64&0x1;
+	b1 = uZ1.ui[1]&0x1;
+	b2 = uZ2.ui[1]&0x1;
 	rcarryb = b1 & b2;
-	uZ.ui.right64 = (uZ1.ui.right64>>1) + (uZ2.ui.right64>>1) + rcarryb;
+	uZ.ui[1] = (uZ1.ui[1]>>1) + (uZ2.ui[1]>>1) + rcarryb;
 
-	rcarryZ = uZ.ui.right64>>63;
+	rcarryZ = uZ.ui[1]>>63;
 
-	uZ.ui.right64 = (uZ.ui.right64<<1 | (b1^b2) );
+	uZ.ui[1] = (uZ.ui[1]<<1 | (b1^b2) );
 
 
-	b1 = uZ1.ui.left64&0x1;
-	b2 = uZ2.ui.left64&0x1;
+	b1 = uZ1.ui[0]&0x1;
+	b2 = uZ2.ui[0]&0x1;
 	rcarryb = b1 & b2 ;
 	int_fast8_t rcarryb3 = b1 + b2 + rcarryZ;
 
-	uZ.ui.left64 = (uZ1.ui.left64>>1) + (uZ2.ui.left64>>1) + ((rcarryb3>>1)& 0x1);
-	rcarrySignZ = uZ.ui.left64>>63;
+	uZ.ui[0] = (uZ1.ui[0]>>1) + (uZ2.ui[0]>>1) + ((rcarryb3>>1)& 0x1);
+	rcarrySignZ = uZ.ui[0]>>63;
 
 
-	uZ.ui.left64 = (uZ.ui.left64<<1 | (rcarryb3 & 0x1) );
+	uZ.ui[0] = (uZ.ui[0]<<1 | (rcarryb3 & 0x1) );
 
 	//Exception handling
 	if (isNaRQ16(uZ.q) ) uZ.q = q16_clr(uZ.q);

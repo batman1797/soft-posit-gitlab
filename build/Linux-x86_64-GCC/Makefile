@@ -49,7 +49,7 @@ SOFTPOSIT_OPTS ?= \
 
 DELETE = rm -f
 C_INCLUDES = -I. -I$(SOURCE_DIR)/$(SPECIALIZE_TYPE) -I$(SOURCE_DIR)/include
-OPTIMISATION  = -march=core-avx2 -O2
+OPTIMISATION  = -march=core-avx2 -O2 
 COMPILE_C = \
   gcc -c -Werror-implicit-function-declaration -DSOFTPOSIT_FAST_INT64 \
     $(SOFTPOSIT_OPTS) $(C_INCLUDES) $(OPTIMISATION) \

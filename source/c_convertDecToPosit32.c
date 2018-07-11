@@ -321,13 +321,15 @@ uint_fast32_t convertFractionP32(double f32, uint_fast16_t fracLength, bool * bi
 	return frac;
 }
 
-
-posit32_t convertDecToP32(posit32 a){
+posit32_t convertDoubleToP32(double f32){
+	//posit32 b = {.f = a };
+	//return convertDecToP32(b);
+//}
+//posit32_t convertDecToP32(posit32 a){
 	union ui32_p32 uZ;
 	bool sign, regS;
 	uint_fast32_t reg, frac=0;
 	int_fast32_t exp=0;
-	double f32 = a.f;
 	bool bitNPlusOne=0, bitsMore=0;
 
 	(f32>=0) ? (sign=0) : (sign=1);
@@ -520,14 +522,10 @@ posit32_t convertDecToP32(posit32 a){
 
 
 posit32_t convertFloatToP32(float a){
-	posit32 b = {.f = (double) a };
-	return convertDecToP32(b);
+	return convertDoubleToP32((double) a );
 }
 
-posit32_t convertDoubleToP32(double a){
-	posit32 b = {.f = a };
-	return convertDecToP32(b);
-}
+
 
 #endif
 

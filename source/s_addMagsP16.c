@@ -170,4 +170,3 @@ posit16_t softposit_addMagsP16( uint_fast16_t uiA, uint_fast16_t uiB ){
 	return uZ.p;
 }
 
-
