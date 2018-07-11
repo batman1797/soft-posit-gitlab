@@ -1,4 +1,4 @@
-V0.3.2
+V0.3.2RC
 
 1) Fixed lt, le and eq. int_fast16_t types cannot represent negative numbers 
 correctly. Use int16_t type instead. Thanks Shinyee for finding the bug.
