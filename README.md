@@ -10,8 +10,17 @@ This code is tested on
  GNU gcc (SUSE Linux) 4.8.5
  Apple LLVM version 9.1.0 (clang-902.0.39.2)
  
- Add, minus, multiply and divide are exhaustively tested. 
+ All operations are exhaustively tested with exception of p16_mulAdd and q16_fdp_add/sub operations.
  
+ Two versions is offered
+ 
+ * Fast C version
+ * User friendly C++ version
+ 
+-----------------------------------------------------
+Fast C version
+-----------------------------------------------------
+
 
 -----------------------------------------------------
 A 8-bit example on how to use the code to add:
@@ -326,4 +335,40 @@ Cast posit into binary expressed in unsigned integer
     uint16_t castUI16(posit16_t)
     
     uint8_t castUI8(posit8_t)
+    
+-----------------------------------------------------
+Easy to use C++ version
+-----------------------------------------------------
+
+Please compile your executable with g++ and not gcc.
+
+
+```
+#include "softposit_cpp.h"
+
+int main(int argc, char *argv[]){
+	posit16 x = 1;
+	posit16 y = 1.5;
+	posit8 x8 = 1;
+	quire16 q;
+	quire8 q8;
+
+	x += p16(1.5)*5.1;
+
+	printf("%.13f  sizeof: %d\n", x.toDouble(), sizeof(posit16));
+
+	x = p16(q.qma(4, 1.2));
+	printf("%.13f  sizeof: %d\n", x.toDouble(), sizeof(quire16));
+
+	x8 = p8(q8.qma(4, 1.2));
+	printf("%.13f  sizeof: %d\n", x8.toDouble(), sizeof(quire8));
+
+
+	return 0;
+}
+
+
+```
+
+
     
