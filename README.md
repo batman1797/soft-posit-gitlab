@@ -342,6 +342,14 @@ Easy to use C++ version
 
 Please compile your executable with g++ and not gcc.
 
+```
+g++ -std=gnu++11 -o main \
+	../source/testmain.cpp \
+	../../SoftPosit/source/../build/Linux-x86_64-GCC/softposit.a  \
+	-I../../SoftPosit/source/../build/Linux-x86_64-GCC  -O2
+```
+
+Example of testmain.cpp
 
 ```
 #include "softposit_cpp.h"
