@@ -129,12 +129,11 @@ gcc -lm -o main \
 
 ```
 
-**Features**
+## Features
 
 
-Main Posit Functionalities:
+### Main Posit Functionalities:
 
-------------------------------------------
 
 Add : 
 
@@ -172,8 +171,8 @@ Fused Multiply Add :
     Note: p16_mulAdd(a, b, c) <=> a*b + c
 
 
-Main Quire Functionalities
-------------------------------------------
+### Main Quire Functionalities
+
 
 Fused dot product-add  : 
 
@@ -202,8 +201,8 @@ Convert quire to posit :
     posit8_t q8_to_p8(quire8_t)
 
 
-Functionalites in Posit Standard
-------------------------------------------
+### Functionalites in Posit Standard
+
 
 Square root : 
 
@@ -307,8 +306,7 @@ Convert posit to posit of another size :
 
 
 
-Helper Functionalites (NOT in Posit Standard)
----------------------------------------------
+### Helper Functionalites (NOT in Posit Standard)
 
 Convert posit to double (64 bits) : 
 
@@ -334,9 +332,9 @@ Cast posit into binary expressed in unsigned integer
     
     uint8_t castUI8(posit8_t)
     
------------------------------------------------------
-Easy to use C++ version
------------------------------------------------------
+
+# Easy to use C++ version
+
 
 ## Build and Link
 
@@ -369,12 +367,11 @@ int main(int argc, char *argv[]){
 
 	printf("%.13f  sizeof: %d\n", x.toDouble(), sizeof(posit16));
 
-	x = p16(q.qma(4, 1.2));
+	x = q.qma(4, 1.2).toPosit();
 	printf("%.13f  sizeof: %d\n", x.toDouble(), sizeof(quire16));
 
-	x8 = p8(q8.qma(4, 1.2));
+	x8 = q8.qma(4, 1.2).toPosit();
 	printf("%.13f  sizeof: %d\n", x8.toDouble(), sizeof(quire8));
-
 
 	return 0;
 }
@@ -382,13 +379,11 @@ int main(int argc, char *argv[]){
 
 ```
 
-## Functions
+## Functionalities
+
+### Main functionalities
 
 * Posit types: posit16, posit8
-* Add: +
-* Sub: -
-* Multiply: *
-* Divide: /
 * Fused-multiply-add: 
   * posit16 fma(posit16, posit16, posit16)
   * posit18 fma(posit18, posit18, posit8)
@@ -398,6 +393,49 @@ int main(int argc, char *argv[]){
 * roundToInt: 
   * posit16 rint(posit16)
   * posit8 rint(posit8)
+* Supported operators
+  * +
+  * +=
+  * -
+  * -=
+  * *
+  * *=
+  * /
+  * /=
+  * <<
+  * <<=
+  * >>
+  * >>=
+  * &
+  * &=
+  * |
+  * |=
+  * &&
+  * ||
+  * ++
+  * --
+  * ==
+  * +=
+  * -=
+  
+  
 
+### Quire functionalities (particularly for deep learning)
 
+* Quire types: quire16, quire8 (when declared, quire is initiated to zero)
+* Clear quire to zero: 
+   * (instance of quire16).clr()
+* Quire multiply add (fused)
+   * (instance of quire16).fma(quire16)
+   * (instance of quire8).fma(quire8)
+* Quire multiply subtract (fused)
+   * (instance of quire16).fms(quire16)
+   * (instance of quire8).fms(quire8)
+* Convert quire to Posit
+   * posit16 (instance of quire16).toPosit()
+   * posit8 (instance of quire8).toPosit()
+* Check if quire is NaR
+   * bool (instance of quire).isNaR()
+   
+   
     
