@@ -378,6 +378,20 @@ int main(int argc, char *argv[]){
 
 ```
 
+**Functions**
 
+* Posit types: posit16, posit8
+* Add: +
+* Sub: -
+* Multiply: *
+* Divide: /
+* Fused-multiply-add: 
+** posit16 fma(posit16, posit16, posit16)
+** posit18 fma(posit18, posit18, posit8)
+* Square root: 
+** posit16 sqrt(posit16)
+** posit8 sqrt(posit8)
+* roundToInt: 
+** posit16 rint(posit16)
 
     
