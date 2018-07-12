@@ -1,3 +1,5 @@
+# SoftPosit
+
 This version supports:
 
     16-bit with one exponential bit (posit16_t). 
@@ -18,12 +20,12 @@ This code is tested on
  * **User friendly C++ version**
  
 
-# Fast C version
+## Fast C version
 
 
-## Examples
+### Examples
 
-### A 8-bit example on how to use the code to add:
+#### A 8-bit example on how to use the code to add:
 
 
 ```
@@ -51,7 +53,7 @@ int main (int argc, char *argv[]){
 ```
 
 
-### A 16-bit example on how to use the code to multiply:
+#### A 16-bit example on how to use the code to multiply:
 
 ```
 #include "softposit.h"
@@ -77,7 +79,7 @@ int main (int argc, char *argv[]){
 ```
 
 
-### For deep learning, please use quire.
+#### For deep learning, please use quire.
 
 
 ```
@@ -103,9 +105,9 @@ posit16_t pZ = q16_to_p16(qZ);
 double dZ = convertP16ToDouble(pZ);
 ```
 
-## Build and link
+### Build and link
 
-### Build - softposit.a
+#### Build - softposit.a
 
 
 Please note that only 64-bit systems are supported. For Mac OSX and Linux, the same Makefile is used. 
@@ -117,7 +119,7 @@ make -j6 all
 
 ```
 
-### Link - softposit.a
+#### Link - softposit.a
 
 
 If your source code is for example "main.c" and you want to create an executable "main".
@@ -129,10 +131,10 @@ gcc -lm -o main \
 
 ```
 
-## Features
+### Features
 
 
-### Main Posit Functionalities:
+#### Main Posit Functionalities:
 
 
 Add : 
@@ -171,7 +173,7 @@ Fused Multiply Add :
     Note: p16_mulAdd(a, b, c) <=> a*b + c
 
 
-### Main Quire Functionalities
+#### Main Quire Functionalities
 
 
 Fused dot product-add  : 
@@ -201,7 +203,7 @@ Convert quire to posit :
     posit8_t q8_to_p8(quire8_t)
 
 
-### Functionalites in Posit Standard
+#### Functionalites in Posit Standard
 
 
 Square root : 
@@ -306,7 +308,7 @@ Convert posit to posit of another size :
 
 
 
-### Helper Functionalites (NOT in Posit Standard)
+#### Helper Functionalites (NOT in Posit Standard)
 
 Convert posit to double (64 bits) : 
 
@@ -333,10 +335,10 @@ Cast posit into binary expressed in unsigned integer
     uint8_t castUI8(posit8_t)
     
 
-# Easy to use C++ version
+## Easy to use C++ version
 
 
-## Build and Link
+### Build and Link
 
 **Build and link your C++ program to SoftPosit.a (C)**
 
@@ -349,9 +351,9 @@ g++ -std=gnu++11 -o main \
 	-I../../SoftPosit/source/../build/Linux-x86_64-GCC  -O2
 ```
 
-## Example
+### Example
 
-### Example of testmain.cpp**
+#### Example of testmain.cpp
 
 ```
 #include "softposit_cpp.h"
@@ -379,9 +381,9 @@ int main(int argc, char *argv[]){
 
 ```
 
-## Functionalities
+### Functionalities
 
-### Main functionalities
+#### Main functionalities
 
 * Posit types: posit16, posit8
 * Fused-multiply-add: 
@@ -394,33 +396,46 @@ int main(int argc, char *argv[]){
   * posit16 rint(posit16)
   * posit8 rint(posit8)
 * Supported operators
-  * +
+  * \+
   * +=
-  * -
-  * -=
-  * *
-  * *=
+  * \-
+  * \-=
+  * &ast;
+  * &ast;=
   * /
   * /=
   * <<
   * <<=
-  * >>
-  * >>=
+  * &#62;&#62;
+  * &#62;&#62;=
   * &
   * &=
   * |
   * |=
+  * ^
+  * ^=
   * &&
   * ||
   * ++
   * --
   * ==
-  * +=
-  * -=
-  
-  
+  * ~
+  * !
+  * !=
+  * &ast;
+  * <
+  * &ast;=
+  * <=
+* Posit to Double:
+  * double (instance of posit).toDouble()
+* Double to Posit:
+  * posit16 p16(double)
+  * posit8 p8(double)
+* Posit to NaR:
+  * posit16 (instance of posit16).toNaR()
+  * posit8 (instance of posit8).toNaR()
 
-### Quire functionalities (particularly for deep learning)
+#### Quire functionalities (particularly for deep learning)
 
 * Quire types: quire16, quire8 (when declared, quire is initiated to zero)
 * Clear quire to zero: 
