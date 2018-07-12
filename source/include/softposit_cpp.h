@@ -499,7 +499,7 @@ struct quire8{
 		 value = q.v;
 		 return *this;
 	}
-	posit8 p8(){
+	posit8 toPosit(){
 		posit8 a;
 		a.value = castUI8(q8_to_p8(castQ8(value)));
 		return a;
@@ -535,7 +535,7 @@ struct quire16{
 		 rvalue = q.v[1];
 		 return *this;
 	}
-	posit16 p16(){
+	posit16 toPosit(){
 		posit16 a;
 		a.value = castUI16(q16_to_p16(castQ16(lvalue, rvalue)));
 		return a;
