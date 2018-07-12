@@ -17,13 +17,13 @@ This code is tested on
  * **Fast C version**
  * **User friendly C++ version**
  
------------------------------------------------------
-Fast C version
------------------------------------------------------
+
+# Fast C version
 
 
+## Examples
 
-**A 8-bit example on how to use the code to add:**
+### A 8-bit example on how to use the code to add:
 
 
 ```
@@ -51,7 +51,7 @@ int main (int argc, char *argv[]){
 ```
 
 
-**A 16-bit example on how to use the code to multiply:**
+### A 16-bit example on how to use the code to multiply:
 
 ```
 #include "softposit.h"
@@ -77,7 +77,7 @@ int main (int argc, char *argv[]){
 ```
 
 
-**For deep learning, please use quire.**
+### For deep learning, please use quire.
 
 
 ```
@@ -103,8 +103,9 @@ posit16_t pZ = q16_to_p16(qZ);
 double dZ = convertP16ToDouble(pZ);
 ```
 
+## Build and link
 
-**Build - softposit.a**
+### Build - softposit.a
 
 
 Please note that only 64-bit systems are supported. For Mac OSX and Linux, the same Makefile is used. 
@@ -116,7 +117,7 @@ make -j6 all
 
 ```
 
-**Link - softposit.a**
+### Link - softposit.a
 
 
 If your source code is for example "main.c" and you want to create an executable "main".
@@ -337,6 +338,7 @@ Cast posit into binary expressed in unsigned integer
 Easy to use C++ version
 -----------------------------------------------------
 
+## Build and Link
 
 **Build and link your C++ program to SoftPosit.a (C)**
 
@@ -349,7 +351,9 @@ g++ -std=gnu++11 -o main \
 	-I../../SoftPosit/source/../build/Linux-x86_64-GCC  -O2
 ```
 
-**Example of testmain.cpp**
+## Example
+
+### Example of testmain.cpp**
 
 ```
 #include "softposit_cpp.h"
@@ -378,7 +382,7 @@ int main(int argc, char *argv[]){
 
 ```
 
-**Functions**
+## Functions
 
 * Posit types: posit16, posit8
 * Add: +
@@ -386,12 +390,14 @@ int main(int argc, char *argv[]){
 * Multiply: *
 * Divide: /
 * Fused-multiply-add: 
-** posit16 fma(posit16, posit16, posit16)
-** posit18 fma(posit18, posit18, posit8)
+  * posit16 fma(posit16, posit16, posit16)
+  * posit18 fma(posit18, posit18, posit8)
 * Square root: 
-** posit16 sqrt(posit16)
-** posit8 sqrt(posit8)
+  * posit16 sqrt(posit16)
+  * posit8 sqrt(posit8)
 * roundToInt: 
-** posit16 rint(posit16)
+  * posit16 rint(posit16)
+  * posit8 rint(posit8)
+
 
     
