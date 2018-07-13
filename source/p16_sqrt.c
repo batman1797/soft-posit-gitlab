@@ -97,7 +97,7 @@ posit16_t p16_sqrt( posit16_t pA ) {
 	eSqrR0 = ((uint_fast32_t) r0 * r0) >> 1;
 
 	if (expA) eSqrR0 >>= 1;
-	sigma0 = 0xFFFF ^ (0xFFFF & ((eSqrR0 * fracA) >> 18));//~(uint_fast16_t) ((eSqrR0 * fracA) >> 18);
+	sigma0 = 0xFFFF ^ (0xFFFF & (((uint64_t)eSqrR0 * (uint64_t)fracA) >> 18));//~(uint_fast16_t) ((eSqrR0 * fracA) >> 18);
 	recipSqrt = ((uint_fast32_t) r0 << 2) + (((uint_fast32_t) r0 * sigma0) >> 23);
 
 	// We need 17 bits of accuracy for posit16 square root approximation.
