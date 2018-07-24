@@ -47,7 +47,7 @@ uint_fast32_t p16_to_ui32( posit16_t pA ) {
 	union ui16_p16 uA;
 	uint_fast32_t mask, iZ, tmp;
 	uint_fast16_t scale = 0, uiA;
-	bool bitLast, bitNPlusOne, bitsMore, sign;
+	bool bitLast, bitNPlusOne, bitsMore;
 
 	uA.p = pA;
 	uiA = uA.ui;                             // Copy of the input.
@@ -89,7 +89,7 @@ uint_fast32_t p16_to_ui32( posit16_t pA ) {
 		iZ = iZ >> (30 - scale);             // Right-justify the integer.
 	}
 
-	if (sign) iZ = -iZ;                      // Apply the sign of the input.
+	//if (sign) iZ = -iZ;                      // Apply the sign of the input.
 	return iZ;
 
 }

@@ -53,7 +53,7 @@ posit16_t i64_to_p16( int64_t a ) {
 	if (sign) a = -a;
 
 	if (a==0x8000000000000000){
-		uZ.ui=0x8001;
+		uZ.ui=0x8000;
 		return uZ.p;
 	}
 	else if ( a > 0x0000000008000000 ) {

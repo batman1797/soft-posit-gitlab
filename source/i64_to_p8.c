@@ -56,7 +56,7 @@ posit8_t i64_to_p8( int64_t a ){
     	a = -a;
     }
 	if (a==0x8000000000000000){
-		uZ.ui=0x81;
+		uZ.ui=0x80;
 		return uZ.p;
 	}
 	else if ( a > 48 ) {

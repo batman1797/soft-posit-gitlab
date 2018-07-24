@@ -46,7 +46,7 @@ uint_fast64_t p16_to_ui64( posit16_t pA ) {
 	union ui16_p16 uA;
 	uint_fast64_t mask, iZ, tmp;
 	uint_fast16_t scale = 0, uiA;
-	bool bitLast, bitNPlusOne, bitsMore, sign;
+	bool bitLast, bitNPlusOne, bitsMore;
 
 	uA.p = pA;
 	uiA = uA.ui;
@@ -90,7 +90,7 @@ uint_fast64_t p16_to_ui64( posit16_t pA ) {
 		iZ = (uint64_t)iZ >> (62 - scale);
 
 	}
-	if (sign) iZ = -iZ;
+	//if (sign) iZ = -iZ;
 	return iZ;
 
 }
