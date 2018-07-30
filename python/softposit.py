@@ -826,6 +826,8 @@ class posit8:
        else:
            a.v = _softposit.p8_add(self.v, other.v)
        return a
+   def __radd__(self, other):
+       return self.__add__(other)
    def __sub__(self, other):
        a = posit8(0)
        if isinstance(other, (int)):
