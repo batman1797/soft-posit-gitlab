@@ -52,7 +52,7 @@ posit16_t softposit_addMagsP16( uint_fast16_t uiA, uint_fast16_t uiB, bool isExa
 posit16_t softposit_addMagsP16( uint_fast16_t uiA, uint_fast16_t uiB ){
 #endif
 
-	uint_fast16_t regA, regB, uiX, uiY;
+	uint_fast16_t regA, uiX, uiY;
 	uint_fast32_t frac32A, frac32B;
 	uint_fast16_t fracA=0,  regime, tmp;
 	bool sign, regSA, regSB, rcarry=0, bitNPlusOne=0, bitsMore=0;

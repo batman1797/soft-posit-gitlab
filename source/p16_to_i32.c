@@ -46,7 +46,7 @@ int_fast32_t p16_to_i32( posit16_t pA ){
 	union ui16_p16 uA;
 	int_fast32_t mask, iZ, tmp;
 	uint_fast16_t scale = 0, uiA;
-	bool bitLast, bitNPlusOne, bitsMore, sign;
+	bool bitLast, bitNPlusOne, sign;
 
 	uA.p = pA;
 	uiA = uA.ui;                             // Copy of the input.

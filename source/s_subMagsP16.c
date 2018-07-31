@@ -47,7 +47,7 @@ posit16_t softposit_subMagsP16( uint_fast16_t uiA, uint_fast16_t uiB, bool isExa
 #else
 posit16_t softposit_subMagsP16( uint_fast16_t uiA, uint_fast16_t uiB ){
 #endif
-	uint_fast16_t regA, regB;
+	uint_fast16_t regA;
 	uint_fast32_t frac32A, frac32B;
 	uint_fast16_t fracA=0, regime, tmp;
 	bool sign=0, regSA, regSB, ecarry=0, bitNPlusOne=0, bitsMore=0;
