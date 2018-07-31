@@ -95,7 +95,7 @@ uint_fast16_t convertFractionP8(float f8, uint_fast8_t fracLength, bool * bitsNP
 }
 posit8_t convertDoubleToP8(double f8){
 	union ui8_p8 uZ;
-	bool sign, regS;
+	bool sign;
 	uint_fast8_t reg, frac=0;
 	bool bitNPlusOne=0, bitsMore=0;
 
@@ -105,13 +105,11 @@ posit8_t convertDoubleToP8(double f8){
 	//frac = a.parts.fraction;
 	//exp = a.parts.exponent;
 
-	/*printf("float to p16: %.26f \n",f16);
-	printf("sign: %d \n",sign);*/
 	if (f8 == 0 ){
 		uZ.ui = 0;
 		return uZ.p;
 	}
-	else if(f8 == INFINITY || f8 == -INFINITY){
+	else if(f8 == INFINITY || f8 == -INFINITY || f8 == NAN){
 		uZ.ui = 0x80;
 		return uZ.p;
 	}
@@ -148,8 +146,6 @@ posit8_t convertDoubleToP8(double f8){
 			//Make negative numbers positive for easier computation
 			f8 = -f8;
 		}
-		//printf("float to p16: %.16f \n",f16);
-		regS = 1;
 		reg = 1; //because k = m-1; so need to add back 1
 		// minpos
 		if (f8 <= 0.015625){
@@ -182,7 +178,6 @@ posit8_t convertDoubleToP8(double f8){
 			//Make negative numbers positive for easier computation
 			f8 = -f8;
 		}
-		regS = 0;
 		reg = 0;
 
 		//regime

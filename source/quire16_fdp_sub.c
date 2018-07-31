@@ -48,7 +48,7 @@ quire16_t q16_fdp_sub( quire16_t q, posit16_t pA, posit16_t pB ){
 	int_fast16_t kA=0, shiftRight;
 	uint_fast32_t frac32Z;
 	//For add
-	bool rcarryb, b1, b2, rcarryZ, rcarrySignZ;
+	bool rcarryb, b1, b2, rcarryZ;//, rcarrySignZ;
 
 	uZ1.q = q;
 
@@ -179,7 +179,7 @@ quire16_t q16_fdp_sub( quire16_t q, posit16_t pA, posit16_t pB ){
 	int_fast8_t rcarryb3 = b1 + b2 + rcarryZ;
 
 	uZ.ui[0] = (uZ1.ui[0]>>1) + (uZ2.ui[0]>>1) + ((rcarryb3>>1)& 0x1);
-	rcarrySignZ = uZ.ui[0]>>63;
+	//rcarrySignZ = uZ.ui[0]>>63;
 
 
 	uZ.ui[0] = (uZ.ui[0]<<1 | (rcarryb3 & 0x1) );

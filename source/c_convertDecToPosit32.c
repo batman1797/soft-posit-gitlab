@@ -111,7 +111,7 @@ posit32_t convertQuadToP32(__float128 f32){
 		uZ.ui = 0;
 		return uZ.p;
 	}
-	else if(f32 == INFINITY || f32 == -INFINITY){
+	else if(f32 == INFINITY || f32 == -INFINITY || f32 == NAN){
 		uZ.ui = 0x80000000;
 		return uZ.p;
 	}
@@ -338,7 +338,7 @@ posit32_t convertDoubleToP32(double f32){
 		uZ.ui = 0;
 		return uZ.p;
 	}
-	else if(f32 == INFINITY || f32 == -INFINITY){
+	else if(f32 == INFINITY || f32 == -INFINITY || f32 == NAN){
 		uZ.ui = 0x80000000;
 		return uZ.p;
 	}

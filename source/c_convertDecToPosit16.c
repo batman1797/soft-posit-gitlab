@@ -106,7 +106,7 @@ posit16_t convertDoubleToP16(double f16){
 		uZ.ui = 0;
 		return uZ.p;
 	}
-	else if(f16 == INFINITY || f16 == -INFINITY){
+	else if(f16 == INFINITY || f16 == -INFINITY || f16 == NAN){
 		uZ.ui = 0x8000;
 		return uZ.p;
 	}
@@ -310,7 +310,7 @@ posit16_t convertDoubleToP16(double f16){
 			uZ.ui = 0;
 			return uZ.p;
 		}
-		else if(f16 == INFINITY || f16 == -INFINITY){
+		else if(f16 == INFINITY || f16 == -INFINITY || f16 == NAN){
 			uZ.ui = 0x8000;
 			return uZ.p;
 		}
