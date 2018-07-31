@@ -46,7 +46,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 posit16_t p16_div( posit16_t pA, posit16_t pB ) {
 	union ui16_p16 uA, uB, uZ;
-	uint_fast16_t uiA, uiB, fracA, fracB, regA, regime, regB, tmp;
+	uint_fast16_t uiA, uiB, fracA, fracB, regA, regime, tmp;
 	bool signA, signB, signZ, regSA, regSB, bitNPlusOne=0, bitsMore=0, rcarry;
 	int_fast8_t expA, kA=0;
 	uint_fast32_t frac32A, frac32Z, rem;

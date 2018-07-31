@@ -89,7 +89,6 @@ uint_fast32_t p16_to_ui32( posit16_t pA ) {
 		iZ = iZ >> (30 - scale);             // Right-justify the integer.
 	}
 
-	//if (sign) iZ = -iZ;                      // Apply the sign of the input.
 	return iZ;
 
 }

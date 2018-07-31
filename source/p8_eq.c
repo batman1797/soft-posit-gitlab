@@ -39,7 +39,6 @@ bool p8_eq( posit8_t pA, posit8_t pB ){
 
     union ui8_p8 uA, uB;
     int8_t uiA, uiB;
-    bool signA, signB;
 
     uA.p = pA;
     uiA = (int8_t) uA.ui;

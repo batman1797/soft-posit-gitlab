@@ -47,7 +47,7 @@ uint_fast64_t p8_to_ui64( posit8_t pA ) {
 	union ui8_p8 uA;
 	uint_fast64_t mask, iZ, tmp;
 	uint_fast8_t scale = 0, uiA;
-	bool bitLast, bitNPlusOne, bitsMore, sign;
+	bool bitLast, bitNPlusOne, sign;
 
 	uA.p = pA;
 	uiA = uA.ui;                             // Copy of the input.
@@ -88,7 +88,6 @@ uint_fast64_t p8_to_ui64( posit8_t pA ) {
 		iZ = (uint64_t)iZ >> (61 - scale);    // Right-justify the integer.
 	}
 
-	if (sign) iZ = -iZ;                      // Apply the sign of the input.
 	return iZ;
 
 }

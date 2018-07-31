@@ -44,14 +44,14 @@ void printBinary(uint64_t * s, int size) {
 	{
 		if(i%8 == 0)
 			putchar(' ');
-		printf("%lld", (number >> (bitSize-i))&1);
+		printf("%ld", (number >> (bitSize-i))&1);
 	}
 	printf("\n");
 
 }
 
 void printHex(uint64_t s) {
-	printf("0x%x\n", s);
+	printf("0x%lx\n", s);
 
 }
 quire16_t q16_TwosComplement(quire16_t q){

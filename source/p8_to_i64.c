@@ -47,7 +47,7 @@ int_fast64_t p8_to_i64( posit8_t pA ) {
 	union ui8_p8 uA;
 	int_fast64_t mask, iZ, tmp;
 	uint_fast8_t scale = 0, uiA;
-	bool bitLast, bitNPlusOne, bitsMore, sign;
+	bool bitLast, bitNPlusOne, sign;
 
 	uA.p = pA;
 	uiA = uA.ui;                             // Copy of the input.

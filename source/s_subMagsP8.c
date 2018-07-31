@@ -43,12 +43,12 @@ posit8_t softposit_subMagsP8( uint_fast8_t uiA, uint_fast8_t uiB, bool isExact){
 #else
 posit8_t softposit_subMagsP8( uint_fast8_t uiA, uint_fast8_t uiB ){
 #endif
-	uint_fast8_t regA, regB;
+	uint_fast8_t regA;
 	uint_fast16_t frac16A, frac16B;
 	uint_fast8_t fracA=0, regime, tmp;
 	bool sign=0, regSA, regSB, ecarry=0, bitNPlusOne=0, bitsMore=0;
 	int_fast16_t shiftRight;
-	int_fast8_t kA=0, expA;
+	int_fast8_t kA=0;
     union ui8_p8 uZ;
 
 

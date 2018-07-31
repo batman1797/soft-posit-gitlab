@@ -49,7 +49,7 @@ posit16_t softposit_mulAddP16( uint_fast16_t uiA, uint_fast16_t uiB, uint_fast16
 
 
 	union ui16_p16 uZ;
-	uint_fast16_t regA, regZ, fracA, fracZ, regime, tmp;
+	uint_fast16_t regZ, fracA, fracZ, regime, tmp;
 	bool signA, signB, signC, signZ, regSA, regSB, regSC, regSZ, bitNPlusOne=0, bitsMore=0, rcarry;
 	int_fast8_t expA, expC, expZ;
 	int_fast16_t kA=0, kC=0, kZ=0, shiftRight;

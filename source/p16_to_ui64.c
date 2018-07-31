@@ -90,7 +90,6 @@ uint_fast64_t p16_to_ui64( posit16_t pA ) {
 		iZ = (uint64_t)iZ >> (62 - scale);
 
 	}
-	//if (sign) iZ = -iZ;
 	return iZ;
 
 }

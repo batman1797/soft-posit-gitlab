@@ -44,7 +44,7 @@ quire16_t q16_fdp_add( quire16_t q, posit16_t pA, posit16_t pB ){
 	uint_fast16_t uiA, uiB;
 	uint_fast16_t fracA, tmp;
 	bool signA, signB, signZ2, regSA, regSB, rcarry;
-	int_fast8_t expA, expB;
+	int_fast8_t expA;
 	int_fast16_t kA=0, shiftRight=0;
 	uint_fast32_t frac32Z;
 	//For add

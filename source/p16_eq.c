@@ -45,7 +45,6 @@ bool p16_eq( posit16_t pA, posit16_t pB ){
 
     union ui16_p16 uA, uB;
     int16_t uiA, uiB;
-    bool signA, signB;
 
     uA.p = pA;
     uiA = (int16_t) uA.ui;

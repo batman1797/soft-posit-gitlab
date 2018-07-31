@@ -45,7 +45,7 @@ posit16_t p8_to_p16( posit8_t pA ) {
 	union ui8_p8 uA;
 	union ui16_p16 uZ;
 	uint_fast8_t uiA, tmp;
-	uint_fast16_t exp_frac16A=0, regime, exp_fracA;
+	uint_fast16_t exp_frac16A=0, regime;
 	bool sign, regSA;
 	int_fast8_t kA=0, regA;
 

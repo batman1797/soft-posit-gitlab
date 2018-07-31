@@ -464,7 +464,7 @@ posit32_t convertDoubleToP32(double f32){
 
 		if (reg==30){
 			bitNPlusOne = exp>>1;
-			if (f32>1 | (exp&0x1)) bitsMore = 1;
+			if ((f32>1) | (exp&0x1)) bitsMore = 1;
 			exp=0;
 			frac=0;
 		}

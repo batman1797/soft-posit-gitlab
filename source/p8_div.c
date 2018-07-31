@@ -40,9 +40,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 posit8_t p8_div( posit8_t pA, posit8_t pB ) {
 	union ui8_p8 uA, uB, uZ;
-	uint_fast8_t uiA, uiB, fracA, fracB, regA, regime, regB, tmp;
+	uint_fast8_t uiA, uiB, fracA, fracB, regA, regime, tmp;
 	bool signA, signB, signZ, regSA, regSB, bitNPlusOne=0, bitsMore=0, rcarry;
-	int_fast8_t expA, kA=0;
+	int_fast8_t kA=0;
 	uint_fast16_t frac16A, frac16Z, rem;
 	div_t divresult;
 

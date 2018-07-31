@@ -43,9 +43,8 @@ posit8_t softposit_mulAddP8( uint_fast8_t uiA, uint_fast8_t uiB, uint_fast8_t ui
 
 
 	union ui8_p8 uZ;
-	uint_fast8_t regA, regZ, fracA, fracZ, regime, tmp;
+	uint_fast8_t regZ, fracA, fracZ, regime, tmp;
 	bool signA, signB, signC, signZ, regSA, regSB, regSC, regSZ, bitNPlusOne=0, bitsMore=0, rcarry;
-	int_fast8_t expA, expC, expZ;
 	int_fast8_t kA=0, kC=0, kZ=0, shiftRight;
 	uint_fast16_t frac16C, frac16Z;
 
@@ -151,7 +150,7 @@ posit8_t softposit_mulAddP8( uint_fast8_t uiA, uint_fast8_t uiB, uint_fast8_t ui
 
 		}
 		else if (shiftRight>0){// |uiC| < |Prod|
-			//if (frac32C&((1<<shiftRight)-1)) bitsMore = 1;
+
 			if(shiftRight>=15){
 				bitsMore = 1;
 				frac16C = 0;
@@ -236,7 +235,7 @@ posit8_t softposit_mulAddP8( uint_fast8_t uiA, uint_fast8_t uiB, uint_fast8_t ui
 			uZ.ui += (uZ.ui&1) | bitsMore;
 		}
 	}
-//printf("signZ:%d, bitNPlusOne: %d, bitsMore:%d\n", signZ, bitNPlusOne, bitsMore);
+
 	if (signZ) uZ.ui = -uZ.ui & 0xFF;
 	return uZ.p;
 

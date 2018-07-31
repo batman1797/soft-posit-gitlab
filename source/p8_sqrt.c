@@ -39,7 +39,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 posit8_t p8_sqrt( posit8_t pA ) {
     union ui8_p8 uA;
     uint_fast8_t uiA;
-    bool sign;
 
     static const uint8_t p8Sqrt [] =
     					{0, 8, 11, 14, 16, 18, 20, 21, 23, 24, 25, 27, 28, 29, 30, 31, 32,
@@ -58,7 +57,6 @@ posit8_t p8_sqrt( posit8_t pA ) {
     	return uA.p;
     }
     uA.ui = p8Sqrt[uiA];
-    if (sign)  uA.ui = -uA.ui & 0xFF;
 
     return uA.p;
 }
