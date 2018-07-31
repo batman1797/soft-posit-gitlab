@@ -954,8 +954,33 @@ class posit8:
        else:
            a.v = _softposit.p8_div(self.v, other.v)
        return a
+   def __truediv__(self, other):
+       a = posit8(0)
+       if isinstance(other, (int)):
+           return _softposit.p8_div(self.v, self.v.i64ToP8(other))
+       elif isinstance(other, (float)):
+           return _softposit.p8_div(self.v, _softposit.convertDoubleToP8(other))
+       else:
+           a.v = _softposit.p8_div(self.v, other.v)
+       return a
    def __rdiv__(self, other):
-       return self.__div__(other)  
+       a = posit8(0)
+       if isinstance(other, (int)):
+           return _softposit.p8_div(self.v.i64ToP8(other), self.v)
+       elif isinstance(other, (float)):
+           return _softposit.p8_div(_softposit.convertDoubleToP8(other), self.v)
+       else:
+           a.v = _softposit.p8_div(other.v, self.v)
+       return a
+   def __rtruediv__(self, other):
+       a = posit8(0)
+       if isinstance(other, (int)):
+           return _softposit.p8_div(self.v.i64ToP8(other), self.v)
+       elif isinstance(other, (float)):
+           return _softposit.p8_div(_softposit.convertDoubleToP8(other), self.v)
+       else:
+           a.v = _softposit.p8_div(other.v, self.v)
+       return a
    def __eq__(self, other):
        if isinstance(other, (int)):
            return _softposit.p8_eq(self.v, self.v.i64ToP8(other))
@@ -1218,8 +1243,33 @@ class posit16:
        else:
            a.v = _softposit.p16_div(self.v, other.v)
        return a
+   def __truediv__(self, other):
+       a = posit16(0)
+       if isinstance(other, (int)):
+           return _softposit.p16_div(self.v, self.v.i64ToP16(other))
+       elif isinstance(other, (float)):
+           return _softposit.p16_div(self.v, _softposit.convertDoubleToP16(other))
+       else:
+           a.v = _softposit.p16_div(self.v, other.v)
+       return a
    def __rdiv__(self, other):
-       return self.__div__(other) 
+       a = posit16(0)
+       if isinstance(other, (int)):
+           return _softposit.p16_div(self.v.i64ToP16(other), self.v)
+       elif isinstance(other, (float)):
+           return _softposit.p16_div(_softposit.convertDoubleToP16(other), self.v)
+       else:
+           a.v = _softposit.p16_div(other.v, self.v)
+       return a
+   def __rtruediv__(self, other):
+       a = posit16(0)
+       if isinstance(other, (int)):
+           return _softposit.p16_div(self.v.i64ToP16(other), self.v)
+       elif isinstance(other, (float)):
+           return _softposit.p16_div(_softposit.convertDoubleToP16(other), self.v)
+       else:
+           a.v = _softposit.p16_div(other.v, self.v)
+       return a
    def __eq__(self, other):
        if isinstance(other, (int)):
            return _softposit.p16_eq(self.v, self.v.i64ToP16(other))
