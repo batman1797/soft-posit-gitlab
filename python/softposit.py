@@ -119,6 +119,9 @@ class posit8_t(_object):
     def toInt(self):
         return _softposit.posit8_t_toInt(self)
 
+    def toI64(self):
+        return _softposit.posit8_t_toI64(self)
+
     def i32ToP8(self, a):
         return _softposit.posit8_t_i32ToP8(self, a)
 
@@ -149,10 +152,24 @@ class posit8_t(_object):
     def __or__(self, other):
         return _softposit.posit8_t___or__(self, other)
 
+    def isNaR(self):
+        return _softposit.posit8_t_isNaR(self)
+
+    def toNaR(self):
+        return _softposit.posit8_t_toNaR(self)
+
     def __repr__(self):
-        return str(_softposit.convertP8ToDouble(self))
+        a = float(_softposit.convertP8ToDouble(self))
+        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+            return "NaR"
+        else:
+            return str(a)
     def __str__(self):
-        return str(_softposit.convertP8ToDouble(self))
+        a = float(_softposit.convertP8ToDouble(self))
+        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+            return "NaR"
+        else:
+            return str(a)
 
 
     def __init__(self):
@@ -185,6 +202,9 @@ class posit16_t(_object):
 
     def toHex(self):
         return _softposit.posit16_t_toHex(self)
+
+    def toI64(self):
+        return _softposit.posit16_t_toI64(self)
 
     def toInt(self):
         return _softposit.posit16_t_toInt(self)
@@ -219,10 +239,24 @@ class posit16_t(_object):
     def __or__(self, other):
         return _softposit.posit16_t___or__(self, other)
 
+    def isNaR(self):
+        return _softposit.posit16_t_isNaR(self)
+
+    def toNaR(self):
+        return _softposit.posit16_t_toNaR(self)
+
     def __repr__(self):
-        return str(_softposit.convertP16ToDouble(self))
+        a = float(_softposit.convertP16ToDouble(self))
+        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+            return "NaR"
+        else:
+            return str(a)
     def __str__(self):
-        return str(_softposit.convertP16ToDouble(self))
+        a = float(_softposit.convertP16ToDouble(self))
+        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+            return "NaR"
+        else:
+            return str(a)
 
 
     def __init__(self):
@@ -319,6 +353,32 @@ class quire8_t(_object):
             self.this.append(this)
         except __builtin__.Exception:
             self.this = this
+
+    def toBits(self):
+        return _softposit.quire8_t_toBits(self)
+
+    def toHex(self):
+        return _softposit.quire8_t_toHex(self)
+
+    def clr(self, q):
+        return _softposit.quire8_t_clr(self, q)
+
+    def isNaR(self):
+        return _softposit.quire8_t_isNaR(self)
+
+    def __repr__(self):
+        a = float(_softposit.convertP8ToDouble(_softposit.q8_to_p8(self)))
+        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+            return "NaR"
+        else:
+            return str(a)
+    def __str__(self):
+        a = float(_softposit.convertP8ToDouble(_softposit.q8_to_p8(self)))
+        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+            return "NaR"
+        else:
+            return str(a)
+
     __swig_destroy__ = _softposit.delete_quire8_t
     __del__ = lambda self: None
 quire8_t_swigregister = _softposit.quire8_t_swigregister
@@ -341,6 +401,32 @@ class quire16_t(_object):
             self.this.append(this)
         except __builtin__.Exception:
             self.this = this
+
+    def toBits(self):
+        return _softposit.quire16_t_toBits(self)
+
+    def toHex(self):
+        return _softposit.quire16_t_toHex(self)
+
+    def clr(self, q):
+        return _softposit.quire16_t_clr(self, q)
+
+    def isNaR(self):
+        return _softposit.quire16_t_isNaR(self)
+
+    def __repr__(self):
+        a = float(_softposit.convertP16ToDouble(_softposit.q16_to_p16(self)))
+        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+            return "NaR"
+        else:
+            return str(a)
+    def __str__(self):
+        a = float(_softposit.convertP16ToDouble(_softposit.q16_to_p16(self)))
+        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+            return "NaR"
+        else:
+            return str(a)
+
     __swig_destroy__ = _softposit.delete_quire16_t
     __del__ = lambda self: None
 quire16_t_swigregister = _softposit.quire16_t_swigregister
@@ -576,7 +662,6 @@ class ui512_q32(_object):
 ui512_q32_swigregister = _softposit.ui512_q32_swigregister
 ui512_q32_swigregister(ui512_q32)
 
-softposit_h = _softposit.softposit_h
 
 def ui32_to_p8(arg1):
     return _softposit.ui32_to_p8(arg1)
@@ -686,6 +771,10 @@ def q8_to_p8(arg1):
     return _softposit.q8_to_p8(arg1)
 q8_to_p8 = _softposit.q8_to_p8
 
+def q8Clr():
+    return _softposit.q8Clr()
+q8Clr = _softposit.q8Clr
+
 def convertP8ToDouble(arg1):
     return _softposit.convertP8ToDouble(arg1)
 convertP8ToDouble = _softposit.convertP8ToDouble
@@ -786,6 +875,10 @@ def printHex(arg1):
     return _softposit.printHex(arg1)
 printHex = _softposit.printHex
 
+def q16Clr():
+    return _softposit.q16Clr()
+q16Clr = _softposit.q16Clr
+
 def convertP16ToDouble(arg1):
     return _softposit.convertP16ToDouble(arg1)
 convertP16ToDouble = _softposit.convertP16ToDouble
@@ -817,6 +910,8 @@ class posit8:
            self.v = self.v.i64ToP8(a);
        else:      
            self.v = _softposit.convertDoubleToP8(value);
+   def type(self):
+       return 'posit8'
    def __add__(self, other):
        a = posit8(0)
        if isinstance(other, (int)):
@@ -827,7 +922,7 @@ class posit8:
            a.v = _softposit.p8_add(self.v, other.v)
        return a
    def __radd__(self, other):
-       return self.__add__(other)
+       return self.__add__(other)  
    def __sub__(self, other):
        a = posit8(0)
        if isinstance(other, (int)):
@@ -837,6 +932,8 @@ class posit8:
        else:
            a.v = _softposit.p8_sub(self.v, other.v)
        return a
+   def __rsub__(self, other):
+       return self.__sub__(other)  
    def __mul__(self, other):
        a = posit8(0)
        if isinstance(other, (int)):
@@ -846,6 +943,8 @@ class posit8:
        else:
            a.v = _softposit.p8_mul(self.v, other.v)
        return a
+   def __rmul__(self, other):
+       return self.__mul__(other)  
    def __div__(self, other):
        a = posit8(0)
        if isinstance(other, (int)):
@@ -855,6 +954,8 @@ class posit8:
        else:
            a.v = _softposit.p8_div(self.v, other.v)
        return a
+   def __rdiv__(self, other):
+       return self.__div__(other)  
    def __eq__(self, other):
        if isinstance(other, (int)):
            return _softposit.p8_eq(self.v, self.v.i64ToP8(other))
@@ -930,19 +1031,142 @@ class posit8:
        a = posit8(0)
        a.v = self.v.__or__(other.v)
        return a
+   def fma(self, other1, other2):
+       a = posit8(0)
+       if isinstance(other1, (int)):
+           if isinstance(other2, (int)):
+               a.v = _softposit.p8_mulAdd(self.v, a.v.i64ToP8(other1), a.v.i64ToP8(other2))
+           elif isinstance(other2, (float)):
+               a.v = _softposit.p8_mulAdd(self.v, a.v.i64ToP8(other1), _softposit.convertDoubleToP8(other2))
+           else:
+               a.v = _softposit.p8_mulAdd(self.v, a.v.i64ToP8(other1), other2.v)
+       elif isinstance(other1, (float)):
+           if isinstance(other2, (int)):
+               a.v = _softposit.p8_mulAdd(self.v, _softposit.convertDoubleToP8(other1), a.v.i64ToP8(other2))
+           elif isinstance(other2, (float)):
+               a.v = _softposit.p8_mulAdd(self.v, _softposit.convertDoubleToP8(other1), _softposit.convertDoubleToP8(other2))
+           else:
+               a.v = _softposit.p8_mulAdd(self.v, _softposit.convertDoubleToP8(other1), other2.v)
+       else:
+           if isinstance(other2, (int)):
+               a.v = _softposit.p8_mulAdd(self.v, other1.v, a.v.i64ToP8(other2))
+           elif isinstance(other2, (float)):
+               a.v = _softposit.p8_mulAdd(self.v, other1.v, _softposit.convertDoubleToP8(other2))
+           else:
+               a.v = _softposit.p8_mulAdd(self.v, other1.v, other2.v)   
+       return a
+   def toPosit16(self):
+       a = posit16(0)
+       a.v = _softposit.p8_to_p16(self.v)
+       return a
+   def toInt(self):
+       return self.v.toI64()
+   def rint(self):
+       return _softposit.p8_roundToInt(self.v)
+   def sqrt(self):
+       return _softposit.p8_sqrt(self.v)
    def __repr__(self):
-       return str(_softposit.convertP8ToDouble(self.v))
+       a = float(_softposit.convertP8ToDouble(self.v))
+       if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+           return "NaR"
+       else:
+           return str(a)
    def __str__(self):
-       return str(_softposit.convertP8ToDouble(self.v))
+       a = float(_softposit.convertP8ToDouble(self.v))
+       if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+           return "NaR"
+       else:
+           return str(a)
    def __int__(self):
        return int(_softposit.convertP8ToDouble(self.v))
    def __float__(self):
        return float(_softposit.convertP8ToDouble(self.v))
+   def isNaR(self):
+       return self.v.isNaR();
+   def toNaR(self):
+       self.v.toNaR();
+       return self
    def toBinary(self):
        self.v.toBits()
    def toHex(self):
        self.v.toHex()
 
+class quire8:
+   def __init__(self):
+       self.v = _softposit.q8Clr();
+   def type(self):
+       return 'quire8'
+   def qma(self, other1, other2):
+       a = posit8(0)
+       if isinstance(other1, (int)):
+           if isinstance(other2, (int)):
+               self.v = _softposit.q8_fdp_add(self.v, a.v.i64ToP8(other1), a.v.i64ToP8(other2))
+           elif isinstance(other2, (float)):
+               self.v = _softposit.q8_fdp_add(self.v, a.v.i64ToP8(other1), _softposit.convertDoubleToP8(other2))
+           else:
+               self.v = _softposit.q8_fdp_add(self.v, a.v.i64ToP8(other1), other2.v)
+       elif isinstance(other1, (float)):
+           if isinstance(other2, (int)):
+               self.v = _softposit.q8_fdp_add(self.v, _softposit.convertDoubleToP8(other1), a.v.i64ToP8(other2))
+           elif isinstance(other2, (float)):
+               self.v = _softposit.q8_fdp_add(self.v, _softposit.convertDoubleToP8(other1), _softposit.convertDoubleToP8(other2))
+           else:
+               self.v = _softposit.q8_fdp_add(self.v, _softposit.convertDoubleToP8(other1), other2.v)
+       else:
+           if isinstance(other2, (int)):
+               self.v = _softposit.q8_fdp_add(self.v, other1.v, a.v.i64ToP8(other2))
+           elif isinstance(other2, (float)):
+               self.v = _softposit.q8_fdp_add(self.v, other1.v, _softposit.convertDoubleToP8(other2))
+           else:
+               self.v = _softposit.q8_fdp_add(self.v, other1.v, other2.v)
+       return self
+   def qms(self, other1, other2):
+       a = posit8(0)
+       if isinstance(other1, (int)):
+           if isinstance(other2, (int)):
+               self.v = _softposit.q8_fdp_sub(self.v, a.v.i64ToP8(other1), a.v.i64ToP8(other2))
+           elif isinstance(other2, (float)):
+               self.v = _softposit.q8_fdp_sub(self.v, a.v.i64ToP8(other1), _softposit.convertDoubleToP8(other2))
+           else:
+               self.v = _softposit.q8_fdp_sub(self.v, a.v.i64ToP8(other1), other2.v)
+       elif isinstance(other1, (float)):
+           if isinstance(other2, (int)):
+               self.v = _softposit.q8_fdp_sub(self.v, _softposit.convertDoubleToP8(other1), a.v.i64ToP8(other2))
+           elif isinstance(other2, (float)):
+               self.v = _softposit.q8_fdp_sub(self.v, _softposit.convertDoubleToP8(other1), _softposit.convertDoubleToP8(other2))
+           else:
+               self.v = _softposit.q8_fdp_sub(self.v, _softposit.convertDoubleToP8(other1), other2.v)
+       else:
+           if isinstance(other2, (int)):
+               self.v = _softposit.q8_fdp_sub(self.v, other1.v, a.v.i64ToP8(other2))
+           elif isinstance(other2, (float)):
+               self.v = _softposit.q8_fdp_sub(self.v, other1.v, _softposit.convertDoubleToP8(other2))
+           else:
+               self.v = _softposit.q8_fdp_sub(self.v, other1.v, other2.v)
+       return self
+   def toPosit(self):       
+       self.v = _softposit.q8_to_p8(self.v);
+       return self
+   def clr(self):       
+       self.v = _softposit.q8Clr();
+   def isNaR(self):       
+       return self.v.isNaR();
+   def __repr__(self):
+       a = float(_softposit.convertP8ToDouble(_softposit.q8_to_p8(self.v)))
+       if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+           return "NaR"
+       else:
+           return str(a)
+   def __str__(self):
+       a = float(_softposit.convertP8ToDouble(_softposit.q8_to_p8(self.v)))
+       if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+           return "NaR"
+       else:
+           return str(a)
+   def toBinary(self):
+       self.v.toBits()
+   def toHex(self):
+       self.v.toHex()
 
 class posit16:
    def __init__(self, value):
@@ -950,6 +1174,8 @@ class posit16:
            self.v = self.v.i64ToP16(a);
        else:      
            self.v = _softposit.convertDoubleToP16(value);
+   def type(self):
+       return 'posit16'
    def __add__(self, other):
        a = posit16(0)
        if isinstance(other, (int)):
@@ -959,6 +1185,8 @@ class posit16:
        else:
            a.v = _softposit.p16_add(self.v, other.v)
        return a
+   def __radd__(self, other):
+       return self.__add__(other)  
    def __sub__(self, other):
        a = posit16(0)
        if isinstance(other, (int)):
@@ -968,6 +1196,8 @@ class posit16:
        else:
            a.v = _softposit.p16_sub(self.v, other.v)
        return a
+   def __rsub__(self, other):
+       return self.__sub__(other)  
    def __mul__(self, other):
        a = posit16(0)
        if isinstance(other, (int)):
@@ -977,6 +1207,8 @@ class posit16:
        else:
            a.v = _softposit.p16_mul(self.v, other.v)
        return a
+   def __rmul__(self, other):
+       return self.__mul__(other)  
    def __div__(self, other):
        a = posit16(0)
        if isinstance(other, (int)):
@@ -986,6 +1218,8 @@ class posit16:
        else:
            a.v = _softposit.p16_div(self.v, other.v)
        return a
+   def __rdiv__(self, other):
+       return self.__div__(other) 
    def __eq__(self, other):
        if isinstance(other, (int)):
            return _softposit.p16_eq(self.v, self.v.i64ToP16(other))
@@ -1061,18 +1295,144 @@ class posit16:
        a = posit16(0)
        a.v = self.v.__or__(other.v)
        return a
+   def fma(self, other1, other2):
+       a = posit16(0)
+       if isinstance(other1, (int)):
+           if isinstance(other2, (int)):
+               a.v = _softposit.p16_mulAdd(self.v, a.v.i64ToP16(other1), a.v.i64ToP16(other2))
+           elif isinstance(other2, (float)):
+               a.v = _softposit.p16_mulAdd(self.v, a.v.i64ToP16(other1), _softposit.convertDoubleToP16(other2))
+           else:
+               a.v = _softposit.p16_mulAdd(self.v, a.v.i64ToP16(other1), other2.v)
+       elif isinstance(other1, (float)):
+           if isinstance(other2, (int)):
+               a.v = _softposit.p16_mulAdd(self.v, _softposit.convertDoubleToP16(other1), a.v.i64ToP16(other2))
+           elif isinstance(other2, (float)):
+               a.v = _softposit.p16_mulAdd(self.v, _softposit.convertDoubleToP16(other1), _softposit.convertDoubleToP16(other2))
+           else:
+               a.v = _softposit.p16_mulAdd(self.v, _softposit.convertDoubleToP16(other1), other2.v)
+       else:
+           if isinstance(other2, (int)):
+               a.v = _softposit.p16_mulAdd(self.v, other1.v, a.v.i64ToP16(other2))
+           elif isinstance(other2, (float)):
+               a.v = _softposit.p16_mulAdd(self.v, other1.v, _softposit.convertDoubleToP16(other2))
+           else:
+               a.v = _softposit.p16_mulAdd(self.v, other1.v, other2.v)
+       return a
+   def toPosit8(self):
+       a = posit8(0)
+       a.v = _softposit.p16_to_p8(self.v)
+       return a
+   def toInt(self):
+       return self.v.toI64()
+   def rint(self):
+       return _softposit.p16_roundToInt(self.v)
+   def sqrt(self):
+       return _softposit.p16_sqrt(self.v)
    def __repr__(self):
-       return str(_softposit.convertP16ToDouble(self.v))
+       a = float(_softposit.convertP16ToDouble(self.v))
+       if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+           return "NaR"
+       else:
+           return str(a)
    def __str__(self):
-       return str(_softposit.convertP16ToDouble(self.v))
+       a = float(_softposit.convertP16ToDouble(self.v))
+       if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+           return "NaR"
+       else:
+           return str(a)
    def __int__(self):
        return int(_softposit.convertP16ToDouble(self.v))
    def __float__(self):
        return float(_softposit.convertP16ToDouble(self.v))
+   def isNaR(self):
+       return self.v.isNaR()
+   def toNaR(self):
+       self.v.toNaR()
+       return self
    def toBinary(self):
        self.v.toBits()
    def toHex(self):
        self.v.toHex()
+
+
+class quire16:
+   def __init__(self):
+       self.v = _softposit.q16Clr();
+   def type(self):
+       return 'quire16'
+   def qma(self, other1, other2):
+       a = posit16(0)
+       if isinstance(other1, (int)):
+           if isinstance(other2, (int)):
+               self.v = _softposit.q16_fdp_add(self.v, a.v.i64ToP16(other1), a.v.i64ToP16(other2))
+           elif isinstance(other2, (float)):
+               self.v = _softposit.q16_fdp_add(self.v, a.v.i64ToP16(other1), _softposit.convertDoubleToP16(other2))
+           else:
+               self.v = _softposit.q16_fdp_add(self.v, a.v.i64ToP16(other1), other2.v)
+       elif isinstance(other1, (float)):
+           if isinstance(other2, (int)):
+               self.v = _softposit.q16_fdp_add(self.v, _softposit.convertDoubleToP16(other1), a.v.i64ToP16(other2))
+           elif isinstance(other2, (float)):
+               self.v = _softposit.q16_fdp_add(self.v, _softposit.convertDoubleToP16(other1), _softposit.convertDoubleToP16(other2))
+           else:
+               self.v = _softposit.q16_fdp_add(self.v, _softposit.convertDoubleToP16(other1), other2.v)
+       else:
+           if isinstance(other2, (int)):
+               self.v = _softposit.q16_fdp_add(self.v, other1.v, a.v.i64ToP16(other2))
+           elif isinstance(other2, (float)):
+               self.v = _softposit.q16_fdp_add(self.v, other1.v, _softposit.convertDoubleToP16(other2))
+           else:
+               self.v = _softposit.q16_fdp_add(self.v, other1.v, other2.v)
+       return self
+   def qms(self, other1, other2):
+       a = posit16(0)
+       if isinstance(other1, (int)):
+           if isinstance(other2, (int)):
+               self.v = _softposit.q16_fdp_sub(self.v, a.v.i64ToP16(other1), a.v.i64ToP16(other2))
+           elif isinstance(other2, (float)):
+               self.v = _softposit.q16_fdp_sub(self.v, a.v.i64ToP16(other1), _softposit.convertDoubleToP16(other2))
+           else:
+               self.v = _softposit.q16_fdp_sub(self.v, a.v.i64ToP16(other1), other2.v)
+       elif isinstance(other1, (float)):
+           if isinstance(other2, (int)):
+               self.v = _softposit.q16_fdp_sub(self.v, _softposit.convertDoubleToP16(other1), a.v.i64ToP16(other2))
+           elif isinstance(other2, (float)):
+               self.v = _softposit.q16_fdp_sub(self.v, _softposit.convertDoubleToP16(other1), _softposit.convertDoubleToP16(other2))
+           else:
+               self.v = _softposit.q16_fdp_sub(self.v, _softposit.convertDoubleToP16(other1), other2.v)
+       else:
+           if isinstance(other2, (int)):
+               self.v = _softposit.q16_fdp_sub(self.v, other1.v, a.v.i64ToP16(other2))
+           elif isinstance(other2, (float)):
+               self.v = _softposit.q16_fdp_sub(self.v, other1.v, _softposit.convertDoubleToP16(other2))
+           else:
+               self.v = _softposit.q16_fdp_sub(self.v, other1.v, other2.v)
+       return self
+   def toPosit(self):       
+       self.v = _softposit.q16_to_p16(self.v);
+       return self
+   def clr(self):       
+       self.v = _softposit.q16Clr();
+   def isNaR(self):       
+       return self.v.isNaR();
+   def __repr__(self):
+       a = float(_softposit.convertP16ToDouble(_softposit.q16_to_p16(self.v)))
+       if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+           return "NaR"
+       else:
+           return str(a)
+   def __str__(self):
+       a = float(_softposit.convertP16ToDouble(_softposit.q16_to_p16(self.v)))
+       if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
+           return "NaR"
+       else:
+           return str(a)
+   def toBinary(self):
+       self.v.toBits()
+   def toHex(self):
+       self.v.toHex()
+
 
 # This file is compatible with both classic and new-style classes.
 

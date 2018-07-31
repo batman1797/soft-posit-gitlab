@@ -149,7 +149,6 @@ posit16_t q16_to_p16(quire16_t qA){
 	}
 
 	if (sign) uA.ui = -uA.ui & 0xFFFF;
-printf("uA.ui : %d\n", uA.ui);
 	return uA.p;
 }
 

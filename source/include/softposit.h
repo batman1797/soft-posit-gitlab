@@ -131,10 +131,17 @@ quire8_t q8_fdp_sub(quire8_t, posit8_t, posit8_t);
 posit8_t q8_to_p8(quire8_t);
 #define isNaRQ8( q ) ( (q).v==0x80000000  )
 #define isQ8Zero(q) ( (q).v==0 )
+
 #define q8_clr(q) ({\
 	(q).v=0;\
 	q;\
 })
+
+static inline quire8_t q8Clr(){
+    quire8_t q;
+	q.v=0;
+	return q;
+}
 
 #define castQ8(a)({\
 		union ui32_q8 uA;\
@@ -216,6 +223,13 @@ void printHex(uint64_t);
 	(q).v[1]=0;\
 	q;\
 })
+
+static inline quire16_t q16Clr(){
+        quire16_t q;
+	q.v[0]=0;
+        q.v[1]=0;
+	return q;
+}
 
 #define castQ16(l, r)({\
 		union ui128_q16 uA;\

@@ -40,13 +40,24 @@
 #=============================================================================
 
 SOURCE_DIR ?= ../../source
+PYTHON_DIR ?= ../../python
 SPECIALIZE_TYPE ?= 8086-SSE
 
 SOFTPOSIT_OPTS ?= \
   -DINLINE_LEVEL=5 #\
   -DSOFTPOSIT_QUAD -lquadmath 
 
-
+COMPILE_PYTHON = \
+  gcc -fPIC -c $(PYTHON_DIR)/softposit_python_wrap.c \
+		-I/usr/include/python \
+		-I$(SOURCE_DIR)/include -I.
+COMPILE_PYTHON3 = \
+  gcc -fPIC -c $(PYTHON_DIR)/softposit_python_wrap.c \
+		-I/usr/include/python3 \
+		-I$(SOURCE_DIR)/include -I.
+LINK_PYTHON = \
+  ld -shared  *.o -o $(PYTHON_DIR)/_softposit.so
+   
 DELETE = rm -f
 C_INCLUDES = -I. -I$(SOURCE_DIR)/$(SPECIALIZE_TYPE) -I$(SOURCE_DIR)/include
 OPTIMISATION  = -march=core-avx2 -O2 
@@ -64,6 +75,17 @@ all: softposit$(LIB)
 
 quad: SOFTPOSIT_OPTS+= -DSOFTPOSIT_QUAD -lquadmath
 quad: all
+
+python2: SOFTPOSIT_OPTS+= -fPIC
+python2: all
+	$(COMPILE_PYTHON)
+	$(LINK_PYTHON)
+	
+python3: SOFTPOSIT_OPTS+= -fPIC
+python3: all
+	$(COMPILE_PYTHON3)
+	$(LINK_PYTHON)
+
 
 OBJS_PRIMITIVES = 
 
@@ -153,5 +175,5 @@ softposit$(LIB): $(OBJS_ALL)
 
 .PHONY: clean
 clean:
-	$(DELETE) $(OBJS_ALL) softposit$(LIB)
+	$(DELETE) $(OBJS_ALL) softposit_python_wrap.o softposit$(LIB)
 

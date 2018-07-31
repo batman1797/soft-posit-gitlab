@@ -1,9 +1,26 @@
 /*
- * softposit_cpp.h
- *
- *  Created on: Jul 2, 2018
- *      Author: cerlane
- */
+Author: S.H. Leong (Cerlane)
+
+Copyright (c) 2018 Next Generation Arithmetic
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 
 #ifndef INCLUDE_SOFTPOSIT_CPP_H_
 #define INCLUDE_SOFTPOSIT_CPP_H_
@@ -770,6 +787,7 @@ inline posit8 p8(int64_t a){
 	b.value = castUI8(i64_to_p8(a));
 	return b;
 }
+
 inline posit16 p16(int64_t a){
 	posit16 b;
 	b.value = castUI16(i64_to_p16(a));
@@ -786,8 +804,6 @@ inline posit16 p16(double a){
 	b.value = castUI16(convertDoubleToP16(a));
 	return b;
 }
-
-
 
 inline posit8 p8(quire8 a){
 	posit8 b;

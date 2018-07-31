@@ -63,7 +63,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	typedef struct { uint64_t v[2]; bool exact; } quire16_t;
 #else
 	typedef struct { uint8_t v; } posit8_t;
-	typedef struct { uint_fast16_t v; } posit16_t;
+	typedef struct { uint16_t v; } posit16_t;
 	typedef struct { uint32_t v; } posit32_t;
 	typedef struct { uint64_t v; } posit64_t;
 	typedef struct { uint64_t v[2]; } posit128_t;
