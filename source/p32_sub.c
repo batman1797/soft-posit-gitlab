@@ -34,15 +34,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include <stdbool.h>
-#include <stdint.h>
-
-#include "include/softposit.h"
 #include "platform.h"
 #include "internals.h"
-
-posit32_t p32_sub( posit32_t a, posit32_t b )
-{
+posit32_t p32_sub( posit32_t a, posit32_t b ) {
 
 
 	union ui32_p32 uA, uB, uZ;
