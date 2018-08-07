@@ -1,4 +1,3 @@
-
 # <img src="https://posithub.org/images/NGA_logo.png"  width="90" height="50"/> SoftPosit
 
 This version supports:
@@ -375,6 +374,8 @@ int main(int argc, char *argv[]){
 
 	x8 = q8.qma(4, 1.2).toPosit();
 	printf("%.13f  sizeof: %d\n", x8.toDouble(), sizeof(quire8));
+	
+	std::cout << x;
 
 	return 0;
 }
