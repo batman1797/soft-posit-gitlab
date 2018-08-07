@@ -23,7 +23,7 @@ This code is tested on
  Three versions are offered
  
  * **Fast C version**
- * **User friendly C++ version**
+ * **User friendly C++ version** : Documentation can be found below.
  * **User friendly Python version** : https://gitlab.com/cerlane/SoftPosit-Python/
  
 
