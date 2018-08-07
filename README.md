@@ -1,10 +1,13 @@
 # <img src="https://posithub.org/images/NGA_logo.png"  width="90" height="50"/> SoftPosit
 
-This version supports:
+This version (0.4rc) supports:
+
+    32-bit with zero exponential bit (posit32_t).  -> Not exhaustively tested
 
     16-bit with one exponential bit (posit16_t). 
     
     8-bit with zero exponential bit (posit8_t). 
+    
     
 
 This code is tested on 
@@ -12,12 +15,16 @@ This code is tested on
  GNU gcc (SUSE Linux) 4.8.5
  Apple LLVM version 9.1.0 (clang-902.0.39.2)
  
- All operations are exhaustively tested with exception of p16_mulAdd and q16_fdp_add/sub operations.
+ All posit8_t and posit16_t operations are exhaustively tested with exception of p16_mulAdd and q16_fdp_add/sub operations.
  
- Two versions is offered
+ posit32_t operations are still being tested exhaustively for correctness. It will take weeks to months before these tests complete.
+ 
+ 
+ Three versions are offered
  
  * **Fast C version**
  * **User friendly C++ version**
+ * **User friendly Python version** : https://gitlab.com/cerlane/SoftPosit-Python/
  
 
 ## Fast C version
