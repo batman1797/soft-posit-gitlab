@@ -32,17 +32,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include <stdbool.h>
-#include <stdint.h>
 #include <inttypes.h>
 
-
-#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
-#include "specialize.h"
-
-//#include <stdio.h>
 
 quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 
@@ -74,8 +67,6 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 	else if (uiA==0 || uiB==0)
 		return q;
 
-//printPositQuireAsBinary(&uiA, 32);
-//printPositQuireAsBinary(&uiB, 32);
 
 	//max pos (sign plus and minus)
 	signA = signP32UI( uiA );
@@ -84,8 +75,7 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 
 	if(signA) uiA = (-uiA & 0xFFFFFFFF);
 	if(signB) uiB = (-uiB & 0xFFFFFFFF);
-//printPositQuireAsBinary(&uiA, 32);
-//printPositQuireAsBinary(&uiB, 32);
+
 	regSA = signregP32UI(uiA);
 	regSB = signregP32UI(uiB);
 
@@ -105,11 +95,10 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 		tmp&=0x7FFFFFFF;
 	}
 	expA = tmp>>29; //to get 2 bits
-	//fracA = ((tmp<<1) | 0x40000000) & 0x7FFFFFFF;
+
 	fracA = ((tmp<<2) | 0x80000000) & 0xFFFFFFFF;
 
-//printf("kA: %d expA: %d \n", kA, expA);
-//printPositQuireAsBinary(&fracA, 16);
+
 	tmp = (uiB<<2) & 0xFFFFFFFF;
 	if (regSB){
 		while (tmp>>31){
@@ -126,12 +115,9 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 		tmp&=0x7FFFFFFF;
 	}
 	expA += tmp>>29;
-	//frac64Z = (uint_fast64_t) fracA * (((tmp<<1) | 0x40000000) & 0x7FFFFFFF);
+
 	frac64Z = (uint_fast64_t) fracA * (((tmp<<2) | 0x80000000) & 0xFFFFFFFF);
 
-//printf("kA: %d expA: %d \n", kA, expA);
-//printPositQuireAsBinary(&tmp, 16);
-//printPositQuireAsBinary(&frac32Z, 32);
 	if (expA>3){
 		kA++;
 		expA&=0x3; // -=4
@@ -144,19 +130,14 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 			kA ++;
 			expA&=0x3;
 		}
-		//frac64Z>>=1;
 	}
 	else
 		frac64Z<<=1;
-
-	//printPositQuireAsBinary(&frac32Z, 32);
 
 	//default dot is between bit 271 and 272, extreme left bit is bit 0. Last right bit is bit 512.
 	//Minpos is 120 position to the right of binary point (dot)
 	//Scale = 2^es * k + e  => 2k + e
 	int firstPos = 271 - (kA<<2) - expA;
-
-//printf("firstPos: %d kA: %d expA: %d \n",firstPos, kA, expA);
 
 	//Moving in chunk of 64. If it is in first chunk, a part might be in the chunk right to it. Simply have to handle that.
 	int i;
@@ -170,9 +151,6 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 		}
 	}
 
-//printf("shiftRight: %d\n", shiftRight);
-
-	//if (signZ2) uZ2.q  = q16_TwosComplement(uZ2.q);
 	if (signZ2){
 		for (i=7; i>=0; i--){
 			if (uZ2.ui[i]>0){
@@ -186,15 +164,7 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 		}
 
 	}
-//int m=0;
-//printf("\n");
-//for (m=0; m<8; m++){
-//	printPositQuireAsBinary(&uZ1.ui[m], 64);
-//}
-//printf("\n");
-//for (m=0; m<8; m++){
-//	printPositQuireAsBinary(&uZ2.ui[m], 64);
-//}
+
 	//Addition
 	for (i=7; i>=0; i--){
 		b1 = uZ1.ui[i] & 0x1;
@@ -215,12 +185,6 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 		}
 
 	}
-//printf("\n");
-//int m;
-//for (m=0; m<8; m++){
-//	printPositQuireAsBinary(&uZ.ui[m], 64);
-//}
-
 
 	//Exception handling
 	if (isNaRQ32(uZ.q) ) uZ.q = q32_clr(uZ.q);

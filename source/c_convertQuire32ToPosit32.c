@@ -33,21 +33,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include <stdbool.h>
-#include <stdint.h>
-
 #include <math.h>
 
-#include "softposit.h"
 #include "platform.h"
 #include "internals.h"
-#include "specialize.h"
 
 
-//#include <stdio.h>
 
 posit32_t q32_to_p32(quire32_t qA){
-	//printstringasbinary0(&a, 16);
+
 	union ui512_q32 uZ;
 	union ui32_p32 uA;
 	uint_fast32_t regA, fracA = 0, shift=0, regime;
@@ -65,11 +59,6 @@ posit32_t q32_to_p32(quire32_t qA){
 		uA.ui=0x80000000;
 		return uA.p;
 	}
-
-
-	/*printf("in convertQ16ToP16\n");
-	printstringasbinary0(&a.v[0], 64);
-	printstringasbinary0(&a.v[1], 64);*/
 
 	uZ.q = qA;
 
@@ -90,11 +79,6 @@ posit32_t q32_to_p32(quire32_t qA){
 	}
 	//minpos and maxpos
 
-
-	/*printPositQuireAsBinary(&uZ.ui.left64, 64);
-	printPositQuireAsBinary(&uZ.ui.right64, 64);*/
-
-	//int noTZ = 64;
 	int noLZ =0;
 
 	for (i=0; i<8; i++){
@@ -126,14 +110,11 @@ posit32_t q32_to_p32(quire32_t qA){
 		}
 	}
 
-//printf("Convert Q2P:  noLZ: %d expA: %d\n", noLZ, expA);
 	//default dot is between bit 271 and 272, extreme left bit is bit 0. Last right bit is bit 511.
 	//Equations derived from quire32_mult  last_pos = 271 - (kA<<2) - expA and first_pos = last_pos - frac_len
 	int kA=(271-noLZ) >> 2;
 	expA = 271 - noLZ - (kA<<2) ;
 
-
-//printf("Convert Q2P: kA: %d noLZ: %d expA: %d\n", kA, noLZ, expA);
 
 	if(kA<0){
 		//regA = (-kA & 0xFFFF);
@@ -153,18 +134,14 @@ posit32_t q32_to_p32(quire32_t qA){
 		(regSA) ? (uA.ui= 0x7FFFFFFF): (uA.ui=0x1);
 	}
 	else{
-//printPositQuireAsBinary(&frac64A, 64);
-//printf("bitsMore: %d\n", bitsMore);
+
 		//remove hidden bit
 		frac64A&=0x7FFFFFFFFFFFFFFF;
-//printf("\n");
-//printPositQuireAsBinary(&frac64A, 64);
+
 		shift = regA+35; //2 es bit, 1 sign bit and 1 r terminating bit , 31+4
-//printf("shift: %d regA: %d\n", shift, regA);
+
 		fracA = frac64A>>shift;
-//printPositQuireAsBinary(&fracA, 32);
-		//printPositQuireAsBinary(&fracA, 32);
-		//printf("p32_mul:  regA: %d expA: %d\n", regA, expA);
+
 		if (regA<=28){
 			bitNPlusOne = (frac64A>>(shift-1)) & 0x1;
 			expA<<= (28-regA);
@@ -191,10 +168,7 @@ posit32_t q32_to_p32(quire32_t qA){
 		if (bitNPlusOne)
 			uA.ui +=  (uA.ui&1) |   bitsMore;
 
-
 	}
-
-
 	if (sign) uA.ui = -uA.ui & 0xFFFFFFFF;
 
 	return uA.p;
