@@ -17,7 +17,7 @@ This code is tested on
  
  All posit8_t and posit16_t operations are exhaustively tested with exception of p16_mulAdd and q16_fdp_add/sub operations.
  
- posit32_t operations are still being tested exhaustively for correctness. It will take weeks to months before these tests complete.
+ **posit32_t operations are still being tested exhaustively for correctness. It will take weeks to months before these tests complete.**
  
  
  Three versions are offered
