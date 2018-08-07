@@ -93,6 +93,13 @@ posit16_t softposit_mulAddP16( uint_fast16_t, uint_fast16_t, uint_fast16_t, uint
 #define signP32UI( a ) ((bool) ((uint32_t) (a)>>31))
 #define signregP32UI( a ) ((bool) (((uint32_t) (a)>>30) & 0x1))
 #define packToP32UI(regime, expA, fracA) ( (uint32_t) regime + (uint32_t) expA + ((uint32_t)(fracA)) )
+
+posit32_t softposit_addMagsP32( uint_fast32_t, uint_fast32_t );
+posit32_t softposit_subMagsP32( uint_fast32_t, uint_fast32_t );
+posit32_t softposit_mulAddP32( uint_fast32_t, uint_fast32_t, uint_fast32_t, uint_fast32_t );
+
+
+
 /*uint_fast16_t reglengthP32UI (uint32_t);
 int_fast16_t regkP32UI(bool, uint_fast32_t);
 #define expP32UI( a, regA ) ((int_fast16_t) ((a>>(28-regA)) & 0x2))

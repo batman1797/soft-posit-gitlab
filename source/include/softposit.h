@@ -72,6 +72,7 @@ extern "C"{
 #define THREAD_LOCAL
 #endif
 
+#define castUI( a ) ( (a).v )
 
 /*----------------------------------------------------------------------------
 | Integer-to-posit conversion routines.
@@ -79,23 +80,23 @@ extern "C"{
 posit8_t  ui32_to_p8( uint32_t );
 posit16_t ui32_to_p16( uint32_t );
 posit32_t ui32_to_p32( uint32_t );
-posit64_t ui32_to_p64( uint32_t );
+//posit64_t ui32_to_p64( uint32_t );
 
 
 posit8_t  ui64_to_p8( uint64_t );
 posit16_t ui64_to_p16( uint64_t );
 posit32_t ui64_to_p32( uint64_t );
-posit64_t ui64_to_p64( uint64_t );
+//posit64_t ui64_to_p64( uint64_t );
 
 posit8_t  i32_to_p8( int32_t );
 posit16_t i32_to_p16( int32_t );
 posit32_t i32_to_p32( int32_t );
-posit64_t i32_to_p64( int32_t );
+//posit64_t i32_to_p64( int32_t );
 
 posit8_t  i64_to_p8( int64_t );
 posit16_t i64_to_p16( int64_t );
 posit32_t i64_to_p32( int64_t );
-posit64_t i64_to_p64( int64_t );
+//posit64_t i64_to_p64( int64_t );
 
 
 
@@ -157,13 +158,6 @@ static inline quire8_t q8Clr(){
 })
 
 
-#define castUI8(a)({\
-		union ui8_p8 uA;\
-		uA.p = (a);\
-		uA.ui;\
-})
-
-
 #define negP8(a)({\
 		union ui8_p8 uA;\
 		uA.p = (a);\
@@ -217,6 +211,7 @@ quire16_t q16_TwosComplement(quire16_t);
 
 void printBinary(uint64_t*, int);
 void printHex(uint64_t);
+void printHex64(uint64_t);
 
 #define q16_clr(q) ({\
 	(q).v[0]=0;\
@@ -245,11 +240,7 @@ static inline quire16_t q16Clr(){
 		uA.p;\
 })
 
-#define castUI16(a)({\
-		union ui16_p16 uA;\
-		uA.p = (a);\
-		uA.ui;\
-})
+
 
 #define negP16(a)({\
 		union ui16_p16 uA;\
@@ -267,10 +258,10 @@ posit16_t convertDoubleToP16(double);
 /*----------------------------------------------------------------------------
 | 32-bit (single-precision) posit operations.
 *----------------------------------------------------------------------------*/
-/*uint_fast32_t p32_to_ui32( posit32_t, uint_fast16_t, bool );
-uint_fast64_t p32_to_ui64( posit32_t, uint_fast16_t, bool );
+uint_fast32_t p32_to_ui32( posit32_t );
+uint_fast64_t p32_to_ui64( posit32_t);
 int_fast32_t p32_to_i32( posit32_t );
-int_fast64_t p32_to_i64( posit32_t, uint_fast16_t, bool );
+int_fast64_t p32_to_i64( posit32_t );
 
 posit8_t p32_to_p8( posit32_t );
 posit16_t p32_to_p16( posit32_t );
@@ -283,34 +274,70 @@ posit32_t p32_sub( posit32_t, posit32_t );
 posit32_t p32_mul( posit32_t, posit32_t );
 posit32_t p32_mulAdd( posit32_t, posit32_t, posit32_t );
 posit32_t p32_div( posit32_t, posit32_t );
-posit32_t p32_rem( posit32_t, posit32_t );
 posit32_t p32_sqrt( posit32_t );
 bool p32_eq( posit32_t, posit32_t );
 bool p32_le( posit32_t, posit32_t );
-bool p32_lt( posit32_t, posit32_t );*/
+bool p32_lt( posit32_t, posit32_t );
 
-
-double convertP32ToDouble(posit32_t);
-posit32_t convertFloatToP32(float);
-posit32_t convertDoubleToP32(double);
+#define isNaRP32UI( a ) ( ((a) ^ 0x80000000) == 0 )
 
 #ifdef SOFTPOSIT_QUAD
+	__float128 convertP32ToQuadDec(posit32_t);
 	posit32_t convertQuadToP32(__float128);
 #endif
 
 
+quire32_t q32_fdp_add(quire32_t, posit32_t, posit32_t);
+quire32_t q32_fdp_sub(quire32_t, posit32_t, posit32_t);
+posit32_t q32_to_p32(quire32_t);
+#define isNaRQ32( q ) ( q.v[0]==0x8000000000000000ULL && q.v[1]==0 && q.v[2]==0 && q.v[3]==0 && q.v[4]==0 && q.v[5]==0 && q.v[6]==0 && q.v[7]==0)
+#define isQ32Zero(q) (q.v[0]==0 && q.v[1]==0 && q.v[2]==0 && q.v[3]==0 && q.v[4]==0 && q.v[5]==0 && q.v[6]==0 && q.v[7]==0)
+quire32_t q32_TwosComplement(quire32_t);
+
+#define q32_clr(q) ({\
+	q.v[0]=0;\
+	q.v[1]=0;\
+	q.v[2]=0;\
+	q.v[3]=0;\
+	q.v[4]=0;\
+	q.v[5]=0;\
+	q.v[6]=0;\
+	q.v[7]=0;\
+	q;\
+})
+
+static inline quire32_t q32Clr(){
+    quire32_t q;
+	q.v[0]=0;
+    q.v[1]=0;
+	q.v[2]=0;
+    q.v[3]=0;
+	q.v[4]=0;
+    q.v[5]=0;
+	q.v[6]=0;
+    q.v[7]=0;
+	return q;
+}
+
+#define castQ32(l0, l1, l2, l3, l4, l5, l6, l7)({\
+		union ui512_q32 uA;\
+		uA.ui[0] = l0; \
+		uA.ui[1] = l1; \
+		uA.ui[2] = l2; \
+		uA.ui[3] = l3; \
+		uA.ui[4] = l4; \
+		uA.ui[5] = l5; \
+		uA.ui[6] = l6; \
+		uA.ui[7] = l7; \
+		uA.q;\
+})
+
+
 #define castP32(a)({\
-		union ui32_p32 uA;\
-		uA.ui = (a);\
-		uA.p;\
+	posit32_t pA = {.v = (a)};\
+	pA; \
 })
 
-
-#define castUI32(a)({\
-		union ui32_p32 uA;\
-		uA.p = (a);\
-		uA.ui;\
-})
 
 
 #define negP32(a)({\
@@ -319,6 +346,12 @@ posit32_t convertDoubleToP32(double);
 		uiA.ui = -uA.ui&0xFFFFFFFF;\
 		uiA.p; \
 })
+
+//Helper
+
+double convertP32ToDouble(posit32_t);
+posit32_t convertFloatToP32(float);
+posit32_t convertDoubleToP32(double);
 
 /*----------------------------------------------------------------------------
 | 64-bit (double-precision) floating-point operations.

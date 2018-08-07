@@ -44,14 +44,17 @@ void printBinary(uint64_t * s, int size) {
 	{
 		if(i%8 == 0)
 			putchar(' ');
-		printf("%ld", (number >> (bitSize-i))&1);
+		printf("%llu", (number >> (bitSize-i))&1);
 	}
 	printf("\n");
 
 }
+void printHex64(uint64_t s) {
+	printf("%016llx\n", s);
 
+}
 void printHex(uint64_t s) {
-	printf("0x%lx\n", s);
+	printf("0x%llx\n", s);
 
 }
 quire16_t q16_TwosComplement(quire16_t q){
@@ -62,6 +65,27 @@ quire16_t q16_TwosComplement(quire16_t q){
 		else{
 			q.v[1] = - q.v[1];
 			q.v[0] = ~q.v[0];
+		}
+	}
+	return q;
+
+}
+
+quire32_t q32_TwosComplement(quire32_t q){
+	if (!isQ32Zero(q) && !isNaRQ32(q)){
+		int i=7;
+		bool found = false;
+		while(i){
+			if (found){
+				q.v[i] = ~q.v[i];
+			}
+			else{
+				if (q.v[i]!=0){
+					q.v[i] = -q.v[i];
+					found = true;
+				}
+			}
+			i--;
 		}
 	}
 	return q;

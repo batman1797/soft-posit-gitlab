@@ -143,6 +143,33 @@ OBJS_OTHERS = \
   ui64_to_p16$(OBJ) \
   i32_to_p16$(OBJ) \
   i64_to_p16$(OBJ) \
+  s_addMagsP32$(OBJ) \
+  s_subMagsP32$(OBJ) \
+  s_mulAddP32$(OBJ) \
+  p32_to_ui32$(OBJ) \
+  p32_to_ui64$(OBJ) \
+  p32_to_i32$(OBJ) \
+  p32_to_i64$(OBJ) \
+  p32_to_p8$(OBJ) \
+  p32_to_p16$(OBJ) \
+  p32_roundToInt$(OBJ) \
+  p32_add$(OBJ) \
+  p32_sub$(OBJ) \
+  p32_mul$(OBJ) \
+  p32_mulAdd$(OBJ) \
+  p32_div$(OBJ) \
+  p32_eq$(OBJ) \
+  p32_le$(OBJ) \
+  p32_lt$(OBJ) \
+  p32_sqrt$(OBJ) \
+  quire32_fdp_add$(OBJ) \
+  quire32_fdp_sub$(OBJ) \
+  p32_to_p16$(OBJ) \
+  p32_to_p8$(OBJ) \
+  ui32_to_p32$(OBJ) \
+  ui64_to_p32$(OBJ) \
+  i32_to_p32$(OBJ) \
+  i64_to_p32$(OBJ) \
   s_approxRecipSqrt_1Ks$(OBJ) \
   c_convertDecToPosit8$(OBJ) \
   c_convertPosit8ToDec$(OBJ) \
@@ -150,6 +177,7 @@ OBJS_OTHERS = \
   c_convertPosit16ToDec$(OBJ) \
   c_convertQuire8ToPosit8$(OBJ) \
   c_convertQuire16ToPosit16$(OBJ) \
+  c_convertQuire32ToPosit32$(OBJ) \
   c_convertDecToPosit32$(OBJ) \
   c_convertPosit32ToDec$(OBJ) 
 

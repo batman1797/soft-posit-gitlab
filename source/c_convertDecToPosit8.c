@@ -38,7 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-void checkExtraTwoBitsP8(float f8, double temp, bool * bitsNPlusOne, bool * bitsMore ){
+void checkExtraTwoBitsP8(double f8, double temp, bool * bitsNPlusOne, bool * bitsMore ){
 	temp /= 2;
 	if (temp<=f8){
 		*bitsNPlusOne = 1;
@@ -47,7 +47,7 @@ void checkExtraTwoBitsP8(float f8, double temp, bool * bitsNPlusOne, bool * bits
 	if (f8>0)
 		*bitsMore = 1;
 }
-uint_fast16_t convertFractionP8(float f8, uint_fast8_t fracLength, bool * bitsNPlusOne, bool * bitsMore ){
+uint_fast16_t convertFractionP8(double f8, uint_fast8_t fracLength, bool * bitsNPlusOne, bool * bitsMore ){
 
 	uint_fast8_t frac=0;
 
