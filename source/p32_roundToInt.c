@@ -42,7 +42,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-
 posit32_t p32_roundToInt( posit32_t pA ){
 	union ui32_p32 uA;
 	uint_fast32_t mask = 0x20000000, scale=0, tmp=0, uiA, uiZ;

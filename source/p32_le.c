@@ -44,12 +44,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 bool p32_le( posit32_t a, posit32_t b ) {
 	union ui32_p32 uA, uB;
-	int_fast32_t uiA, uiB;
+	int32_t uiA, uiB;
 
 	uA.p = a;
-	uiA = (int_fast32_t) uA.ui;
+	uiA = (int32_t) uA.ui;
 	uB.p = b;
-	uiB = (int_fast32_t)uB.ui;
+	uiB = (int32_t)uB.ui;
 
 	if(uiA<=uiB)
 		return true;
