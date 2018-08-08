@@ -65,13 +65,13 @@ posit32_t q32_to_p32(quire32_t qA){
 	sign = uZ.ui[0]>>63;
 
 	if(sign){
-		//probably need to do two's complement here before the rest.
 		for (i=7; i>=0; i--){
 			if (uZ.ui[i]>0){
 				uZ.ui[i] = - uZ.ui[i];
 				i--;
-				while(i){
+				while(i>=0){
 					uZ.ui[i] = ~uZ.ui[i];
+					i--;
 				}
 				break;
 			}
