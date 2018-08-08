@@ -28,7 +28,7 @@ SOFTWARE.
 #include <iostream>
 #include "softposit.h"
 #include "math.h"
-#include "positMath.h"
+
 
 #ifdef __cplusplus
 struct posit8{
