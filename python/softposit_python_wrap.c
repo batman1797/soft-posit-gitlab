@@ -3357,9 +3357,6 @@ SWIGINTERN int posit32_t_toInt(posit32_t *self){
 SWIGINTERN int posit32_t_toI64(posit32_t *self){
         return (int) p32_to_i64(*self);
     }
-SWIGINTERN int posit32_t_castInt(posit32_t *self){
-        return (int) p32_toInteger(*self);
-    }
 SWIGINTERN posit32_t posit32_t_i32ToP32(posit32_t *self,int a){
         return i32_to_p32((int32_t)a);
     }
@@ -4856,28 +4853,6 @@ SWIGINTERN PyObject *_wrap_posit32_t_toI64(PyObject *SWIGUNUSEDPARM(self), PyObj
   }
   arg1 = (posit32_t *)(argp1);
   result = (int)posit32_t_toI64(arg1);
-  resultobj = SWIG_From_int((int)(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_posit32_t_castInt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  posit32_t *arg1 = (posit32_t *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  int result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:posit32_t_castInt",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit32_t, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit32_t_castInt" "', argument " "1"" of type '" "posit32_t *""'"); 
-  }
-  arg1 = (posit32_t *)(argp1);
-  result = (int)posit32_t_castInt(arg1);
   resultobj = SWIG_From_int((int)(result));
   return resultobj;
 fail:
@@ -10282,7 +10257,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"posit32_t_toHex", _wrap_posit32_t_toHex, METH_VARARGS, NULL},
 	 { (char *)"posit32_t_toInt", _wrap_posit32_t_toInt, METH_VARARGS, NULL},
 	 { (char *)"posit32_t_toI64", _wrap_posit32_t_toI64, METH_VARARGS, NULL},
-	 { (char *)"posit32_t_castInt", _wrap_posit32_t_castInt, METH_VARARGS, NULL},
 	 { (char *)"posit32_t_i32ToP32", _wrap_posit32_t_i32ToP32, METH_VARARGS, NULL},
 	 { (char *)"posit32_t_i64ToP32", _wrap_posit32_t_i64ToP32, METH_VARARGS, NULL},
 	 { (char *)"posit32_t___rshift__", _wrap_posit32_t___rshift__, METH_VARARGS, NULL},

@@ -296,9 +296,6 @@ class posit32_t(_object):
     def toI64(self):
         return _softposit.posit32_t_toI64(self)
 
-    def castInt(self):
-        return _softposit.posit32_t_castInt(self)
-
     def i32ToP32(self, a):
         return _softposit.posit32_t_i32ToP32(self, a)
 
