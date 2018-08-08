@@ -296,6 +296,9 @@ class posit32_t(_object):
     def toI64(self):
         return _softposit.posit32_t_toI64(self)
 
+    def castInt(self):
+        return _softposit.posit32_t_castInt(self)
+
     def i32ToP32(self, a):
         return _softposit.posit32_t_i32ToP32(self, a)
 
@@ -1067,6 +1070,10 @@ def p32_lt(arg1, arg2):
     return _softposit.p32_lt(arg1, arg2)
 p32_lt = _softposit.p32_lt
 
+def p32_toInteger(arg1):
+    return _softposit.p32_toInteger(arg1)
+p32_toInteger = _softposit.p32_toInteger
+
 def q32_fdp_add(arg1, arg2, arg3):
     return _softposit.q32_fdp_add(arg1, arg2, arg3)
 q32_fdp_add = _softposit.q32_fdp_add
@@ -1129,7 +1136,14 @@ class posit8:
            a.v = _softposit.p8_sub(self.v, other.v)
        return a
    def __rsub__(self, other):
-       return self.__sub__(other)  
+       a = posit8(0)
+       if isinstance(other, (int)):
+           a.v = _softposit.p8_sub(self.v.i64ToP8(other), self.v)
+       elif isinstance(other, (float)):
+           a.v = _softposit.p8_sub(_softposit.convertDoubleToP8(other), self.v)
+       else:
+           a.v = _softposit.p8_sub(other.v, self.v)
+       return a
    def __mul__(self, other):
        a = posit8(0)
        if isinstance(other, (int)):
@@ -1355,9 +1369,10 @@ class quire8:
            else:
                self.v = _softposit.q8_fdp_sub(self.v, other1.v, other2.v)
        return self
-   def toPosit(self):       
-       self.v = _softposit.q8_to_p8(self.v);
-       return self
+   def toPosit(self): 
+       a = posit8(0)      
+       a.v = _softposit.q8_to_p8(self.v);
+       return a
    def clr(self):       
        self.v = _softposit.q8Clr();
    def isNaR(self):       
@@ -1408,7 +1423,14 @@ class posit16:
            a.v = _softposit.p16_sub(self.v, other.v)
        return a
    def __rsub__(self, other):
-       return self.__sub__(other)  
+       a = posit16(0)
+       if isinstance(other, (int)):
+           a.v = _softposit.p16_sub(self.v.i64ToP16(other), self.v)
+       elif isinstance(other, (float)):
+           a.v = _softposit.p16_sub(_softposit.convertDoubleToP16(other), self.v)
+       else:
+           a.v = _softposit.p16_sub(other.v, self.v)
+       return a
    def __mul__(self, other):
        a = posit16(0)
        if isinstance(other, (int)):
@@ -1635,9 +1657,10 @@ class quire16:
            else:
                self.v = _softposit.q16_fdp_sub(self.v, other1.v, other2.v)
        return self
-   def toPosit(self):       
-       self.v = _softposit.q16_to_p16(self.v);
-       return self
+   def toPosit(self): 
+       a = posit16(0)      
+       a.v = _softposit.q16_to_p16(self.v);
+       return a
    def clr(self):       
        self.v = _softposit.q16Clr();
    def isNaR(self):       
@@ -1688,7 +1711,14 @@ class posit32:
            a.v = _softposit.p32_sub(self.v, other.v)
        return a
    def __rsub__(self, other):
-       return self.__sub__(other)  
+       a = posit32(0)
+       if isinstance(other, (int)):
+           a.v = _softposit.p32_sub(self.v.i64ToP32(other), self.v)
+       elif isinstance(other, (float)):
+           a.v = _softposit.p32_sub(_softposit.convertDoubleToP32(other), self.v)
+       else:
+           a.v = _softposit.p32_sub(other.v, self.v)
+       return a
    def __mul__(self, other):
        a = posit32(0)
        if isinstance(other, (int)):
@@ -1914,9 +1944,10 @@ class quire32:
            else:
                self.v = _softposit.q32_fdp_sub(self.v, other1.v, other2.v)
        return self
-   def toPosit(self):       
-       self.v = _softposit.q32_to_p32(self.v);
-       return self
+   def toPosit(self):   
+       a = posit32(0)
+       a.v = _softposit.q32_to_p32(self.v);
+       return a
    def clr(self):       
        self.v = _softposit.q32Clr();
    def isNaR(self):       
