@@ -1067,10 +1067,6 @@ def p32_lt(arg1, arg2):
     return _softposit.p32_lt(arg1, arg2)
 p32_lt = _softposit.p32_lt
 
-def p32_toInteger(arg1):
-    return _softposit.p32_toInteger(arg1)
-p32_toInteger = _softposit.p32_toInteger
-
 def q32_fdp_add(arg1, arg2, arg3):
     return _softposit.q32_fdp_add(arg1, arg2, arg3)
 q32_fdp_add = _softposit.q32_fdp_add
