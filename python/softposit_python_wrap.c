@@ -8173,7 +8173,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_p8_toInteger(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_p8_int(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   posit8_t arg1 ;
   void *argp1 ;
@@ -8181,19 +8181,19 @@ SWIGINTERN PyObject *_wrap_p8_toInteger(PyObject *SWIGUNUSEDPARM(self), PyObject
   PyObject * obj0 = 0 ;
   int_fast64_t result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:p8_toInteger",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:p8_int",&obj0)) SWIG_fail;
   {
     res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit8_t,  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "p8_toInteger" "', argument " "1"" of type '" "posit8_t""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "p8_int" "', argument " "1"" of type '" "posit8_t""'"); 
     }  
     if (!argp1) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "p8_toInteger" "', argument " "1"" of type '" "posit8_t""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "p8_int" "', argument " "1"" of type '" "posit8_t""'");
     } else {
       arg1 = *((posit8_t *)(argp1));
     }
   }
-  result = (int_fast64_t)p8_toInteger(arg1);
+  result = (int_fast64_t)p8_int(arg1);
   resultobj = SWIG_From_long_SS_long((long long)(result));
   return resultobj;
 fail:
@@ -9047,7 +9047,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_p16_toInteger(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_p16_int(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   posit16_t arg1 ;
   void *argp1 ;
@@ -9055,19 +9055,19 @@ SWIGINTERN PyObject *_wrap_p16_toInteger(PyObject *SWIGUNUSEDPARM(self), PyObjec
   PyObject * obj0 = 0 ;
   int_fast64_t result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:p16_toInteger",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:p16_int",&obj0)) SWIG_fail;
   {
     res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit16_t,  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "p16_toInteger" "', argument " "1"" of type '" "posit16_t""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "p16_int" "', argument " "1"" of type '" "posit16_t""'"); 
     }  
     if (!argp1) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "p16_toInteger" "', argument " "1"" of type '" "posit16_t""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "p16_int" "', argument " "1"" of type '" "posit16_t""'");
     } else {
       arg1 = *((posit16_t *)(argp1));
     }
   }
-  result = (int_fast64_t)p16_toInteger(arg1);
+  result = (int_fast64_t)p16_int(arg1);
   resultobj = SWIG_From_long_SS_long((long long)(result));
   return resultobj;
 fail:
@@ -9815,7 +9815,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_p32_toInteger(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_p32_int(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   posit32_t arg1 ;
   void *argp1 ;
@@ -9823,19 +9823,19 @@ SWIGINTERN PyObject *_wrap_p32_toInteger(PyObject *SWIGUNUSEDPARM(self), PyObjec
   PyObject * obj0 = 0 ;
   int64_t result;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:p32_toInteger",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:p32_int",&obj0)) SWIG_fail;
   {
     res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit32_t,  0 );
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "p32_toInteger" "', argument " "1"" of type '" "posit32_t""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "p32_int" "', argument " "1"" of type '" "posit32_t""'"); 
     }  
     if (!argp1) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "p32_toInteger" "', argument " "1"" of type '" "posit32_t""'");
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "p32_int" "', argument " "1"" of type '" "posit32_t""'");
     } else {
       arg1 = *((posit32_t *)(argp1));
     }
   }
-  result = (int64_t)p32_toInteger(arg1);
+  result = (int64_t)p32_int(arg1);
   resultobj = SWIG_From_long_SS_long((long long)(result));
   return resultobj;
 fail:
@@ -10284,7 +10284,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"q8_fdp_add", _wrap_q8_fdp_add, METH_VARARGS, NULL},
 	 { (char *)"q8_fdp_sub", _wrap_q8_fdp_sub, METH_VARARGS, NULL},
 	 { (char *)"q8_to_p8", _wrap_q8_to_p8, METH_VARARGS, NULL},
-	 { (char *)"p8_toInteger", _wrap_p8_toInteger, METH_VARARGS, NULL},
+	 { (char *)"p8_int", _wrap_p8_int, METH_VARARGS, NULL},
 	 { (char *)"q8Clr", _wrap_q8Clr, METH_VARARGS, NULL},
 	 { (char *)"convertP8ToDouble", _wrap_convertP8ToDouble, METH_VARARGS, NULL},
 	 { (char *)"convertDoubleToP8", _wrap_convertDoubleToP8, METH_VARARGS, NULL},
@@ -10309,7 +10309,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"convertQ16ToP16", _wrap_convertQ16ToP16, METH_VARARGS, NULL},
 	 { (char *)"q16_to_p16", _wrap_q16_to_p16, METH_VARARGS, NULL},
 	 { (char *)"q16_TwosComplement", _wrap_q16_TwosComplement, METH_VARARGS, NULL},
-	 { (char *)"p16_toInteger", _wrap_p16_toInteger, METH_VARARGS, NULL},
+	 { (char *)"p16_int", _wrap_p16_int, METH_VARARGS, NULL},
 	 { (char *)"printBinary", _wrap_printBinary, METH_VARARGS, NULL},
 	 { (char *)"printHex", _wrap_printHex, METH_VARARGS, NULL},
 	 { (char *)"printHex64", _wrap_printHex64, METH_VARARGS, NULL},
@@ -10333,7 +10333,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"p32_eq", _wrap_p32_eq, METH_VARARGS, NULL},
 	 { (char *)"p32_le", _wrap_p32_le, METH_VARARGS, NULL},
 	 { (char *)"p32_lt", _wrap_p32_lt, METH_VARARGS, NULL},
-	 { (char *)"p32_toInteger", _wrap_p32_toInteger, METH_VARARGS, NULL},
+	 { (char *)"p32_int", _wrap_p32_int, METH_VARARGS, NULL},
 	 { (char *)"q32_fdp_add", _wrap_q32_fdp_add, METH_VARARGS, NULL},
 	 { (char *)"q32_fdp_sub", _wrap_q32_fdp_sub, METH_VARARGS, NULL},
 	 { (char *)"q32_to_p32", _wrap_q32_to_p32, METH_VARARGS, NULL},

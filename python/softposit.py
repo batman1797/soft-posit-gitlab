@@ -855,9 +855,9 @@ def q8_to_p8(arg1):
     return _softposit.q8_to_p8(arg1)
 q8_to_p8 = _softposit.q8_to_p8
 
-def p8_toInteger(arg1):
-    return _softposit.p8_toInteger(arg1)
-p8_toInteger = _softposit.p8_toInteger
+def p8_int(arg1):
+    return _softposit.p8_int(arg1)
+p8_int = _softposit.p8_int
 
 def q8Clr():
     return _softposit.q8Clr()
@@ -955,9 +955,9 @@ def q16_TwosComplement(arg1):
     return _softposit.q16_TwosComplement(arg1)
 q16_TwosComplement = _softposit.q16_TwosComplement
 
-def p16_toInteger(arg1):
-    return _softposit.p16_toInteger(arg1)
-p16_toInteger = _softposit.p16_toInteger
+def p16_int(arg1):
+    return _softposit.p16_int(arg1)
+p16_int = _softposit.p16_int
 
 def printBinary(arg1, arg2):
     return _softposit.printBinary(arg1, arg2)
@@ -1051,9 +1051,9 @@ def p32_lt(arg1, arg2):
     return _softposit.p32_lt(arg1, arg2)
 p32_lt = _softposit.p32_lt
 
-def p32_toInteger(arg1):
-    return _softposit.p32_toInteger(arg1)
-p32_toInteger = _softposit.p32_toInteger
+def p32_int(arg1):
+    return _softposit.p32_int(arg1)
+p32_int = _softposit.p32_int
 
 def q32_fdp_add(arg1, arg2, arg3):
     return _softposit.q32_fdp_add(arg1, arg2, arg3)
@@ -1284,7 +1284,7 @@ class posit8:
        else:
            return str(a)
    def __int__(self):
-       return _softposit.p8_toInteger(self.v)
+       return _softposit.p8_int(self.v)
    def __float__(self):
        return float(_softposit.convertP8ToDouble(self.v))
    def isNaR(self):
@@ -1571,7 +1571,7 @@ class posit16:
        else:
            return str(a)
    def __int__(self):
-       return _softposit.p16_toInteger(self.v) 
+       return _softposit.p16_int(self.v) 
    def __float__(self):
        return float(_softposit.convertP16ToDouble(self.v))
    def isNaR(self):
@@ -1859,7 +1859,7 @@ class posit32:
        else:
            return str(a)
    def __int__(self):
-       return _softposit.p32_toInteger(self.v) 
+       return _softposit.p32_int(self.v) 
    def __float__(self):
        return float(_softposit.convertP32ToDouble(self.v))
    def isNaR(self):
