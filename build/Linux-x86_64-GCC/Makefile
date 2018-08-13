@@ -179,7 +179,8 @@ OBJS_OTHERS = \
   c_convertQuire16ToPosit16$(OBJ) \
   c_convertQuire32ToPosit32$(OBJ) \
   c_convertDecToPosit32$(OBJ) \
-  c_convertPosit32ToDec$(OBJ) 
+  c_convertPosit32ToDec$(OBJ) \
+  c_int$(OBJ) 
 
 OBJS_ALL = $(OBJS_PRIMITIVES) $(OBJS_SPECIALIZE) $(OBJS_OTHERS)
 

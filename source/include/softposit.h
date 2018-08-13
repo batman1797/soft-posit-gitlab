@@ -133,6 +133,8 @@ posit8_t q8_to_p8(quire8_t);
 #define isNaRQ8( q ) ( (q).v==0x80000000  )
 #define isQ8Zero(q) ( (q).v==0 )
 
+int_fast64_t p8_int( posit8_t );
+
 #define q8_clr(q) ({\
 	(q).v=0;\
 	q;\
@@ -209,6 +211,9 @@ posit16_t q16_to_p16(quire16_t);
 #define isQ16Zero(q) (q.v[0]==0 && q.v[1]==0)
 quire16_t q16_TwosComplement(quire16_t);
 
+
+int_fast64_t p16_int( posit16_t);
+
 void printBinary(uint64_t*, int);
 void printHex(uint64_t);
 void printHex64(uint64_t);
@@ -280,6 +285,8 @@ bool p32_le( posit32_t, posit32_t );
 bool p32_lt( posit32_t, posit32_t );
 
 #define isNaRP32UI( a ) ( ((a) ^ 0x80000000) == 0 )
+
+int64_t p32_int( posit32_t);
 
 #ifdef SOFTPOSIT_QUAD
 	__float128 convertP32ToQuadDec(posit32_t);
