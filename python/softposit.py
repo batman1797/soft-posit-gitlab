@@ -1270,7 +1270,8 @@ class posit8:
    def rint(self):
        return _softposit.p8_roundToInt(self.v)
    def sqrt(self):
-       return _softposit.p8_sqrt(self.v)
+       self.v = _softposit.p8_sqrt(self.v)
+       return self
    def __repr__(self):
        a = float(_softposit.convertP8ToDouble(self.v))
        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
@@ -1557,7 +1558,8 @@ class posit16:
    def rint(self):
        return _softposit.p16_roundToInt(self.v)
    def sqrt(self):
-       return _softposit.p16_sqrt(self.v)
+       self.v = _softposit.p16_sqrt(self.v)
+       return self
    def __repr__(self):
        a = float(_softposit.convertP16ToDouble(self.v))
        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
@@ -1845,7 +1847,8 @@ class posit32:
    def rint(self):
        return _softposit.p32_roundToInt(self.v)
    def sqrt(self):
-       return _softposit.p32_sqrt(self.v)
+       self.v = _softposit.p32_sqrt(self.v)
+       return self
    def __repr__(self):
        a = float(_softposit.convertP32ToDouble(self.v))
        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
