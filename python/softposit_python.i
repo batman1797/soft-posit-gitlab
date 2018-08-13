@@ -212,10 +212,13 @@ class posit8:
        a = posit32(0)
        a.v = _softposit.p8_to_p32(self.v)
        return a
-   def toInt(self):
+   def toRInt(self):
        return _softposit.p8_to_i64(self.v)
+   def toInt(self):
+       return _softposit.p8_int(self.v)
    def rint(self):
-       return _softposit.p8_roundToInt(self.v)
+       self.v = _softposit.p8_roundToInt(self.v)
+       return self
    def sqrt(self):
        self.v = _softposit.p8_sqrt(self.v)
        return self
@@ -500,10 +503,13 @@ class posit16:
        a = posit32(0)
        a.v = _softposit.p16_to_p32(self.v)
        return a
-   def toInt(self):
+   def toRInt(self):
        return _softposit.p16_to_i64(self.v)
+   def toInt(self):
+       return _softposit.p16_int(self.v)
    def rint(self):
-       return _softposit.p16_roundToInt(self.v)
+       self.v = _softposit.p16_roundToInt(self.v)
+       return self
    def sqrt(self):
        self.v = _softposit.p16_sqrt(self.v)
        return self
@@ -789,10 +795,13 @@ class posit32:
        a = posit16(0)
        a.v = _softposit.p32_to_p16(self.v)
        return a
-   def toInt(self):
+   def toRInt(self):
        return _softposit.p32_to_i64(self.v)
+   def toInt(self):
+       return _softposit.p32_int(self.v)
    def rint(self):
-       return _softposit.p32_roundToInt(self.v)
+       self.v = _softposit.p32_roundToInt(self.v)
+       return self
    def sqrt(self):
        self.v = _softposit.p32_sqrt(self.v)
        return self

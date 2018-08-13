@@ -242,8 +242,12 @@ struct posit8{
 		return convertP8ToDouble(castP8(value));
 	}
 
-	long long int toInteger()const{
+	long long int toInt()const{
 		return p8_int(castP8(value));
+	}
+
+	long long int toRInt()const{
+		return p8_to_i64(castP8(value));
 	}
 
 	posit8& fma(posit8 a, posit8 b){ // += (a*b)
@@ -470,9 +474,14 @@ struct posit16{
 		return convertP16ToDouble(castP16(value));
 	}
 
-	long long int toInteger()const{
+	long long int toInt()const{
 		return p16_int(castP16(value));
 	}
+
+	long long int toRInt()const{
+		return p16_to_i64(castP16(value));
+	}
+
 
 	posit16& fma(posit16 a, posit16 b){ // += (a*b)
 		value = castUI(p16_mulAdd(castP16(a.value), castP16(b.value), castP16(value)));
@@ -698,8 +707,12 @@ struct posit32{
 		return convertP32ToDouble(castP32(value));
 	}
 
-	long long int toInteger()const{
-		return p32_int(castP32(value));;
+	long long int toInt()const{
+		return p32_int(castP32(value));
+	}
+
+	long long int toRInt()const{
+		return p32_to_i64(castP32(value));
 	}
 
 	posit32& fma(posit32 a, posit32 b){ // += (a*b)
@@ -848,6 +861,7 @@ struct quire32{
 	}
 
 };
+
 
 inline posit8 operator+(int a, posit8 b){
 	b.value = castUI(p8_add(i32_to_p8(a), castP8(b.value)));
