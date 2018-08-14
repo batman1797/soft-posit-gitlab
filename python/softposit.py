@@ -4,6 +4,11 @@
 # Do not make changes to this file unless you know what you are doing--modify
 # the SWIG interface file instead.
 
+
+from __future__ import absolute_import, print_function, division
+
+
+
 from sys import version_info as _swig_python_version_info
 if _swig_python_version_info >= (2, 7, 0):
     def swig_import_helper():
@@ -1107,7 +1112,7 @@ class posit8:
               a.v = _softposit.p8_add(self.v, other.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for +: posit8 and ",other.type()          
+          print("TypeError: Unsupported operand type(s) for +: posit8 and ",other.type())          
    def __radd__(self, other):
        return self.__add__(other)  
    def __sub__(self, other):
@@ -1121,7 +1126,7 @@ class posit8:
               a.v = _softposit.p8_sub(self.v, other.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for -: posit8 and ",other.type()       
+          print("TypeError: Unsupported operand type(s) for -: posit8 and ",other.type())      
    def __rsub__(self, other):
        try:
           a = posit8(0)
@@ -1133,7 +1138,7 @@ class posit8:
               a.v = _softposit.p8_sub(other.v, self.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for -: posit8 and ",other.type()   
+          print("TypeError: Unsupported operand type(s) for -: posit8 and ",other.type())  
    def __mul__(self, other):
        try:
           a = posit8(0)
@@ -1145,7 +1150,7 @@ class posit8:
               a.v = _softposit.p8_mul(self.v, other.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for *: posit8 and ",other.type()   
+          print("TypeError: Unsupported operand type(s) for *: posit8 and ",other.type())   
    def __rmul__(self, other):
        return self.__mul__(other)  
    def __div__(self, other):
@@ -1159,7 +1164,7 @@ class posit8:
               a.v = _softposit.p8_div(self.v, other.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for /: posit8 and ",other.type()   
+          print("TypeError: Unsupported operand type(s) for /: posit8 and ",other.type())   
    def __truediv__(self, other):
        return self.__div(other)      
    def __rdiv__(self, other):
@@ -1173,7 +1178,7 @@ class posit8:
               a.v = _softposit.p8_div(other.v, self.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for *: posit8 and ",other.type()   
+          print("TypeError: Unsupported operand type(s) for *: posit8 and ",other.type())  
    def __rtruediv__(self, other):
        return self.__rdiv__(other)
    def __eq__(self, other):
@@ -1185,7 +1190,7 @@ class posit8:
           else:
               return _softposit.p8_eq(self.v, other.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for ==: posit8 and ",other.type()   
+          print("TypeError: Unsupported operand type(s) for ==: posit8 and ",other.type())   
    def __ne__(self, other):
        try:                                                                                     
           if isinstance(other, (int)):
@@ -1195,7 +1200,7 @@ class posit8:
           else:
               return not(_softposit.p8_eq(self.v, other.v))
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for !=: posit8 and ",other.type() 
+          print("TypeError: Unsupported operand type(s) for !=: posit8 and ",other.type())
    def __le__(self, other):
        try:        
           if isinstance(other, (int)):
@@ -1205,7 +1210,7 @@ class posit8:
           else:
               return _softposit.p8_le(self.v, other.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for <=: posit8 and ",other.type() 
+          print("TypeError: Unsupported operand type(s) for <=: posit8 and ",other.type()) 
    def __lt__(self, other):
        try:   
           if isinstance(other, (int)):
@@ -1215,7 +1220,7 @@ class posit8:
           else:
               return _softposit.p8_lt(self.v, other.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for <: posit8 and ",other.type() 
+          print("TypeError: Unsupported operand type(s) for <: posit8 and ",other.type())
    def __ge__(self, other):
        try:   
           if isinstance(other, (int)):
@@ -1225,7 +1230,7 @@ class posit8:
           else:
               return _softposit.p8_le(other.v, self.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for >=: posit8 and ",other.type() 
+          print("TypeError: Unsupported operand type(s) for >=: posit8 and ",other.type())
    def __gt__(self, other):
        try:   
           if isinstance(other, (int)):
@@ -1235,7 +1240,7 @@ class posit8:
           else:
               return _softposit.p8_lt(other.v, self.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for >: posit8 and ",other.type() 
+          print("TypeError: Unsupported operand type(s) for >: posit8 and ",other.type())
    def __rshift__(self, other):
        a = posit8(0)
        a.v = self.v.__rshift__(other)
@@ -1295,7 +1300,7 @@ class posit8:
                   a.v = _softposit.p8_mulAdd(other1.v, other2.v, self.v)   
           return a
        except TypeError:
-          print "TypeError: Unsupported fused operand (fma) among mixed precison posit types"  
+          print("TypeError: Unsupported fused operand (fma) among mixed precison posit types")
    def toPosit16(self):
        a = posit16(0)
        a.v = _softposit.p8_to_p16(self.v)
@@ -1371,7 +1376,7 @@ class quire8:
                   self.v = _softposit.q8_fdp_add(self.v, other1.v, other2.v)
           return self
        except TypeError:
-          print "TypeError: Unsupported fused operand (qma) between quire8 and non-posit8 types"      
+          print("TypeError: Unsupported fused operand (qma) between quire8 and non-posit8 types")     
    def qms(self, other1, other2):
        try:
           a = posit8(0)
@@ -1398,7 +1403,7 @@ class quire8:
                   self.v = _softposit.q8_fdp_sub(self.v, other1.v, other2.v)
           return self
        except TypeError:
-          print "TypeError: Unsupported fused operand (qms) between quire8 and non-posit8 types"        
+          print("TypeError: Unsupported fused operand (qms) between quire8 and non-posit8 types")    
    def toPosit(self): 
        a = posit8(0)      
        a.v = _softposit.q8_to_p8(self.v);
@@ -1443,7 +1448,7 @@ class posit16:
               a.v = _softposit.p16_add(self.v, other.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for +: posit16 and ",other.type()     
+          print("TypeError: Unsupported operand type(s) for +: posit16 and ",other.type())     
    def __radd__(self, other):
        return self.__add__(other)  
    def __sub__(self, other):
@@ -1457,7 +1462,7 @@ class posit16:
               a.v = _softposit.p16_sub(self.v, other.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for -: posit16 and ",other.type()   
+          print("TypeError: Unsupported operand type(s) for -: posit16 and ",other.type()) 
    def __rsub__(self, other):
        try:
           a = posit16(0)
@@ -1469,7 +1474,7 @@ class posit16:
               a.v = _softposit.p16_sub(other.v, self.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for -: posit16 and ",other.type()   
+          print("TypeError: Unsupported operand type(s) for -: posit16 and ",other.type())  
    def __mul__(self, other):
        try:
           a = posit16(0)
@@ -1481,7 +1486,7 @@ class posit16:
               a.v = _softposit.p16_mul(self.v, other.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for *: posit16 and ",other.type()  
+          print("TypeError: Unsupported operand type(s) for *: posit16 and ",other.type()) 
    def __rmul__(self, other):
        return self.__mul__(other)  
    def __div__(self, other):
@@ -1495,7 +1500,7 @@ class posit16:
               a.v = _softposit.p16_div(self.v, other.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for /: posit16 and ",other.type()  
+          print("TypeError: Unsupported operand type(s) for /: posit16 and ",other.type()) 
    def __truediv__(self, other):
        return self.__div__(other)
    def __rdiv__(self, other):
@@ -1509,7 +1514,7 @@ class posit16:
               a.v = _softposit.p16_div(other.v, self.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for /: posit16 and ",other.type()  
+          print("TypeError: Unsupported operand type(s) for /: posit16 and ",other.type()) 
    def __rtruediv__(self, other):
        return self.__rdiv__(other)
    def __eq__(self, other):
@@ -1521,7 +1526,7 @@ class posit16:
           else:
               return _softposit.p16_eq(self.v, other.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for ==: posit16 and ",other.type()  
+          print("TypeError: Unsupported operand type(s) for ==: posit16 and ",other.type()) 
    def __ne__(self, other):  
        try:                                                                                          
           if isinstance(other, (int)):
@@ -1531,7 +1536,7 @@ class posit16:
           else:
               return not(_softposit.p16_eq(self.v, other.v))
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for !=: posit16 and ",other.type()  
+          print("TypeError: Unsupported operand type(s) for !=: posit16 and ",other.type())
    def __le__(self, other):
        try:             
           if isinstance(other, (int)):
@@ -1541,7 +1546,7 @@ class posit16:
           else:
               return _softposit.p16_le(self.v, other.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for <=: posit16 and ",other.type()  
+          print("TypeError: Unsupported operand type(s) for <=: posit16 and ",other.type()) 
    def __lt__(self, other):
        try:             
           if isinstance(other, (int)):
@@ -1551,7 +1556,7 @@ class posit16:
           else:
               return _softposit.p16_lt(self.v, other.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for <: posit16 and ",other.type()  
+          print("TypeError: Unsupported operand type(s) for <: posit16 and ",other.type()) 
    def __ge__(self, other):
        try:    
           if isinstance(other, (int)):
@@ -1561,7 +1566,7 @@ class posit16:
           else:
               return _softposit.p16_le(other.v, self.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for >=: posit16 and ",other.type()  
+          print("TypeError: Unsupported operand type(s) for >=: posit16 and ",other.type())  
    def __gt__(self, other):
        if isinstance(other, (int)):
            return _softposit.p16_lt(_softposit.i64_to_p16(other), self.v)
@@ -1628,7 +1633,7 @@ class posit16:
                   a.v = _softposit.p16_mulAdd(other1.v, other2.v, self.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported fused operand (fma) among mixed precison posit types"  
+          print("TypeError: Unsupported fused operand (fma) among mixed precison posit types")
    def toPosit8(self):
        a = posit8(0)
        a.v = _softposit.p16_to_p8(self.v)
@@ -1705,7 +1710,7 @@ class quire16:
                   self.v = _softposit.q16_fdp_add(self.v, other1.v, other2.v)
           return self
        except TypeError:
-          print "TypeError: Unsupported fused operand (qms) between quire16 and non-posit16 types"   
+          print("TypeError: Unsupported fused operand (qms) between quire16 and non-posit16 types")  
    def qms(self, other1, other2):
        try:
           a = posit16(0)
@@ -1732,7 +1737,7 @@ class quire16:
                   self.v = _softposit.q16_fdp_sub(self.v, other1.v, other2.v)
           return self
        except TypeError:
-          print "TypeError: Unsupported fused operand (qms) between quire16 and non-posit16 types"   
+          print("TypeError: Unsupported fused operand (qms) between quire16 and non-posit16 types")   
    def toPosit(self): 
        a = posit16(0)      
        a.v = _softposit.q16_to_p16(self.v);
@@ -1777,7 +1782,7 @@ class posit32:
               a.v = _softposit.p32_add(self.v, other.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for +: posit32 and ",other.type()     
+          print("TypeError: Unsupported operand type(s) for +: posit32 and ",other.type())     
    def __radd__(self, other):
        return self.__add__(other)  
    def __sub__(self, other):
@@ -1791,7 +1796,7 @@ class posit32:
               a.v = _softposit.p32_sub(self.v, other.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for -: posit32 and ",other.type()     
+          print("TypeError: Unsupported operand type(s) for -: posit32 and ",other.type())  
    def __rsub__(self, other):
        try:
           a = posit32(0)
@@ -1803,7 +1808,7 @@ class posit32:
               a.v = _softposit.p32_sub(other.v, self.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for -: posit32 and ",other.type()     
+          print("TypeError: Unsupported operand type(s) for -: posit32 and ",other.type())    
    def __mul__(self, other):
        try:
           a = posit32(0)
@@ -1815,7 +1820,7 @@ class posit32:
               a.v = _softposit.p32_mul(self.v, other.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for *: posit32 and ",other.type()     
+          print("TypeError: Unsupported operand type(s) for *: posit32 and ",other.type())     
    def __rmul__(self, other):
        return self.__mul__(other)  
    def __div__(self, other):
@@ -1829,7 +1834,7 @@ class posit32:
               a.v = _softposit.p32_div(self.v, other.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for /: posit32 and ",other.type()     
+          print("TypeError: Unsupported operand type(s) for /: posit32 and ",other.type())   
    def __truediv__(self, other):
        return self.__div__(other)
    def __rdiv__(self, other):
@@ -1843,7 +1848,7 @@ class posit32:
               a.v = _softposit.p32_div(other.v, self.v)
           return a
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for /: posit32 and ",other.type()     
+          print("TypeError: Unsupported operand type(s) for /: posit32 and ",other.type())     
    def __rtruediv__(self, other):
        return self.__rdiv__(other)
    def __eq__(self, other):
@@ -1855,7 +1860,7 @@ class posit32:
           else:
               return _softposit.p32_eq(self.v, other.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for ==: posit32 and ",other.type()     
+          print("TypeError: Unsupported operand type(s) for ==: posit32 and ",other.type())     
    def __ne__(self, other):  
        try:                                                                                
           if isinstance(other, (int)):
@@ -1865,7 +1870,7 @@ class posit32:
           else:
               return not(_softposit.p32_eq(self.v, other.v))
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for !=: posit32 and ",other.type()     
+          print("TypeError: Unsupported operand type(s) for !=: posit32 and ",other.type())    
    def __le__(self, other):
        try:
           if isinstance(other, (int)):
@@ -1875,7 +1880,7 @@ class posit32:
           else:
               return _softposit.p32_le(self.v, other.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for <=: posit32 and ",other.type()  
+          print("TypeError: Unsupported operand type(s) for <=: posit32 and ",other.type())  
    def __lt__(self, other):
        try:
           if isinstance(other, (int)):
@@ -1885,7 +1890,7 @@ class posit32:
           else:
               return _softposit.p32_lt(self.v, other.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for <: posit32 and ",other.type()  
+          print("TypeError: Unsupported operand type(s) for <: posit32 and ",other.type())  
    def __ge__(self, other):
        try:
           if isinstance(other, (int)):
@@ -1895,7 +1900,7 @@ class posit32:
           else:
               return _softposit.p32_le(other.v, self.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for >=: posit32 and ",other.type()  
+          print("TypeError: Unsupported operand type(s) for >=: posit32 and ",other.type())  
    def __gt__(self, other):
        try:
           if isinstance(other, (int)):
@@ -1905,7 +1910,7 @@ class posit32:
           else:
               return _softposit.p32_lt(other.v, self.v)
        except TypeError:
-          print "TypeError: Unsupported operand type(s) for >: posit32 and ",other.type()  
+          print("TypeError: Unsupported operand type(s) for >: posit32 and ",other.type())  
    def __rshift__(self, other):
        a = posit32(0)
        a.v = self.v.__rshift__(other)
@@ -1965,7 +1970,7 @@ class posit32:
                   a.v = _softposit.p32_mulAdd(other1.v, other2.v, self.v)   
           return a
        except TypeError:
-          print "TypeError: Unsupported fused operand (fma) among mixed precison posit types"  
+          print("TypeError: Unsupported fused operand (fma) among mixed precison posit types")
    def toPosit8(self):
        a = posit8(0)
        a.v = _softposit.p32_to_p8(self.v)
@@ -2041,7 +2046,7 @@ class quire32:
                   self.v = _softposit.q32_fdp_add(self.v, other1.v, other2.v)
           return self
        except TypeError:
-          print "TypeError: Unsupported fused operand (qma) between quire32 and non-posit32 types"   
+          print("TypeError: Unsupported fused operand (qma) between quire32 and non-posit32 types")   
    def qms(self, other1, other2):
        try:
           a = posit32(0)
@@ -2068,7 +2073,7 @@ class quire32:
                   self.v = _softposit.q32_fdp_sub(self.v, other1.v, other2.v)
           return self
        except TypeError:
-           print "TypeError: Unsupported fused operand (qmd) between quire32 and non-posit32 types"   
+           print("TypeError: Unsupported fused operand (qmd) between quire32 and non-posit32 types")   
    def toPosit(self):   
        a = posit32(0)
        a.v = _softposit.q32_to_p32(self.v);
