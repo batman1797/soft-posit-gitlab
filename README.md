@@ -2,7 +2,7 @@
 
 This version (0.4rc) supports:
 
-    32-bit with zero exponential bit (posit32_t).  -> Not exhaustively tested
+    32-bit with two exponential bit (posit32_t).  -> Not exhaustively tested
 
     16-bit with one exponential bit (posit16_t). 
     
