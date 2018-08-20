@@ -71,9 +71,7 @@ posit32_t softposit_subMagsP32( uint_fast32_t uiA, uint_fast32_t uiB ) {
 	}
 	regSA = signregP32UI( uiA );
 	regSB = signregP32UI( uiB );
-//printf("\n\n");
-//printPositQuireAsBinary(&uiA, 32);
-//printPositQuireAsBinary(&uiB, 32);
+
 	tmp = (uiA<<2)&0xFFFFFFFF;
 	if (regSA){
 		while (tmp>>31){
@@ -113,8 +111,7 @@ posit32_t softposit_subMagsP32( uint_fast32_t uiA, uint_fast32_t uiB ) {
 
 	}
 	frac64B = ((0x40000000ULL | tmp<<1) & 0x7FFFFFFFULL) <<32;
-//printPositQuireAsBinary(&frac64B, 64);
-//printf("sign:%d kA: %d, expA: %d shiftRight: %d \n", sign, kA, expA, shiftRight);
+
 	//This is 4kZ + expZ; (where kZ=kA-kB and expZ=expA-expB)
 	shiftRight = (shiftRight<<2) + expA - (tmp>>29);
 	if (shiftRight>63){
@@ -123,10 +120,10 @@ posit32_t softposit_subMagsP32( uint_fast32_t uiA, uint_fast32_t uiB ) {
 		return uZ.p;
 	}
 	else
-		(frac64B >>= shiftRight); //frac64B >>= shiftRight
-//printPositQuireAsBinary(&frac64B, 64);
+		(frac64B >>= shiftRight);
+
 	frac64A -= frac64B;
-//printPositQuireAsBinary(&frac64A, 64);
+
 	while((frac64A>>59)==0){
 		kA--;
 		frac64A<<=4;
@@ -142,8 +139,7 @@ posit32_t softposit_subMagsP32( uint_fast32_t uiA, uint_fast32_t uiB ) {
 		frac64A<<=1;
 		ecarry = (0x4000000000000000 & frac64A);
 	}
-//printf("ecarry: %d kA: %d expA: %d\n", ecarry, kA, expA);
-//printPositQuireAsBinary(&frac64A, 64);
+
 	if(kA<0){
 		regA = -kA;
 		regSA = 0;
@@ -161,15 +157,9 @@ posit32_t softposit_subMagsP32( uint_fast32_t uiA, uint_fast32_t uiB ) {
 	else{
 		//remove hidden bits
 		frac64A = (frac64A & 0x3FFFFFFFFFFFFFFF) >>(regA + 2) ; // 2 bits exp
-//printPositQuireAsBinary(&frac64A, 64);
+
 		fracA = frac64A>>32;
-//printPositQuireAsBinary(&fracA, 32);
-		/*if (regA!=14) bitNPlusOne = (frac64A>>31) & 0x1;
-		else if (frac64A>0){ //regA==14
-			fracA=0;
-			bitsMore =1;
-printf("err1\n");
-		}*/
+
 		if (regA<=28){
 			bitNPlusOne |= (0x80000000 & frac64A) ;
 			expA <<= (28-regA);
@@ -187,13 +177,10 @@ printf("err1\n");
 			if (fracA>0){
 				fracA=0;
 				bitsMore =1;
-//printf("err1\n");
 			}
 
 		}
-//printf("expA: %d bitNPlusOne : %d bitsMore: %d\n", expA, bitNPlusOne, bitsMore);
-//printPositQuireAsBinary(&regime, 32);
-//printPositQuireAsBinary(&fracA, 32);
+
 		uZ.ui = packToP32UI(regime, expA, fracA);
 		//n+1 frac bit is 1. Need to check if another bit is 1 too if not round to even
 		if (bitNPlusOne){

@@ -220,21 +220,18 @@ posit32_t
 		else {
 			//for subtract cases
 			if (frac64Z!=0){
-				while((frac64Z>>61)==0){
+				while((frac64Z>>59)==0){
 					kZ--;
-					frac64Z<<=2;
+					frac64Z<<=4;
 				}
-			}
-			bool ecarry = (0x4000000000000000 & frac64Z)>>62;
-
-			if(!ecarry){
-				if (expZ==0){
-					kZ--;
-					expZ=3;
-				}
-				else
+				while((frac64Z>>62)==0){
 					expZ--;
-				frac64Z<<=1;
+					frac64Z<<=1;
+					if (expZ<0){
+						kZ--;
+						expZ=3;
+					}
+				}
 			}
 		}
 
@@ -263,7 +260,7 @@ posit32_t
 			//remove hidden bits
 			frac64Z &= 0x3FFFFFFFFFFFFFFF;
 			fracZ = frac64Z >> (regZ + 34);//frac32Z>>16;
-			bitNPlusOne |= (0x80000000 & frac64Z) ;
+			bitNPlusOne |= (0x200000000 & (frac64Z >>regA ) ) ;
 			expZ <<= (28-regZ);
 		}
 		else {
