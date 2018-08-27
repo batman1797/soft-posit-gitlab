@@ -156,8 +156,9 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 			if (uZ2.ui[i]>0){
 				uZ2.ui[i] = - uZ2.ui[i];
 				i--;
-				while(i){
+				while(i>=0){
 					uZ2.ui[i] = ~uZ2.ui[i];
+					i--;
 				}
 				break;
 			}
