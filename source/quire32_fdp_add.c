@@ -38,9 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "internals.h"
 
 quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
-
-
-	union ui32_p32 uA, uB;
+    union ui32_p32 uA, uB;
 	union ui512_q32 uZ, uZ1, uZ2;
 	uint_fast32_t uiA, uiB;
 	uint_fast32_t regA, fracA, regime, tmp;
@@ -49,7 +47,7 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 	int_fast16_t kA=0, shiftRight=0;
 	uint_fast64_t frac64Z;
 	//For add
-	bool rcarryb, b1, b2, rcarryZ, rcarrySignZ;
+	bool rcarryb, b1, b2, rcarryZ=0, rcarrySignZ;
 
 	uZ1.q = q;
 
@@ -183,19 +181,17 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 	for (i=7; i>=0; i--){
 		b1 = uZ1.ui[i] & 0x1;
 		b2 = uZ2.ui[i] & 0x1;
-
-		rcarryb = b1 & b2;
-		uZ.ui[i] = (uZ1.ui[i]>>1) + (uZ2.ui[i]>>1) + rcarryb;
-		int_fast8_t rcarryb3;
-		if (i<7){
-			rcarryb3 = b1 + b2 + rcarryZ;
-			uZ.ui[i] += ((rcarryb3>>1)& 0x1);
-			rcarryZ = uZ.ui[i]>>63;
-			uZ.ui[i] = (uZ.ui[i]<<1 | (rcarryb3 & 0x1) );
-		}
-		else{
+		if (i==7){
+			rcarryb = b1 & b2;
+			uZ.ui[i] = (uZ1.ui[i]>>1) + (uZ2.ui[i]>>1) + rcarryb;
 			rcarryZ = uZ.ui[i]>>63;
 			uZ.ui[i] = (uZ.ui[i]<<1 | (b1^b2) );
+		}
+		else{
+			int_fast8_t rcarryb3 =  b1 + b2 + rcarryZ;
+			uZ.ui[i] = (uZ1.ui[i]>>1) + (uZ2.ui[i]>>1) + (rcarryb3>>1);
+			rcarryZ = uZ.ui[i]>>63;
+			uZ.ui[i] = (uZ.ui[i]<<1 | (rcarryb3 & 0x1) );
 		}
 
 	}
@@ -212,6 +208,7 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 			}
 		}
 	}
+
 	//Exception handling
 	if (isNaRQ32(uZ.q) ) uZ.q = q32_clr(uZ.q);
 
