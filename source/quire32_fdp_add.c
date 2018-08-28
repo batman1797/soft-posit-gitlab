@@ -39,11 +39,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 
+
 	union ui32_p32 uA, uB;
 	union ui512_q32 uZ, uZ1, uZ2;
 	uint_fast32_t uiA, uiB;
 	uint_fast32_t regA, fracA, regime, tmp;
-	bool signA, signB, signZ2, regSA, regSB, bitNPlusOne=0, bitsMore=0, rcarry;
+	bool signA, signB, signZ1, signZ2, signZ=0, regSA, regSB, bitNPlusOne=0, bitsMore=0, rcarry;
 	int_fast32_t expA, expB;
 	int_fast16_t kA=0, shiftRight=0;
 	uint_fast64_t frac64Z;
@@ -72,6 +73,7 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 	signA = signP32UI( uiA );
 	signB = signP32UI( uiB );
 	signZ2 = signA ^ signB;
+	signZ1 = uZ1.ui[0]>>63;
 
 	if(signA) uiA = (-uiA & 0xFFFFFFFF);
 	if(signB) uiB = (-uiB & 0xFFFFFFFF);
@@ -95,7 +97,6 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 		tmp&=0x7FFFFFFF;
 	}
 	expA = tmp>>29; //to get 2 bits
-
 	fracA = ((tmp<<2) | 0x80000000) & 0xFFFFFFFF;
 
 
@@ -115,7 +116,6 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 		tmp&=0x7FFFFFFF;
 	}
 	expA += tmp>>29;
-
 	frac64Z = (uint_fast64_t) fracA * (((tmp<<2) | 0x80000000) & 0xFFFFFFFF);
 
 	if (expA>3){
@@ -151,7 +151,21 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 		}
 	}
 
-	if (signZ2){
+	if(signZ1&signZ2){
+		signZ = 1;
+		for (i=7; i>=0; i--){
+			if (uZ1.ui[i]>0){
+				uZ1.ui[i] = - uZ1.ui[i];
+				i--;
+				while(i>=0){
+					uZ1.ui[i] = ~uZ1.ui[i];
+					i--;
+				}
+				break;
+			}
+		}
+	}
+	else if (signZ2){
 		for (i=7; i>=0; i--){
 			if (uZ2.ui[i]>0){
 				uZ2.ui[i] = - uZ2.ui[i];
@@ -163,7 +177,6 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 				break;
 			}
 		}
-
 	}
 
 	//Addition
@@ -186,7 +199,19 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 		}
 
 	}
-
+	if(signZ){
+		for (i=7; i>=0; i--){
+			if (uZ.ui[i]>0){
+				uZ.ui[i] = - uZ.ui[i];
+				i--;
+				while(i>=0){
+					uZ.ui[i] = ~uZ.ui[i];
+					i--;
+				}
+				break;
+			}
+		}
+	}
 	//Exception handling
 	if (isNaRQ32(uZ.q) ) uZ.q = q32_clr(uZ.q);
 
