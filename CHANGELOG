@@ -1,5 +1,7 @@
 V0.4RC
 1) Added support for P32
+2) Fixed Quire32 bugs (for both fdp add and sub)
+3) Added support of PX_2 (where X=2 to 32). NaR will be returned for X>32 and X<2.
 
 
 V0.3.2
