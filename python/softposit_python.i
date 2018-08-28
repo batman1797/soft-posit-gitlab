@@ -788,9 +788,9 @@ class posit32:
        try:
           a = posit32(0)
           if isinstance(other, (int)):
-              return _softposit.p32_div(_softposit.i64_to_p32(other), self.v)
+              a.v = _softposit.p32_div(_softposit.i64_to_p32(other), self.v)
           elif isinstance(other, (float)):
-              return _softposit.p32_div(_softposit.convertDoubleToP32(other), self.v)
+              a.v = _softposit.p32_div(_softposit.convertDoubleToP32(other), self.v)
           else:
               a.v = _softposit.p32_div(other.v, self.v)
           return a

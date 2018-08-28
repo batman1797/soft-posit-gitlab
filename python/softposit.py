@@ -526,6 +526,50 @@ class quire32_t(_object):
 quire32_t_swigregister = _softposit.quire32_t_swigregister
 quire32_t_swigregister(quire32_t)
 
+class posit_2_t(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, posit_2_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, posit_2_t, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["v"] = _softposit.posit_2_t_v_set
+    __swig_getmethods__["v"] = _softposit.posit_2_t_v_get
+    if _newclass:
+        v = _swig_property(_softposit.posit_2_t_v_get, _softposit.posit_2_t_v_set)
+
+    def __init__(self):
+        this = _softposit.new_posit_2_t()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _softposit.delete_posit_2_t
+    __del__ = lambda self: None
+posit_2_t_swigregister = _softposit.posit_2_t_swigregister
+posit_2_t_swigregister(posit_2_t)
+
+class quire_2_t(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, quire_2_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, quire_2_t, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["v"] = _softposit.quire_2_t_v_set
+    __swig_getmethods__["v"] = _softposit.quire_2_t_v_get
+    if _newclass:
+        v = _swig_property(_softposit.quire_2_t_v_get, _softposit.quire_2_t_v_set)
+
+    def __init__(self):
+        this = _softposit.new_quire_2_t()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _softposit.delete_quire_2_t
+    __del__ = lambda self: None
+quire_2_t_swigregister = _softposit.quire_2_t_swigregister
+quire_2_t_swigregister(quire_2_t)
+
 class ui8_p8(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, ui8_p8, name, value)
@@ -656,6 +700,32 @@ class ui128_p128c(_object):
 ui128_p128c_swigregister = _softposit.ui128_p128c_swigregister
 ui128_p128c_swigregister(ui128_p128c)
 
+class ui32_pX2(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ui32_pX2, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, ui32_pX2, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["ui"] = _softposit.ui32_pX2_ui_set
+    __swig_getmethods__["ui"] = _softposit.ui32_pX2_ui_get
+    if _newclass:
+        ui = _swig_property(_softposit.ui32_pX2_ui_get, _softposit.ui32_pX2_ui_set)
+    __swig_setmethods__["p"] = _softposit.ui32_pX2_p_set
+    __swig_getmethods__["p"] = _softposit.ui32_pX2_p_get
+    if _newclass:
+        p = _swig_property(_softposit.ui32_pX2_p_get, _softposit.ui32_pX2_p_set)
+
+    def __init__(self):
+        this = _softposit.new_ui32_pX2()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _softposit.delete_ui32_pX2
+    __del__ = lambda self: None
+ui32_pX2_swigregister = _softposit.ui32_pX2_swigregister
+ui32_pX2_swigregister(ui32_pX2)
+
 class ui32_q8(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, ui32_q8, name, value)
@@ -733,6 +803,32 @@ class ui512_q32(_object):
     __del__ = lambda self: None
 ui512_q32_swigregister = _softposit.ui512_q32_swigregister
 ui512_q32_swigregister(ui512_q32)
+
+class ui512_qX2(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ui512_qX2, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, ui512_qX2, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["ui"] = _softposit.ui512_qX2_ui_set
+    __swig_getmethods__["ui"] = _softposit.ui512_qX2_ui_get
+    if _newclass:
+        ui = _swig_property(_softposit.ui512_qX2_ui_get, _softposit.ui512_qX2_ui_set)
+    __swig_setmethods__["q"] = _softposit.ui512_qX2_q_set
+    __swig_getmethods__["q"] = _softposit.ui512_qX2_q_get
+    if _newclass:
+        q = _swig_property(_softposit.ui512_qX2_q_get, _softposit.ui512_qX2_q_set)
+
+    def __init__(self):
+        this = _softposit.new_ui512_qX2()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _softposit.delete_ui512_qX2
+    __del__ = lambda self: None
+ui512_qX2_swigregister = _softposit.ui512_qX2_swigregister
+ui512_qX2_swigregister(ui512_qX2)
 
 softposit_h = _softposit.softposit_h
 
@@ -900,6 +996,10 @@ def p16_to_p32(arg1):
     return _softposit.p16_to_p32(arg1)
 p16_to_p32 = _softposit.p16_to_p32
 
+def p16_to_pX2(arg1, arg2):
+    return _softposit.p16_to_pX2(arg1, arg2)
+p16_to_pX2 = _softposit.p16_to_pX2
+
 def p16_roundToInt(arg1):
     return _softposit.p16_roundToInt(arg1)
 p16_roundToInt = _softposit.p16_roundToInt
@@ -968,6 +1068,10 @@ def printBinary(arg1, arg2):
     return _softposit.printBinary(arg1, arg2)
 printBinary = _softposit.printBinary
 
+def printBinaryPX(arg1, arg2):
+    return _softposit.printBinaryPX(arg1, arg2)
+printBinaryPX = _softposit.printBinaryPX
+
 def printHex(arg1):
     return _softposit.printHex(arg1)
 printHex = _softposit.printHex
@@ -975,6 +1079,10 @@ printHex = _softposit.printHex
 def printHex64(arg1):
     return _softposit.printHex64(arg1)
 printHex64 = _softposit.printHex64
+
+def printHexPX(arg1, arg2):
+    return _softposit.printHexPX(arg1, arg2)
+printHexPX = _softposit.printHexPX
 
 def q16Clr():
     return _softposit.q16Clr()
@@ -1056,6 +1164,10 @@ def p32_lt(arg1, arg2):
     return _softposit.p32_lt(arg1, arg2)
 p32_lt = _softposit.p32_lt
 
+def p32_to_pX2(arg1, arg2):
+    return _softposit.p32_to_pX2(arg1, arg2)
+p32_to_pX2 = _softposit.p32_to_pX2
+
 def p32_int(arg1):
     return _softposit.p32_int(arg1)
 p32_int = _softposit.p32_int
@@ -1091,6 +1203,126 @@ convertFloatToP32 = _softposit.convertFloatToP32
 def convertDoubleToP32(arg1):
     return _softposit.convertDoubleToP32(arg1)
 convertDoubleToP32 = _softposit.convertDoubleToP32
+
+def pX2_add(arg1, arg2, arg3):
+    return _softposit.pX2_add(arg1, arg2, arg3)
+pX2_add = _softposit.pX2_add
+
+def pX2_sub(arg1, arg2, arg3):
+    return _softposit.pX2_sub(arg1, arg2, arg3)
+pX2_sub = _softposit.pX2_sub
+
+def pX2_mul(arg1, arg2, arg3):
+    return _softposit.pX2_mul(arg1, arg2, arg3)
+pX2_mul = _softposit.pX2_mul
+
+def pX2_div(arg1, arg2, arg3):
+    return _softposit.pX2_div(arg1, arg2, arg3)
+pX2_div = _softposit.pX2_div
+
+def pX2_mulAdd(arg1, arg2, arg3, arg4):
+    return _softposit.pX2_mulAdd(arg1, arg2, arg3, arg4)
+pX2_mulAdd = _softposit.pX2_mulAdd
+
+def pX2_roundToInt(arg1, arg2):
+    return _softposit.pX2_roundToInt(arg1, arg2)
+pX2_roundToInt = _softposit.pX2_roundToInt
+
+def ui32_to_pX2(arg1, arg2):
+    return _softposit.ui32_to_pX2(arg1, arg2)
+ui32_to_pX2 = _softposit.ui32_to_pX2
+
+def ui64_to_pX2(arg1, arg2):
+    return _softposit.ui64_to_pX2(arg1, arg2)
+ui64_to_pX2 = _softposit.ui64_to_pX2
+
+def i32_to_pX2(arg1, arg2):
+    return _softposit.i32_to_pX2(arg1, arg2)
+i32_to_pX2 = _softposit.i32_to_pX2
+
+def i64_to_pX2(arg1, arg2):
+    return _softposit.i64_to_pX2(arg1, arg2)
+i64_to_pX2 = _softposit.i64_to_pX2
+
+def pX2_sqrt(arg1, arg2):
+    return _softposit.pX2_sqrt(arg1, arg2)
+pX2_sqrt = _softposit.pX2_sqrt
+
+def pX2_to_ui32(arg1):
+    return _softposit.pX2_to_ui32(arg1)
+pX2_to_ui32 = _softposit.pX2_to_ui32
+
+def pX2_to_ui64(arg1):
+    return _softposit.pX2_to_ui64(arg1)
+pX2_to_ui64 = _softposit.pX2_to_ui64
+
+def pX2_to_i32(arg1):
+    return _softposit.pX2_to_i32(arg1)
+pX2_to_i32 = _softposit.pX2_to_i32
+
+def pX2_to_i64(arg1):
+    return _softposit.pX2_to_i64(arg1)
+pX2_to_i64 = _softposit.pX2_to_i64
+
+def pX2_int(arg1):
+    return _softposit.pX2_int(arg1)
+pX2_int = _softposit.pX2_int
+
+def pX2_eq(arg1, arg2):
+    return _softposit.pX2_eq(arg1, arg2)
+pX2_eq = _softposit.pX2_eq
+
+def pX2_le(arg1, arg2):
+    return _softposit.pX2_le(arg1, arg2)
+pX2_le = _softposit.pX2_le
+
+def pX2_lt(arg1, arg2):
+    return _softposit.pX2_lt(arg1, arg2)
+pX2_lt = _softposit.pX2_lt
+
+def pX2_to_p8(arg1):
+    return _softposit.pX2_to_p8(arg1)
+pX2_to_p8 = _softposit.pX2_to_p8
+
+def pX2_to_p16(arg1):
+    return _softposit.pX2_to_p16(arg1)
+pX2_to_p16 = _softposit.pX2_to_p16
+
+def pX2_to_pX2(arg1, arg2):
+    return _softposit.pX2_to_pX2(arg1, arg2)
+pX2_to_pX2 = _softposit.pX2_to_pX2
+
+def pX2_to_p32(pA):
+    return _softposit.pX2_to_p32(pA)
+pX2_to_p32 = _softposit.pX2_to_p32
+
+def convertDoubleToPX2(arg1, arg2):
+    return _softposit.convertDoubleToPX2(arg1, arg2)
+convertDoubleToPX2 = _softposit.convertDoubleToPX2
+
+def convertPX2ToDouble(arg1):
+    return _softposit.convertPX2ToDouble(arg1)
+convertPX2ToDouble = _softposit.convertPX2ToDouble
+
+def qX2_fdp_add(q, pA, arg3):
+    return _softposit.qX2_fdp_add(q, pA, arg3)
+qX2_fdp_add = _softposit.qX2_fdp_add
+
+def qX2_fdp_sub(q, pA, arg3):
+    return _softposit.qX2_fdp_sub(q, pA, arg3)
+qX2_fdp_sub = _softposit.qX2_fdp_sub
+
+def qX2_to_pX2(arg1, arg2):
+    return _softposit.qX2_to_pX2(arg1, arg2)
+qX2_to_pX2 = _softposit.qX2_to_pX2
+
+def qX2_TwosComplement(arg1):
+    return _softposit.qX2_TwosComplement(arg1)
+qX2_TwosComplement = _softposit.qX2_TwosComplement
+
+def qX2Clr():
+    return _softposit.qX2Clr()
+qX2Clr = _softposit.qX2Clr
 
 
 class posit8:
@@ -1841,9 +2073,9 @@ class posit32:
        try:
           a = posit32(0)
           if isinstance(other, (int)):
-              return _softposit.p32_div(_softposit.i64_to_p32(other), self.v)
+              a.v = _softposit.p32_div(_softposit.i64_to_p32(other), self.v)
           elif isinstance(other, (float)):
-              return _softposit.p32_div(_softposit.convertDoubleToP32(other), self.v)
+              a.v = _softposit.p32_div(_softposit.convertDoubleToP32(other), self.v)
           else:
               a.v = _softposit.p32_div(other.v, self.v)
           return a

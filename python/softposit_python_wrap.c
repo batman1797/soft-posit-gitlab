@@ -2987,25 +2987,29 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 #define SWIGTYPE_p_posit32_t swig_types[5]
 #define SWIGTYPE_p_posit64_t swig_types[6]
 #define SWIGTYPE_p_posit8_t swig_types[7]
-#define SWIGTYPE_p_quire16_t swig_types[8]
-#define SWIGTYPE_p_quire32_t swig_types[9]
-#define SWIGTYPE_p_quire8_t swig_types[10]
-#define SWIGTYPE_p_short swig_types[11]
-#define SWIGTYPE_p_signed_char swig_types[12]
-#define SWIGTYPE_p_ui128_p128c swig_types[13]
-#define SWIGTYPE_p_ui128_q16 swig_types[14]
-#define SWIGTYPE_p_ui16_p16 swig_types[15]
-#define SWIGTYPE_p_ui32_p32 swig_types[16]
-#define SWIGTYPE_p_ui32_q8 swig_types[17]
-#define SWIGTYPE_p_ui512_q32 swig_types[18]
-#define SWIGTYPE_p_ui64_p64 swig_types[19]
-#define SWIGTYPE_p_ui8_p8 swig_types[20]
-#define SWIGTYPE_p_unsigned_char swig_types[21]
-#define SWIGTYPE_p_unsigned_int swig_types[22]
-#define SWIGTYPE_p_unsigned_long_long swig_types[23]
-#define SWIGTYPE_p_unsigned_short swig_types[24]
-static swig_type_info *swig_types[26];
-static swig_module_info swig_module = {swig_types, 25, 0, 0, 0, 0};
+#define SWIGTYPE_p_posit_2_t swig_types[8]
+#define SWIGTYPE_p_quire16_t swig_types[9]
+#define SWIGTYPE_p_quire32_t swig_types[10]
+#define SWIGTYPE_p_quire8_t swig_types[11]
+#define SWIGTYPE_p_quire_2_t swig_types[12]
+#define SWIGTYPE_p_short swig_types[13]
+#define SWIGTYPE_p_signed_char swig_types[14]
+#define SWIGTYPE_p_ui128_p128c swig_types[15]
+#define SWIGTYPE_p_ui128_q16 swig_types[16]
+#define SWIGTYPE_p_ui16_p16 swig_types[17]
+#define SWIGTYPE_p_ui32_p32 swig_types[18]
+#define SWIGTYPE_p_ui32_pX2 swig_types[19]
+#define SWIGTYPE_p_ui32_q8 swig_types[20]
+#define SWIGTYPE_p_ui512_q32 swig_types[21]
+#define SWIGTYPE_p_ui512_qX2 swig_types[22]
+#define SWIGTYPE_p_ui64_p64 swig_types[23]
+#define SWIGTYPE_p_ui8_p8 swig_types[24]
+#define SWIGTYPE_p_unsigned_char swig_types[25]
+#define SWIGTYPE_p_unsigned_int swig_types[26]
+#define SWIGTYPE_p_unsigned_long_long swig_types[27]
+#define SWIGTYPE_p_unsigned_short swig_types[28]
+static swig_type_info *swig_types[30];
+static swig_module_info swig_module = {swig_types, 29, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -6001,6 +6005,199 @@ SWIGINTERN PyObject *quire32_t_swigregister(PyObject *SWIGUNUSEDPARM(self), PyOb
   return SWIG_Py_Void();
 }
 
+SWIGINTERN PyObject *_wrap_posit_2_t_v_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  uint32_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:posit_2_t_v_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t_v_set" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit_2_t_v_set" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = (uint32_t)(val2);
+  if (arg1) (arg1)->v = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t_v_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint32_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:posit_2_t_v_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t_v_get" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  result = (uint32_t) ((arg1)->v);
+  resultobj = SWIG_From_unsigned_SS_int((unsigned int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_posit_2_t(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_posit_2_t")) SWIG_fail;
+  result = (posit_2_t *)calloc(1, sizeof(posit_2_t));
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_posit_2_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_posit_2_t(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_posit_2_t",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_posit_2_t" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  free((char *) arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *posit_2_t_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char *)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_posit_2_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_quire_2_t_v_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t *arg1 = (quire_2_t *) 0 ;
+  uint64_t *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:quire_2_t_v_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_quire_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "quire_2_t_v_set" "', argument " "1"" of type '" "quire_2_t *""'"); 
+  }
+  arg1 = (quire_2_t *)(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_unsigned_long_long, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "quire_2_t_v_set" "', argument " "2"" of type '" "uint64_t [8]""'"); 
+  } 
+  arg2 = (uint64_t *)(argp2);
+  {
+    if (arg2) {
+      size_t ii = 0;
+      for (; ii < (size_t)8; ++ii) *(uint64_t *)&arg1->v[ii] = *((uint64_t *)arg2 + ii);
+    } else {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""v""' of type '""uint64_t [8]""'");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_quire_2_t_v_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t *arg1 = (quire_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint64_t *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:quire_2_t_v_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_quire_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "quire_2_t_v_get" "', argument " "1"" of type '" "quire_2_t *""'"); 
+  }
+  arg1 = (quire_2_t *)(argp1);
+  result = (uint64_t *)(uint64_t *) ((arg1)->v);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_unsigned_long_long, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_quire_2_t(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_quire_2_t")) SWIG_fail;
+  result = (quire_2_t *)calloc(1, sizeof(quire_2_t));
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_quire_2_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_quire_2_t(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t *arg1 = (quire_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_quire_2_t",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_quire_2_t, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_quire_2_t" "', argument " "1"" of type '" "quire_2_t *""'"); 
+  }
+  arg1 = (quire_2_t *)(argp1);
+  free((char *) arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *quire_2_t_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char *)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_quire_2_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
 SWIGINTERN PyObject *_wrap_ui8_p8_ui_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   union ui8_p8 *arg1 = (union ui8_p8 *) 0 ;
@@ -6733,6 +6930,151 @@ SWIGINTERN PyObject *ui128_p128c_swigregister(PyObject *SWIGUNUSEDPARM(self), Py
   return SWIG_Py_Void();
 }
 
+SWIGINTERN PyObject *_wrap_ui32_pX2_ui_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui32_pX2 *arg1 = (union ui32_pX2 *) 0 ;
+  uint32_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ui32_pX2_ui_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui32_pX2, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ui32_pX2_ui_set" "', argument " "1"" of type '" "union ui32_pX2 *""'"); 
+  }
+  arg1 = (union ui32_pX2 *)(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ui32_pX2_ui_set" "', argument " "2"" of type '" "uint32_t""'");
+  } 
+  arg2 = (uint32_t)(val2);
+  if (arg1) (arg1)->ui = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ui32_pX2_ui_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui32_pX2 *arg1 = (union ui32_pX2 *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint32_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:ui32_pX2_ui_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui32_pX2, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ui32_pX2_ui_get" "', argument " "1"" of type '" "union ui32_pX2 *""'"); 
+  }
+  arg1 = (union ui32_pX2 *)(argp1);
+  result = (uint32_t) ((arg1)->ui);
+  resultobj = SWIG_From_unsigned_SS_int((unsigned int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ui32_pX2_p_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui32_pX2 *arg1 = (union ui32_pX2 *) 0 ;
+  posit_2_t *arg2 = (posit_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ui32_pX2_p_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui32_pX2, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ui32_pX2_p_set" "', argument " "1"" of type '" "union ui32_pX2 *""'"); 
+  }
+  arg1 = (union ui32_pX2 *)(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ui32_pX2_p_set" "', argument " "2"" of type '" "posit_2_t *""'"); 
+  }
+  arg2 = (posit_2_t *)(argp2);
+  if (arg1) (arg1)->p = *arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ui32_pX2_p_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui32_pX2 *arg1 = (union ui32_pX2 *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  posit_2_t *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:ui32_pX2_p_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui32_pX2, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ui32_pX2_p_get" "', argument " "1"" of type '" "union ui32_pX2 *""'"); 
+  }
+  arg1 = (union ui32_pX2 *)(argp1);
+  result = (posit_2_t *)& ((arg1)->p);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_posit_2_t, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_ui32_pX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui32_pX2 *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_ui32_pX2")) SWIG_fail;
+  result = (union ui32_pX2 *)calloc(1, sizeof(union ui32_pX2));
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ui32_pX2, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_ui32_pX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui32_pX2 *arg1 = (union ui32_pX2 *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_ui32_pX2",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui32_pX2, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ui32_pX2" "', argument " "1"" of type '" "union ui32_pX2 *""'"); 
+  }
+  arg1 = (union ui32_pX2 *)(argp1);
+  free((char *) arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *ui32_pX2_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char *)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_ui32_pX2, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
 SWIGINTERN PyObject *_wrap_ui32_q8_ui_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   union ui32_q8 *arg1 = (union ui32_q8 *) 0 ;
@@ -7179,6 +7521,158 @@ SWIGINTERN PyObject *ui512_q32_swigregister(PyObject *SWIGUNUSEDPARM(self), PyOb
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char *)"O:swigregister", &obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_ui512_q32, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_ui512_qX2_ui_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui512_qX2 *arg1 = (union ui512_qX2 *) 0 ;
+  uint64_t *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ui512_qX2_ui_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui512_qX2, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ui512_qX2_ui_set" "', argument " "1"" of type '" "union ui512_qX2 *""'"); 
+  }
+  arg1 = (union ui512_qX2 *)(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_unsigned_long_long, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ui512_qX2_ui_set" "', argument " "2"" of type '" "uint64_t [8]""'"); 
+  } 
+  arg2 = (uint64_t *)(argp2);
+  {
+    if (arg2) {
+      size_t ii = 0;
+      for (; ii < (size_t)8; ++ii) *(uint64_t *)&arg1->ui[ii] = *((uint64_t *)arg2 + ii);
+    } else {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""ui""' of type '""uint64_t [8]""'");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ui512_qX2_ui_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui512_qX2 *arg1 = (union ui512_qX2 *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint64_t *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:ui512_qX2_ui_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui512_qX2, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ui512_qX2_ui_get" "', argument " "1"" of type '" "union ui512_qX2 *""'"); 
+  }
+  arg1 = (union ui512_qX2 *)(argp1);
+  result = (uint64_t *)(uint64_t *) ((arg1)->ui);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_unsigned_long_long, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ui512_qX2_q_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui512_qX2 *arg1 = (union ui512_qX2 *) 0 ;
+  quire_2_t *arg2 = (quire_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ui512_qX2_q_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui512_qX2, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ui512_qX2_q_set" "', argument " "1"" of type '" "union ui512_qX2 *""'"); 
+  }
+  arg1 = (union ui512_qX2 *)(argp1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_quire_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ui512_qX2_q_set" "', argument " "2"" of type '" "quire_2_t *""'"); 
+  }
+  arg2 = (quire_2_t *)(argp2);
+  if (arg1) (arg1)->q = *arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ui512_qX2_q_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui512_qX2 *arg1 = (union ui512_qX2 *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  quire_2_t *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:ui512_qX2_q_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui512_qX2, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ui512_qX2_q_get" "', argument " "1"" of type '" "union ui512_qX2 *""'"); 
+  }
+  arg1 = (union ui512_qX2 *)(argp1);
+  result = (quire_2_t *)& ((arg1)->q);
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_quire_2_t, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_ui512_qX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui512_qX2 *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_ui512_qX2")) SWIG_fail;
+  result = (union ui512_qX2 *)calloc(1, sizeof(union ui512_qX2));
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ui512_qX2, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_ui512_qX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui512_qX2 *arg1 = (union ui512_qX2 *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_ui512_qX2",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui512_qX2, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ui512_qX2" "', argument " "1"" of type '" "union ui512_qX2 *""'"); 
+  }
+  arg1 = (union ui512_qX2 *)(argp1);
+  free((char *) arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *ui512_qX2_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char *)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_ui512_qX2, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -8432,6 +8926,43 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_p16_to_pX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit16_t arg1 ;
+  int arg2 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:p16_to_pX2",&obj0,&obj1)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit16_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "p16_to_pX2" "', argument " "1"" of type '" "posit16_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "p16_to_pX2" "', argument " "1"" of type '" "posit16_t""'");
+    } else {
+      arg1 = *((posit16_t *)(argp1));
+    }
+  }
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "p16_to_pX2" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = p16_to_pX2(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_p16_roundToInt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   posit16_t arg1 ;
@@ -9105,6 +9636,36 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_printBinaryPX(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  uint32_t *arg1 = (uint32_t *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:printBinaryPX",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_unsigned_int, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "printBinaryPX" "', argument " "1"" of type '" "uint32_t *""'"); 
+  }
+  arg1 = (uint32_t *)(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "printBinaryPX" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  printBinaryPX(arg1,arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_printHex(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   uint64_t arg1 ;
@@ -9140,6 +9701,36 @@ SWIGINTERN PyObject *_wrap_printHex64(PyObject *SWIGUNUSEDPARM(self), PyObject *
   } 
   arg1 = (uint64_t)(val1);
   printHex64(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_printHexPX(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  uint32_t arg1 ;
+  int arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:printHexPX",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "printHexPX" "', argument " "1"" of type '" "uint32_t""'");
+  } 
+  arg1 = (uint32_t)(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "printHexPX" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  printHexPX(arg1,arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -9815,6 +10406,43 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_p32_to_pX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit32_t arg1 ;
+  int arg2 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:p32_to_pX2",&obj0,&obj1)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit32_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "p32_to_pX2" "', argument " "1"" of type '" "posit32_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "p32_to_pX2" "', argument " "1"" of type '" "posit32_t""'");
+    } else {
+      arg1 = *((posit32_t *)(argp1));
+    }
+  }
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "p32_to_pX2" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = p32_to_pX2(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_p32_int(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   posit32_t arg1 ;
@@ -10100,6 +10728,1122 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_pX2_add(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  posit_2_t arg2 ;
+  int arg3 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:pX2_add",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_add" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_add" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pX2_add" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_add" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "pX2_add" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = (int)(val3);
+  result = pX2_add(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_sub(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  posit_2_t arg2 ;
+  int arg3 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:pX2_sub",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_sub" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_sub" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pX2_sub" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_sub" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "pX2_sub" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = (int)(val3);
+  result = pX2_sub(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_mul(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  posit_2_t arg2 ;
+  int arg3 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:pX2_mul",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_mul" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_mul" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pX2_mul" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_mul" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "pX2_mul" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = (int)(val3);
+  result = pX2_mul(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_div(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  posit_2_t arg2 ;
+  int arg3 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:pX2_div",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_div" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_div" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pX2_div" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_div" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "pX2_div" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = (int)(val3);
+  result = pX2_div(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_mulAdd(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  posit_2_t arg2 ;
+  posit_2_t arg3 ;
+  int arg4 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  void *argp3 ;
+  int res3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:pX2_mulAdd",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_mulAdd" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_mulAdd" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pX2_mulAdd" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_mulAdd" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  {
+    res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "pX2_mulAdd" "', argument " "3"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_mulAdd" "', argument " "3"" of type '" "posit_2_t""'");
+    } else {
+      arg3 = *((posit_2_t *)(argp3));
+    }
+  }
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "pX2_mulAdd" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = (int)(val4);
+  result = pX2_mulAdd(arg1,arg2,arg3,arg4);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_roundToInt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  int arg2 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:pX2_roundToInt",&obj0,&obj1)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_roundToInt" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_roundToInt" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "pX2_roundToInt" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = pX2_roundToInt(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ui32_to_pX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  uint32_t arg1 ;
+  int arg2 ;
+  unsigned int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ui32_to_pX2",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "ui32_to_pX2" "', argument " "1"" of type '" "uint32_t""'");
+  } 
+  arg1 = (uint32_t)(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ui32_to_pX2" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = ui32_to_pX2(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ui64_to_pX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  uint64_t arg1 ;
+  int arg2 ;
+  unsigned long long val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ui64_to_pX2",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_unsigned_SS_long_SS_long(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "ui64_to_pX2" "', argument " "1"" of type '" "uint64_t""'");
+  } 
+  arg1 = (uint64_t)(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ui64_to_pX2" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = ui64_to_pX2(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_i32_to_pX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int32_t arg1 ;
+  int arg2 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:i32_to_pX2",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "i32_to_pX2" "', argument " "1"" of type '" "int32_t""'");
+  } 
+  arg1 = (int32_t)(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "i32_to_pX2" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = i32_to_pX2(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_i64_to_pX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int64_t arg1 ;
+  int arg2 ;
+  long long val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:i64_to_pX2",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_long_SS_long(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "i64_to_pX2" "', argument " "1"" of type '" "int64_t""'");
+  } 
+  arg1 = (int64_t)(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "i64_to_pX2" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = i64_to_pX2(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_sqrt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  int arg2 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:pX2_sqrt",&obj0,&obj1)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_sqrt" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_sqrt" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "pX2_sqrt" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = pX2_sqrt(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_to_ui32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint_fast32_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:pX2_to_ui32",&obj0)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_to_ui32" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_to_ui32" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  result = (uint_fast32_t)pX2_to_ui32(arg1);
+  resultobj = SWIG_From_unsigned_SS_int((unsigned int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_to_ui64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint_fast64_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:pX2_to_ui64",&obj0)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_to_ui64" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_to_ui64" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  result = (uint_fast64_t)pX2_to_ui64(arg1);
+  resultobj = SWIG_From_unsigned_SS_long_SS_long((unsigned long long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_to_i32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  int_fast32_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:pX2_to_i32",&obj0)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_to_i32" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_to_i32" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  result = (int_fast32_t)pX2_to_i32(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_to_i64(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  int_fast64_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:pX2_to_i64",&obj0)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_to_i64" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_to_i64" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  result = (int_fast64_t)pX2_to_i64(arg1);
+  resultobj = SWIG_From_long_SS_long((long long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_int(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  int64_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:pX2_int",&obj0)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_int" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_int" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  result = (int64_t)pX2_int(arg1);
+  resultobj = SWIG_From_long_SS_long((long long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_eq(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  posit_2_t arg2 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:pX2_eq",&obj0,&obj1)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_eq" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_eq" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pX2_eq" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_eq" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  result = (bool)pX2_eq(arg1,arg2);
+  resultobj = SWIG_From_bool((bool)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_le(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  posit_2_t arg2 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:pX2_le",&obj0,&obj1)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_le" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_le" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pX2_le" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_le" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  result = (bool)pX2_le(arg1,arg2);
+  resultobj = SWIG_From_bool((bool)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_lt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  posit_2_t arg2 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:pX2_lt",&obj0,&obj1)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_lt" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_lt" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "pX2_lt" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_lt" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  result = (bool)pX2_lt(arg1,arg2);
+  resultobj = SWIG_From_bool((bool)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_to_p8(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  posit8_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:pX2_to_p8",&obj0)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_to_p8" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_to_p8" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  result = pX2_to_p8(arg1);
+  resultobj = SWIG_NewPointerObj((posit8_t *)memcpy((posit8_t *)calloc(1,sizeof(posit8_t)),&result,sizeof(posit8_t)), SWIGTYPE_p_posit8_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_to_p16(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  posit16_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:pX2_to_p16",&obj0)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_to_p16" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_to_p16" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  result = pX2_to_p16(arg1);
+  resultobj = SWIG_NewPointerObj((posit16_t *)memcpy((posit16_t *)calloc(1,sizeof(posit16_t)),&result,sizeof(posit16_t)), SWIGTYPE_p_posit16_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_to_pX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  int arg2 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:pX2_to_pX2",&obj0,&obj1)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_to_pX2" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_to_pX2" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "pX2_to_pX2" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = pX2_to_pX2(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_pX2_to_p32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  posit32_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:pX2_to_p32",&obj0)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "pX2_to_p32" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "pX2_to_p32" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  result = pX2_to_p32(arg1);
+  resultobj = SWIG_NewPointerObj((posit32_t *)memcpy((posit32_t *)calloc(1,sizeof(posit32_t)),&result,sizeof(posit32_t)), SWIGTYPE_p_posit32_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_convertDoubleToPX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  int arg2 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:convertDoubleToPX2",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "convertDoubleToPX2" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = (double)(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "convertDoubleToPX2" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = convertDoubleToPX2(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_convertPX2ToDouble(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t arg1 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:convertPX2ToDouble",&obj0)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "convertPX2ToDouble" "', argument " "1"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "convertPX2ToDouble" "', argument " "1"" of type '" "posit_2_t""'");
+    } else {
+      arg1 = *((posit_2_t *)(argp1));
+    }
+  }
+  result = (double)convertPX2ToDouble(arg1);
+  resultobj = SWIG_From_double((double)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_qX2_fdp_add(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t arg1 ;
+  posit_2_t arg2 ;
+  posit_2_t arg3 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  void *argp3 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  quire_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:qX2_fdp_add",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_quire_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "qX2_fdp_add" "', argument " "1"" of type '" "quire_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "qX2_fdp_add" "', argument " "1"" of type '" "quire_2_t""'");
+    } else {
+      arg1 = *((quire_2_t *)(argp1));
+    }
+  }
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "qX2_fdp_add" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "qX2_fdp_add" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  {
+    res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "qX2_fdp_add" "', argument " "3"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "qX2_fdp_add" "', argument " "3"" of type '" "posit_2_t""'");
+    } else {
+      arg3 = *((posit_2_t *)(argp3));
+    }
+  }
+  result = qX2_fdp_add(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj((quire_2_t *)memcpy((quire_2_t *)calloc(1,sizeof(quire_2_t)),&result,sizeof(quire_2_t)), SWIGTYPE_p_quire_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_qX2_fdp_sub(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t arg1 ;
+  posit_2_t arg2 ;
+  posit_2_t arg3 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  void *argp3 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  quire_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:qX2_fdp_sub",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_quire_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "qX2_fdp_sub" "', argument " "1"" of type '" "quire_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "qX2_fdp_sub" "', argument " "1"" of type '" "quire_2_t""'");
+    } else {
+      arg1 = *((quire_2_t *)(argp1));
+    }
+  }
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "qX2_fdp_sub" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "qX2_fdp_sub" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  {
+    res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "qX2_fdp_sub" "', argument " "3"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "qX2_fdp_sub" "', argument " "3"" of type '" "posit_2_t""'");
+    } else {
+      arg3 = *((posit_2_t *)(argp3));
+    }
+  }
+  result = qX2_fdp_sub(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj((quire_2_t *)memcpy((quire_2_t *)calloc(1,sizeof(quire_2_t)),&result,sizeof(quire_2_t)), SWIGTYPE_p_quire_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_qX2_to_pX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t arg1 ;
+  int arg2 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:qX2_to_pX2",&obj0,&obj1)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_quire_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "qX2_to_pX2" "', argument " "1"" of type '" "quire_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "qX2_to_pX2" "', argument " "1"" of type '" "quire_2_t""'");
+    } else {
+      arg1 = *((quire_2_t *)(argp1));
+    }
+  }
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "qX2_to_pX2" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = qX2_to_pX2(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_qX2_TwosComplement(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t arg1 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  quire_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:qX2_TwosComplement",&obj0)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_quire_2_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "qX2_TwosComplement" "', argument " "1"" of type '" "quire_2_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "qX2_TwosComplement" "', argument " "1"" of type '" "quire_2_t""'");
+    } else {
+      arg1 = *((quire_2_t *)(argp1));
+    }
+  }
+  result = qX2_TwosComplement(arg1);
+  resultobj = SWIG_NewPointerObj((quire_2_t *)memcpy((quire_2_t *)calloc(1,sizeof(quire_2_t)),&result,sizeof(quire_2_t)), SWIGTYPE_p_quire_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_qX2Clr(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":qX2Clr")) SWIG_fail;
+  result = qX2Clr();
+  resultobj = SWIG_NewPointerObj((quire_2_t *)memcpy((quire_2_t *)calloc(1,sizeof(quire_2_t)),&result,sizeof(quire_2_t)), SWIGTYPE_p_quire_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 static PyMethodDef SwigMethods[] = {
 	 { (char *)"SWIG_PyInstanceMethod_New", (PyCFunction)SWIG_PyInstanceMethod_New, METH_O, NULL},
 	 { (char *)"posit8_t_v_set", _wrap_posit8_t_v_set, METH_VARARGS, NULL},
@@ -10197,6 +11941,16 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"quire32_t_isNaR", _wrap_quire32_t_isNaR, METH_VARARGS, NULL},
 	 { (char *)"delete_quire32_t", _wrap_delete_quire32_t, METH_VARARGS, NULL},
 	 { (char *)"quire32_t_swigregister", quire32_t_swigregister, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t_v_set", _wrap_posit_2_t_v_set, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t_v_get", _wrap_posit_2_t_v_get, METH_VARARGS, NULL},
+	 { (char *)"new_posit_2_t", _wrap_new_posit_2_t, METH_VARARGS, NULL},
+	 { (char *)"delete_posit_2_t", _wrap_delete_posit_2_t, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t_swigregister", posit_2_t_swigregister, METH_VARARGS, NULL},
+	 { (char *)"quire_2_t_v_set", _wrap_quire_2_t_v_set, METH_VARARGS, NULL},
+	 { (char *)"quire_2_t_v_get", _wrap_quire_2_t_v_get, METH_VARARGS, NULL},
+	 { (char *)"new_quire_2_t", _wrap_new_quire_2_t, METH_VARARGS, NULL},
+	 { (char *)"delete_quire_2_t", _wrap_delete_quire_2_t, METH_VARARGS, NULL},
+	 { (char *)"quire_2_t_swigregister", quire_2_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"ui8_p8_ui_set", _wrap_ui8_p8_ui_set, METH_VARARGS, NULL},
 	 { (char *)"ui8_p8_ui_get", _wrap_ui8_p8_ui_get, METH_VARARGS, NULL},
 	 { (char *)"ui8_p8_p_set", _wrap_ui8_p8_p_set, METH_VARARGS, NULL},
@@ -10232,6 +11986,13 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_ui128_p128c", _wrap_new_ui128_p128c, METH_VARARGS, NULL},
 	 { (char *)"delete_ui128_p128c", _wrap_delete_ui128_p128c, METH_VARARGS, NULL},
 	 { (char *)"ui128_p128c_swigregister", ui128_p128c_swigregister, METH_VARARGS, NULL},
+	 { (char *)"ui32_pX2_ui_set", _wrap_ui32_pX2_ui_set, METH_VARARGS, NULL},
+	 { (char *)"ui32_pX2_ui_get", _wrap_ui32_pX2_ui_get, METH_VARARGS, NULL},
+	 { (char *)"ui32_pX2_p_set", _wrap_ui32_pX2_p_set, METH_VARARGS, NULL},
+	 { (char *)"ui32_pX2_p_get", _wrap_ui32_pX2_p_get, METH_VARARGS, NULL},
+	 { (char *)"new_ui32_pX2", _wrap_new_ui32_pX2, METH_VARARGS, NULL},
+	 { (char *)"delete_ui32_pX2", _wrap_delete_ui32_pX2, METH_VARARGS, NULL},
+	 { (char *)"ui32_pX2_swigregister", ui32_pX2_swigregister, METH_VARARGS, NULL},
 	 { (char *)"ui32_q8_ui_set", _wrap_ui32_q8_ui_set, METH_VARARGS, NULL},
 	 { (char *)"ui32_q8_ui_get", _wrap_ui32_q8_ui_get, METH_VARARGS, NULL},
 	 { (char *)"ui32_q8_q_set", _wrap_ui32_q8_q_set, METH_VARARGS, NULL},
@@ -10253,6 +12014,13 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_ui512_q32", _wrap_new_ui512_q32, METH_VARARGS, NULL},
 	 { (char *)"delete_ui512_q32", _wrap_delete_ui512_q32, METH_VARARGS, NULL},
 	 { (char *)"ui512_q32_swigregister", ui512_q32_swigregister, METH_VARARGS, NULL},
+	 { (char *)"ui512_qX2_ui_set", _wrap_ui512_qX2_ui_set, METH_VARARGS, NULL},
+	 { (char *)"ui512_qX2_ui_get", _wrap_ui512_qX2_ui_get, METH_VARARGS, NULL},
+	 { (char *)"ui512_qX2_q_set", _wrap_ui512_qX2_q_set, METH_VARARGS, NULL},
+	 { (char *)"ui512_qX2_q_get", _wrap_ui512_qX2_q_get, METH_VARARGS, NULL},
+	 { (char *)"new_ui512_qX2", _wrap_new_ui512_qX2, METH_VARARGS, NULL},
+	 { (char *)"delete_ui512_qX2", _wrap_delete_ui512_qX2, METH_VARARGS, NULL},
+	 { (char *)"ui512_qX2_swigregister", ui512_qX2_swigregister, METH_VARARGS, NULL},
 	 { (char *)"ui32_to_p8", _wrap_ui32_to_p8, METH_VARARGS, NULL},
 	 { (char *)"ui32_to_p16", _wrap_ui32_to_p16, METH_VARARGS, NULL},
 	 { (char *)"ui32_to_p32", _wrap_ui32_to_p32, METH_VARARGS, NULL},
@@ -10294,6 +12062,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"p16_to_i64", _wrap_p16_to_i64, METH_VARARGS, NULL},
 	 { (char *)"p16_to_p8", _wrap_p16_to_p8, METH_VARARGS, NULL},
 	 { (char *)"p16_to_p32", _wrap_p16_to_p32, METH_VARARGS, NULL},
+	 { (char *)"p16_to_pX2", _wrap_p16_to_pX2, METH_VARARGS, NULL},
 	 { (char *)"p16_roundToInt", _wrap_p16_roundToInt, METH_VARARGS, NULL},
 	 { (char *)"p16_add", _wrap_p16_add, METH_VARARGS, NULL},
 	 { (char *)"p16_sub", _wrap_p16_sub, METH_VARARGS, NULL},
@@ -10311,8 +12080,10 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"q16_TwosComplement", _wrap_q16_TwosComplement, METH_VARARGS, NULL},
 	 { (char *)"p16_int", _wrap_p16_int, METH_VARARGS, NULL},
 	 { (char *)"printBinary", _wrap_printBinary, METH_VARARGS, NULL},
+	 { (char *)"printBinaryPX", _wrap_printBinaryPX, METH_VARARGS, NULL},
 	 { (char *)"printHex", _wrap_printHex, METH_VARARGS, NULL},
 	 { (char *)"printHex64", _wrap_printHex64, METH_VARARGS, NULL},
+	 { (char *)"printHexPX", _wrap_printHexPX, METH_VARARGS, NULL},
 	 { (char *)"q16Clr", _wrap_q16Clr, METH_VARARGS, NULL},
 	 { (char *)"convertP16ToDouble", _wrap_convertP16ToDouble, METH_VARARGS, NULL},
 	 { (char *)"convertFloatToP16", _wrap_convertFloatToP16, METH_VARARGS, NULL},
@@ -10333,6 +12104,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"p32_eq", _wrap_p32_eq, METH_VARARGS, NULL},
 	 { (char *)"p32_le", _wrap_p32_le, METH_VARARGS, NULL},
 	 { (char *)"p32_lt", _wrap_p32_lt, METH_VARARGS, NULL},
+	 { (char *)"p32_to_pX2", _wrap_p32_to_pX2, METH_VARARGS, NULL},
 	 { (char *)"p32_int", _wrap_p32_int, METH_VARARGS, NULL},
 	 { (char *)"q32_fdp_add", _wrap_q32_fdp_add, METH_VARARGS, NULL},
 	 { (char *)"q32_fdp_sub", _wrap_q32_fdp_sub, METH_VARARGS, NULL},
@@ -10342,6 +12114,36 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"convertP32ToDouble", _wrap_convertP32ToDouble, METH_VARARGS, NULL},
 	 { (char *)"convertFloatToP32", _wrap_convertFloatToP32, METH_VARARGS, NULL},
 	 { (char *)"convertDoubleToP32", _wrap_convertDoubleToP32, METH_VARARGS, NULL},
+	 { (char *)"pX2_add", _wrap_pX2_add, METH_VARARGS, NULL},
+	 { (char *)"pX2_sub", _wrap_pX2_sub, METH_VARARGS, NULL},
+	 { (char *)"pX2_mul", _wrap_pX2_mul, METH_VARARGS, NULL},
+	 { (char *)"pX2_div", _wrap_pX2_div, METH_VARARGS, NULL},
+	 { (char *)"pX2_mulAdd", _wrap_pX2_mulAdd, METH_VARARGS, NULL},
+	 { (char *)"pX2_roundToInt", _wrap_pX2_roundToInt, METH_VARARGS, NULL},
+	 { (char *)"ui32_to_pX2", _wrap_ui32_to_pX2, METH_VARARGS, NULL},
+	 { (char *)"ui64_to_pX2", _wrap_ui64_to_pX2, METH_VARARGS, NULL},
+	 { (char *)"i32_to_pX2", _wrap_i32_to_pX2, METH_VARARGS, NULL},
+	 { (char *)"i64_to_pX2", _wrap_i64_to_pX2, METH_VARARGS, NULL},
+	 { (char *)"pX2_sqrt", _wrap_pX2_sqrt, METH_VARARGS, NULL},
+	 { (char *)"pX2_to_ui32", _wrap_pX2_to_ui32, METH_VARARGS, NULL},
+	 { (char *)"pX2_to_ui64", _wrap_pX2_to_ui64, METH_VARARGS, NULL},
+	 { (char *)"pX2_to_i32", _wrap_pX2_to_i32, METH_VARARGS, NULL},
+	 { (char *)"pX2_to_i64", _wrap_pX2_to_i64, METH_VARARGS, NULL},
+	 { (char *)"pX2_int", _wrap_pX2_int, METH_VARARGS, NULL},
+	 { (char *)"pX2_eq", _wrap_pX2_eq, METH_VARARGS, NULL},
+	 { (char *)"pX2_le", _wrap_pX2_le, METH_VARARGS, NULL},
+	 { (char *)"pX2_lt", _wrap_pX2_lt, METH_VARARGS, NULL},
+	 { (char *)"pX2_to_p8", _wrap_pX2_to_p8, METH_VARARGS, NULL},
+	 { (char *)"pX2_to_p16", _wrap_pX2_to_p16, METH_VARARGS, NULL},
+	 { (char *)"pX2_to_pX2", _wrap_pX2_to_pX2, METH_VARARGS, NULL},
+	 { (char *)"pX2_to_p32", _wrap_pX2_to_p32, METH_VARARGS, NULL},
+	 { (char *)"convertDoubleToPX2", _wrap_convertDoubleToPX2, METH_VARARGS, NULL},
+	 { (char *)"convertPX2ToDouble", _wrap_convertPX2ToDouble, METH_VARARGS, NULL},
+	 { (char *)"qX2_fdp_add", _wrap_qX2_fdp_add, METH_VARARGS, NULL},
+	 { (char *)"qX2_fdp_sub", _wrap_qX2_fdp_sub, METH_VARARGS, NULL},
+	 { (char *)"qX2_to_pX2", _wrap_qX2_to_pX2, METH_VARARGS, NULL},
+	 { (char *)"qX2_TwosComplement", _wrap_qX2_TwosComplement, METH_VARARGS, NULL},
+	 { (char *)"qX2Clr", _wrap_qX2Clr, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 
@@ -10356,17 +12158,21 @@ static swig_type_info _swigt__p_posit16_t = {"_p_posit16_t", "posit16_t *", 0, 0
 static swig_type_info _swigt__p_posit32_t = {"_p_posit32_t", "posit32_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_posit64_t = {"_p_posit64_t", "posit64_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_posit8_t = {"_p_posit8_t", "posit8_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_posit_2_t = {"_p_posit_2_t", "posit_2_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_quire16_t = {"_p_quire16_t", "quire16_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_quire32_t = {"_p_quire32_t", "quire32_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_quire8_t = {"_p_quire8_t", "quire8_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_quire_2_t = {"_p_quire_2_t", "quire_2_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_short = {"_p_short", "short *|int_least16_t *|int16_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_signed_char = {"_p_signed_char", "signed char *|int_least8_t *|int_fast8_t *|int8_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ui128_p128c = {"_p_ui128_p128c", "union ui128_p128c *|ui128_p128c *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ui128_q16 = {"_p_ui128_q16", "union ui128_q16 *|ui128_q16 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ui16_p16 = {"_p_ui16_p16", "union ui16_p16 *|ui16_p16 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ui32_p32 = {"_p_ui32_p32", "union ui32_p32 *|ui32_p32 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ui32_pX2 = {"_p_ui32_pX2", "union ui32_pX2 *|ui32_pX2 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ui32_q8 = {"_p_ui32_q8", "union ui32_q8 *|ui32_q8 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ui512_q32 = {"_p_ui512_q32", "union ui512_q32 *|ui512_q32 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ui512_qX2 = {"_p_ui512_qX2", "union ui512_qX2 *|ui512_qX2 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ui64_p64 = {"_p_ui64_p64", "union ui64_p64 *|ui64_p64 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ui8_p8 = {"_p_ui8_p8", "union ui8_p8 *|ui8_p8 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "unsigned char *|uint_least8_t *|uint_fast8_t *|uint8_t *", 0, 0, (void*)0, 0};
@@ -10383,17 +12189,21 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_posit32_t,
   &_swigt__p_posit64_t,
   &_swigt__p_posit8_t,
+  &_swigt__p_posit_2_t,
   &_swigt__p_quire16_t,
   &_swigt__p_quire32_t,
   &_swigt__p_quire8_t,
+  &_swigt__p_quire_2_t,
   &_swigt__p_short,
   &_swigt__p_signed_char,
   &_swigt__p_ui128_p128c,
   &_swigt__p_ui128_q16,
   &_swigt__p_ui16_p16,
   &_swigt__p_ui32_p32,
+  &_swigt__p_ui32_pX2,
   &_swigt__p_ui32_q8,
   &_swigt__p_ui512_q32,
+  &_swigt__p_ui512_qX2,
   &_swigt__p_ui64_p64,
   &_swigt__p_ui8_p8,
   &_swigt__p_unsigned_char,
@@ -10410,17 +12220,21 @@ static swig_cast_info _swigc__p_posit16_t[] = {  {&_swigt__p_posit16_t, 0, 0, 0}
 static swig_cast_info _swigc__p_posit32_t[] = {  {&_swigt__p_posit32_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_posit64_t[] = {  {&_swigt__p_posit64_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_posit8_t[] = {  {&_swigt__p_posit8_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_posit_2_t[] = {  {&_swigt__p_posit_2_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_quire16_t[] = {  {&_swigt__p_quire16_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_quire32_t[] = {  {&_swigt__p_quire32_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_quire8_t[] = {  {&_swigt__p_quire8_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_quire_2_t[] = {  {&_swigt__p_quire_2_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_short[] = {  {&_swigt__p_short, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_signed_char[] = {  {&_swigt__p_signed_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ui128_p128c[] = {  {&_swigt__p_ui128_p128c, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ui128_q16[] = {  {&_swigt__p_ui128_q16, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ui16_p16[] = {  {&_swigt__p_ui16_p16, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ui32_p32[] = {  {&_swigt__p_ui32_p32, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ui32_pX2[] = {  {&_swigt__p_ui32_pX2, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ui32_q8[] = {  {&_swigt__p_ui32_q8, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ui512_q32[] = {  {&_swigt__p_ui512_q32, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ui512_qX2[] = {  {&_swigt__p_ui512_qX2, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ui64_p64[] = {  {&_swigt__p_ui64_p64, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ui8_p8[] = {  {&_swigt__p_ui8_p8, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_char[] = {  {&_swigt__p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
@@ -10437,17 +12251,21 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_posit32_t,
   _swigc__p_posit64_t,
   _swigc__p_posit8_t,
+  _swigc__p_posit_2_t,
   _swigc__p_quire16_t,
   _swigc__p_quire32_t,
   _swigc__p_quire8_t,
+  _swigc__p_quire_2_t,
   _swigc__p_short,
   _swigc__p_signed_char,
   _swigc__p_ui128_p128c,
   _swigc__p_ui128_q16,
   _swigc__p_ui16_p16,
   _swigc__p_ui32_p32,
+  _swigc__p_ui32_pX2,
   _swigc__p_ui32_q8,
   _swigc__p_ui512_q32,
+  _swigc__p_ui512_qX2,
   _swigc__p_ui64_p64,
   _swigc__p_ui8_p8,
   _swigc__p_unsigned_char,
