@@ -2,7 +2,7 @@
 /*============================================================================
 
 This C source file is part of the SoftPosit Posit Arithmetic Package
-by S. H. Leong (Cerlane).
+by S. H. Leong (Cerlane) and John Gustafson.
 
 Copyright 2017 2018 A*STAR.  All rights reserved.
 
@@ -42,59 +42,71 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-int_fast32_t pX2_to_i32( posit_2_t pA ){
-	posit32_t p32 = {.v = pA.v};
-	return p32_to_i32(p32);
-}
-int_fast32_t p32_to_i32( posit32_t pA ){
-
-    union ui32_p32 uA;
-    uint_fast64_t iZ64, mask, tmp;
-    int_fast32_t iZ;
-    uint_fast32_t scale = 0, uiA;
-    bool bitLast, bitNPlusOne, bitsMore, sign;
+posit_2_t pX2_roundToInt( posit_2_t pA, int x ){
+	union ui32_pX2 uA;
+	uint_fast32_t mask = 0x20000000, scale=0, tmp=0, uiA, uiZ;
+	bool bitLast, bitNPlusOne, sign;
 
 	uA.p = pA;
 	uiA = uA.ui;
-
-	if (uiA==0x80000000) return 0x80000000;
-
 	sign = uiA>>31;
-	if (sign) uiA = -uiA & 0xFFFFFFFF;
 
-	if (uiA <= 0x38000000)  return 0;  		// 0 <= |pA| <= 1/2 rounds to zero.
-	else if (uiA < 0x44000000) iZ = 1;		// 1/2 < x < 3/2 rounds to 1.
-	else if (uiA <= 0x4A000000) iZ = 2;		// 3/2 <= x <= 5/2 rounds to 2. // For speed. Can be commented out
-	//overflow so return max integer value
-	else if(uiA>0x7FAFFFFF) iZ=  0x7FFFFFFF;
-	else{
-		uiA -= 0x40000000;
-		while (0x20000000 & uiA) {
-			scale += 4;
-			uiA = (uiA - 0x20000000) << 1;
-		}
-		uiA <<= 1;  								// Skip over termination bit, which is 0.
-		if (0x20000000 & uiA) scale+=2;          	// If first exponent bit is 1, increment the scale.
-		if (0x10000000 & uiA) scale++;
-		iZ64 = ((uiA | 0x10000000ULL)&0x1FFFFFFFULL) << 34;	// Left-justify fraction in 32-bit result (one left bit padding)
-		mask = 0x4000000000000000 >> scale; 	 // Point to the last bit of the integer part.
-
-		bitLast = (iZ64 & mask);               // Extract the bit, without shifting it.
-		mask >>= 1;
-		tmp = (iZ64 & mask);
-		bitNPlusOne = tmp;                   // "True" if nonzero.
-		iZ64 ^= tmp;                           // Erase the bit, if it was set.
-		tmp = iZ64 & (mask - 1);               // tmp has any remaining bits. // This is bitsMore
-		iZ64 ^= tmp;                           // Erase those bits, if any were set.
-
-		if (bitNPlusOne) {                   // logic for round to nearest, tie to even
-			if (bitLast | tmp) iZ64 += (mask << 1);
-		}
-
-		iZ = iZ64 >> (62 - scale);             // Right-justify the integer.
+	// sign is True if pA > NaR.
+	if (sign) uiA = -uiA & 0xFFFFFFFF;           // A is now |A|.
+	if (uiA <= 0x38000000) {                     // 0 <= |pA| <= 1/2 rounds to zero.
+		uA.ui = 0;
+		return uA.p;
 	}
+	else if (uiA < 0x44000000) {                 // 1/2 < x < 3/2 rounds to 1.
+		uA.ui = 0x40000000;
+	}
+	else if (uiA <= 0x4A000000) {                // 3/2 <= x <= 5/2 rounds to 2.
+		uA.ui = (x>4) ? ( 0x48000000 ) : (0x40000000);
+	}
+	else if (uiA >= 0x7E800000) {                 // If |A| is 0x7E800000 (4194304) (posit is pure integer value), leave it unchanged.
+		if (x>8) return uA.p;                           // This also takes care of the NaR case, 0x80000000.
+		else{
+			bitNPlusOne=((uint32_t)0x80000000>>x) & uiA;
+			tmp = ((uint32_t)0x7FFFFFFF>>x)& uiA; //bitsMore
+			bitLast = ((uint32_t)0x80000000>>(x-1)) & uiA;
+			if (bitNPlusOne)
+				if (bitLast | tmp) uiA += bitLast;
+		}
+	}
+	else {                                   // 34% of the cases, we have to decode the posit.
 
-	if (sign) iZ = (-iZ & 0xFFFFFFFF);
-	return iZ;
+		while (mask & uiA) {
+			scale += 4;
+			mask >>= 1;
+		}
+		mask >>= 1;
+
+		//Exponential (2 bits)
+		if (mask & uiA) scale+=2;
+		mask >>= 1;
+		if (mask & uiA) scale++;
+		mask >>= scale;
+
+		//the rest of the bits
+		bitLast = (uiA & mask);
+		mask >>= 1;
+		tmp = (uiA & mask);
+		bitNPlusOne = tmp;
+		uiA ^= tmp;                            // Erase the bit, if it was set.
+		tmp = uiA & (mask - 1);                // this is actually bitsMore
+
+		uiA ^= tmp;    
+
+		if (bitNPlusOne) {
+			if (bitLast | tmp) uiA += (mask << 1);
+		}
+		uA.ui = uiA;
+
+
+	}
+	if (sign) uA.ui = -uA.ui & 0xFFFFFFFF;
+	return uA.p;
+
+
 }
 

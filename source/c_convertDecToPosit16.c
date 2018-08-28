@@ -161,7 +161,7 @@ posit16_t convertDoubleToP16(double f16){
 				exp++;
 			}
 
-			int8_t fracLength = 13-reg;
+			int fracLength = 13-reg;
 
 			if (fracLength<0){
 				//reg == 14, means rounding bits is exp and just the rest.
@@ -214,7 +214,7 @@ posit16_t convertDoubleToP16(double f16){
 		else{
 			//only possible combination for reg=15 to reach here is 7FFF (maxpos) and FFFF (-minpos)
 			//but since it should be caught on top, so no need to handle
-			uint_fast8_t fracLength = 13-reg;
+			int_fast8_t fracLength = 13-reg;
 			frac = convertFractionP16 (f16, fracLength, &bitNPlusOne, &bitsMore);
 		}
 
@@ -414,7 +414,7 @@ posit16_t convertDoubleToP16(double f16){
 			else{
 				//only possible combination for reg=15 to reach here is 7FFF (maxpos) and FFFF (-minpos)
 				//but since it should be caught on top, so no need to handle
-				uint_fast8_t fracLength = 13-reg;
+				int_fast8_t fracLength = 13-reg;
 				frac = convertQuadFractionP16 (f16, fracLength, &bitNPlusOne, &bitsMore);
 			}
 

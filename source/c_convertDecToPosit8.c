@@ -190,7 +190,7 @@ posit8_t convertDoubleToP8(double f8){
 		if (reg>6 )
 			uZ.ui=0x1;
 		else{
-			uint_fast8_t fracLength = 6-reg;
+			int_fast8_t fracLength = 6-reg;
 			frac = convertFractionP8 (f8, fracLength, &bitNPlusOne, &bitsMore);
 			uint_fast8_t regime = 0x40>>reg;
 			uZ.ui = packToP8UI(regime, frac);

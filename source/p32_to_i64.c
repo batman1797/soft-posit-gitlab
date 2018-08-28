@@ -42,6 +42,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
+int_fast64_t pX2_to_i64( posit_2_t pA ){
+	posit32_t p32 = {.v = pA.v};
+	return p32_to_i64(p32);
+}
+
 int_fast64_t p32_to_i64( posit32_t pA ){
 
     union ui32_p32 uA;

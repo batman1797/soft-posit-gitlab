@@ -33,15 +33,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 =============================================================================*/
 
 #include <inttypes.h>
+#include <string.h>
 
 #include "platform.h"
 #include "internals.h"
 
 //c-(a*b)
 
+quire_2_t qX2_fdp_sub( quire_2_t q, posit_2_t pA, posit_2_t pB ){
+	union ui512_q32 uQZ;
+	union ui32_p32 uA, uB;
+	memcpy(uQZ.ui, q.v, 8*sizeof(uint64_t));
+	uA.ui = pA.v;
+	uB.ui = pB.v;
+	uQZ.q = q32_fdp_sub(uQZ.q, uA.p, uB.p);
+	memcpy(q.v, uQZ.ui, 8*sizeof(uint64_t));
+	return q;
+}
+
 quire32_t q32_fdp_sub( quire32_t q, posit32_t pA, posit32_t pB ){
 
-    union ui32_p32 uA, uB;
+	union ui32_p32 uA, uB;
 	union ui512_q32 uZ, uZ1, uZ2;
 	uint_fast32_t uiA, uiB;
 	uint_fast32_t regA, fracA, regime, tmp;

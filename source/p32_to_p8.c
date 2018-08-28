@@ -39,6 +39,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
+posit8_t pX2_to_p8( posit_2_t pA ){
+	posit32_t p32 = {.v = pA.v};
+	return p32_to_p8(p32);
+}
+
 posit8_t p32_to_p8( posit32_t pA ){
 
 	union ui32_p32 uA;

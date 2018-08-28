@@ -40,22 +40,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 
-posit32_t q32_to_p32(quire32_t qA){
+posit_2_t qX2_to_pX2(quire_2_t qA, int x){
 
-	union ui512_q32 uZ;
-	union ui32_p32 uA;
-	uint_fast32_t regA, fracA = 0, shift=0, regime;
+	union ui512_qX2 uZ;
+	union ui32_pX2 uA;
+	uint_fast32_t fracA = 0, shift=0, regime;
 	uint_fast64_t frac64A;
 	bool sign, regSA=0, bitNPlusOne=0, bitsMore=0;
-	int_fast32_t expA = 0;
+	int_fast32_t regA, expA = 0;
 	int i;
 
-	if (isQ32Zero(qA)){
+	if (isQX2Zero(qA)){
 		uA.ui=0;
 		return uA.p;
 	}
 	//handle NaR
-	else if (isNaRQ32(qA)){
+	else if (isNaRQX2(qA)){
 		uA.ui=0x80000000;
 		return uA.p;
 	}
@@ -128,10 +128,9 @@ posit32_t q32_to_p32(quire32_t qA){
 		regime = 0x7FFFFFFF - (0x7FFFFFFF>>regA);
 	}
 
-
-	if(regA>30){
+	if(regA>(x-2)){
 		//max or min pos. exp and frac does not matter.
-		(regSA) ? (uA.ui= 0x7FFFFFFF): (uA.ui=0x1);
+		uA.ui=(regSA) ? (0x7FFFFFFF & ((int32_t)0x80000000>>(x-1)) ): (0x1 << (32-x));
 	}
 	else{
 
@@ -140,35 +139,44 @@ posit32_t q32_to_p32(quire32_t qA){
 
 		shift = regA+35; //2 es bit, 1 sign bit and 1 r terminating bit , 31+4
 
-		fracA = frac64A>>shift;
+		fracA = ((uint32_t) (frac64A>>shift));
 
-		if (regA<=28){
-			bitNPlusOne = (frac64A>>(shift-1)) & 0x1;
-			expA<<= (28-regA);
-			if (frac64A<<(65-shift)) bitsMore=1;
-
+		//regime length is smaller than length of posit
+		if (regA<x){
+			if (regA<=(x-4)){
+				bitNPlusOne = (frac64A>>(shift+31-x)) & 0x1;
+				if ((frac64A<<(33-shift+x)) !=0) bitsMore=1;
+			}
+			else {
+				if (regA==(x-2)){
+					bitNPlusOne = expA&0x2;
+					bitsMore = (expA&0x1);
+					expA = 0;
+				}
+				else if (regA==(x-3)){
+					bitNPlusOne = expA&0x1;
+					//expA>>=1; //taken care of by the pack algo
+					expA &=0x2;
+				}
+				if (frac64A>0){
+					fracA=0;
+					bitsMore =1;
+				}
+			}
 		}
-		else {
-			if (regA==30){
-				bitNPlusOne = expA&0x2;
-				bitsMore = (expA&0x1);
-				expA = 0;
-			}
-			else if (regA==29){
-				bitNPlusOne = expA&0x1;
-				expA>>=1; //taken care of by the pack algo
-			}
-			if (frac64A>0){
-				fracA=0;
-				bitsMore =1;
-			}
+		else{
+			regime=(regSA) ? (regime & ((int32_t)0x80000000>>(x-1)) ): (regime << (32-x));
+			expA=0;
+			fracA=0;
 		}
 
-		uA.ui = packToP32UI(regime, expA, fracA);
+		expA <<= (28-regA);
+		uA.ui = packToP32UI(regime, expA, fracA) & ((int32_t)0x80000000>>(x-1));
+
 		if (bitNPlusOne)
-			uA.ui +=  (uA.ui&1) |   bitsMore;
-
+			uA.ui += (((uA.ui>>(32-x)) &0x1) | (uint32_t)bitsMore )<< (32-x);
 	}
+
 	if (sign) uA.ui = -uA.ui & 0xFFFFFFFF;
 
 	return uA.p;

@@ -9,9 +9,6 @@ Copyright 2017 2018 A*STAR.  All rights reserved.
 This C source file was based on SoftFloat IEEE Floating-Point Arithmetic
 Package, Release 3d, by John R. Hauser.
 
-Copyright 2011, 2012, 2013, 2014, 2015, 2016, 2017 The Regents of the
-University of California.  All rights reserved.
-
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
 
@@ -42,59 +39,54 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-int_fast32_t pX2_to_i32( posit_2_t pA ){
+posit_2_t pX2_to_pX2( posit_2_t pA, int x ){
 	posit32_t p32 = {.v = pA.v};
-	return p32_to_i32(p32);
+	return p32_to_pX2(p32, x);
 }
-int_fast32_t p32_to_i32( posit32_t pA ){
+posit_2_t p32_to_pX2( posit32_t pA, int x ){
 
-    union ui32_p32 uA;
-    uint_fast64_t iZ64, mask, tmp;
-    int_fast32_t iZ;
-    uint_fast32_t scale = 0, uiA;
-    bool bitLast, bitNPlusOne, bitsMore, sign;
+	union ui32_p32 uA;
+	union ui32_pX2 uZ;
+	uint_fast32_t uiA;
+	bool sign;
+
+
+	if (x<2 || x>32){
+		uZ.ui = 0x80000000;
+		return uZ.p;
+	}
 
 	uA.p = pA;
 	uiA = uA.ui;
 
-	if (uiA==0x80000000) return 0x80000000;
-
-	sign = uiA>>31;
-	if (sign) uiA = -uiA & 0xFFFFFFFF;
-
-	if (uiA <= 0x38000000)  return 0;  		// 0 <= |pA| <= 1/2 rounds to zero.
-	else if (uiA < 0x44000000) iZ = 1;		// 1/2 < x < 3/2 rounds to 1.
-	else if (uiA <= 0x4A000000) iZ = 2;		// 3/2 <= x <= 5/2 rounds to 2. // For speed. Can be commented out
-	//overflow so return max integer value
-	else if(uiA>0x7FAFFFFF) iZ=  0x7FFFFFFF;
-	else{
-		uiA -= 0x40000000;
-		while (0x20000000 & uiA) {
-			scale += 4;
-			uiA = (uiA - 0x20000000) << 1;
-		}
-		uiA <<= 1;  								// Skip over termination bit, which is 0.
-		if (0x20000000 & uiA) scale+=2;          	// If first exponent bit is 1, increment the scale.
-		if (0x10000000 & uiA) scale++;
-		iZ64 = ((uiA | 0x10000000ULL)&0x1FFFFFFFULL) << 34;	// Left-justify fraction in 32-bit result (one left bit padding)
-		mask = 0x4000000000000000 >> scale; 	 // Point to the last bit of the integer part.
-
-		bitLast = (iZ64 & mask);               // Extract the bit, without shifting it.
-		mask >>= 1;
-		tmp = (iZ64 & mask);
-		bitNPlusOne = tmp;                   // "True" if nonzero.
-		iZ64 ^= tmp;                           // Erase the bit, if it was set.
-		tmp = iZ64 & (mask - 1);               // tmp has any remaining bits. // This is bitsMore
-		iZ64 ^= tmp;                           // Erase those bits, if any were set.
-
-		if (bitNPlusOne) {                   // logic for round to nearest, tie to even
-			if (bitLast | tmp) iZ64 += (mask << 1);
-		}
-
-		iZ = iZ64 >> (62 - scale);             // Right-justify the integer.
+	if (uiA==0x80000000 || uiA==0 ){
+		uZ.ui = uiA;
+		return uZ.p;
 	}
 
-	if (sign) iZ = (-iZ & 0xFFFFFFFF);
-	return iZ;
+	sign = signP32UI( uiA );
+	if (sign) uiA = -uiA & 0xFFFFFFFF;
+
+    if (x==2){
+    	uZ.ui=(uiA>0)?(0x40000000):(0);
+    }
+    else if (x==32 || (((uint32_t)0xFFFFFFFF>>x) & uiA)==0 ){
+    	uZ.ui = uiA;
+    }
+    else {
+
+		int shift = 32-x;
+		if( (uiA>>shift)!=(0x7FFFFFFF>>shift) ){
+			if( ((uint32_t)0x80000000>>x) & uiA){
+				if ( ( ((uint32_t)0x80000000>>(x-1)) & uiA) || (((uint32_t)0x7FFFFFFF>>x) & uiA) )
+					uiA += (0x1<<shift);
+			}
+		}
+    	uZ.ui = uiA & ((int32_t)0x80000000>>(x-1));
+    	if (uZ.ui==0) uZ.ui = 0x1<<shift;
+
+    }
+    if (sign) uZ.ui = (-uZ.ui & 0xFFFFFFFF);
+	return uZ.p;
 }
 

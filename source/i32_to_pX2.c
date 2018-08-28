@@ -9,8 +9,8 @@ Copyright 2017 2018 A*STAR.  All rights reserved.
 This C source file was based on SoftFloat IEEE Floating-Point Arithmetic
 Package, Release 3d, by John R. Hauser.
 
-Copyright 2011, 2012, 2013, 2014, 2015, 2016 The Regents of the University of
-California.  All Rights Reserved.
+Copyright 2011, 2012, 2013, 2014 The Regents of the University of California.
+All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -39,23 +39,31 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include <stdint.h>
 
 #include "platform.h"
 #include "internals.h"
 
-posit32_t ui64_to_p32( uint64_t a ) {
-	int_fast8_t k, log2 = 63;//length of bit (e.g. 18445618173802707967) in int (64 but because we have only 64 bits, so one bit off to accommodate that fact)
-	union ui32_p32 uZ;
-	uint_fast64_t uiA;
-	uint_fast64_t mask = 0x8000000000000000, fracA;
-	uint_fast32_t expA;
+
+posit_2_t i32_to_pX2( int32_t a, int x ) {
+	int_fast8_t k, log2 = 31;//length of bit (e.g. 4294966271) in int (32 but because we have only 32 bits, so one bit off to accomdate that fact)
+	union ui32_pX2 uZ;
+	uint_fast32_t uiA=0;
+	uint_fast32_t expA, mask = 0x80000000, fracA;
+	bool sign;
+
+    sign = a>>31;
+    if(sign) a = -a &0xFFFFFFFF;
 
 	//NaR
-	if (a == 0x8000000000000000)
+	if (a == 0x80000000 || x<2 || x>32)
 		uiA = 0x80000000;
-	else if ( a > 0xFFFBFFFFFFFFFBFF)//18445618173802707967
-		uiA = 0x7FFFC000; // 18446744073709552000
+	else if (x==2){
+		if (a>0) uiA=0x40000000;
+	}
+	else if ( a > 0xFFFFFBFF){//4294966271
+		uiA = 0x7FC00000; // 4294967296
+		if (x<12)  uiA&=((int32_t)0x80000000>>(x-1));
+	}
 	else if ( a < 0x2 )
 		uiA = (a << 30);
 	else {
@@ -64,20 +72,44 @@ posit32_t ui64_to_p32( uint64_t a ) {
 			log2--;
 			fracA <<= 1;
 		}
-
 		k = (log2 >> 2);
-
-		expA = (log2 & 0x3) << (27 - k);
+		expA = (log2 & 0x3);
 		fracA = (fracA ^ mask);
 
-		uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k)) | expA | fracA>>(k+36);
-
-		mask = 0x800000000 << k;  //bitNPlusOne
-
-		if (mask & fracA) {
-			if (((mask - 1) & fracA) | ((mask << 1) & fracA)) uiA++;
+		if(k>=(x-2)){//maxpos
+			uiA= 0x7FFFFFFF & ((int32_t)0x80000000>>(x-1));
 		}
+		else if (k==(x-3)){//bitNPlusOne-> first exp bit //bitLast is zero
+			uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k));
+			if( (expA & 0x2) && ((expA&0x1) | fracA) ) //bitNPlusOne //bitsMore
+				 uiA |= ((uint32_t)0x80000000>>(x-1));
+		}
+		else if (k==(x-4)){
+			uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k)) | ((expA &0x2)<< (27 - k));
+			if(expA&0x1){
+				if( (((uint32_t)0x80000000>>(x-1)) & uiA)| fracA)
+						uiA  += ((uint32_t)0x80000000>>(x-1));
+			}
+		}
+		else if (k==(x-5)){
+			uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k)) | (expA<< (27 - k));
+			mask = 0x8 << (k -x);
+			if (mask & fracA){ //bitNPlusOne
+				if (((mask - 1) & fracA) | (expA&0x1)) {
+					uiA+= ((uint32_t)0x80000000>>(x-1));
+				}
+			}
+		}
+		else{
+			uiA = ((0x7FFFFFFF ^ (0x3FFFFFFF >> k)) | (expA<< (27 - k)) | fracA>>(k+4)) & ((int32_t)0x80000000>>(x-1));;
+			mask = 0x8 << (k-x);  //bitNPlusOne
+			if (mask & fracA)
+				if (((mask - 1) & fracA) | ((mask << 1) & fracA)) uiA+= ((uint32_t)0x80000000>>(x-1));
+		}
+
 	}
-	uZ.ui = uiA;
+	(sign) ? (uZ.ui = -uiA &0xFFFFFFFF) : (uZ.ui = uiA);
 	return uZ.p;
 }
+
+

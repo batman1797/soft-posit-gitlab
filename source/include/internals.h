@@ -99,6 +99,12 @@ posit32_t softposit_subMagsP32( uint_fast32_t, uint_fast32_t );
 posit32_t softposit_mulAddP32( uint_fast32_t, uint_fast32_t, uint_fast32_t, uint_fast32_t );
 
 
+/*----------------------------------------------------------------------------
+*----------------------------------------------------------------------------*/
+
+posit_2_t softposit_addMagsPX2( uint_fast32_t, uint_fast32_t, int );
+posit_2_t softposit_subMagsPX2( uint_fast32_t, uint_fast32_t, int );
+posit_2_t softposit_mulAddPX2( uint_fast32_t, uint_fast32_t, uint_fast32_t, uint_fast32_t, int );
 
 /*uint_fast16_t reglengthP32UI (uint32_t);
 int_fast16_t regkP32UI(bool, uint_fast32_t);

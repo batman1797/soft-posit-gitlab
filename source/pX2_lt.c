@@ -1,6 +1,5 @@
 
 /*============================================================================
-
 This C source file is part of the SoftPosit Posit Arithmetic Package
 by S. H. Leong (Cerlane).
 
@@ -9,8 +8,8 @@ Copyright 2017 2018 A*STAR.  All rights reserved.
 This C source file was based on SoftFloat IEEE Floating-Point Arithmetic
 Package, Release 3d, by John R. Hauser.
 
-Copyright 2011, 2012, 2013, 2014, 2015, 2016 The Regents of the University of
-California.  All Rights Reserved.
+Copyright 2011, 2012, 2013, 2014 The Regents of the University of California.
+All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -39,45 +38,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
 
-#include <stdint.h>
-
 #include "platform.h"
 #include "internals.h"
 
-posit32_t ui64_to_p32( uint64_t a ) {
-	int_fast8_t k, log2 = 63;//length of bit (e.g. 18445618173802707967) in int (64 but because we have only 64 bits, so one bit off to accommodate that fact)
-	union ui32_p32 uZ;
-	uint_fast64_t uiA;
-	uint_fast64_t mask = 0x8000000000000000, fracA;
-	uint_fast32_t expA;
+bool pX2_lt( posit_2_t a, posit_2_t b ) {
+	union ui32_pX2 uA, uB;
+	int32_t uiA, uiB;
 
-	//NaR
-	if (a == 0x8000000000000000)
-		uiA = 0x80000000;
-	else if ( a > 0xFFFBFFFFFFFFFBFF)//18445618173802707967
-		uiA = 0x7FFFC000; // 18446744073709552000
-	else if ( a < 0x2 )
-		uiA = (a << 30);
-	else {
-		fracA = a;
-		while ( !(fracA & mask) ) {
-			log2--;
-			fracA <<= 1;
-		}
+	uA.p = a;
+	uiA = (int32_t) uA.ui;
+	uB.p = b;
+	uiB = (int32_t)uB.ui;
 
-		k = (log2 >> 2);
+	if(uiA<uiB)
+		return true;
+	else
+		return false;
 
-		expA = (log2 & 0x3) << (27 - k);
-		fracA = (fracA ^ mask);
-
-		uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k)) | expA | fracA>>(k+36);
-
-		mask = 0x800000000 << k;  //bitNPlusOne
-
-		if (mask & fracA) {
-			if (((mask - 1) & fracA) | ((mask << 1) & fracA)) uiA++;
-		}
-	}
-	uZ.ui = uiA;
-	return uZ.p;
 }
+

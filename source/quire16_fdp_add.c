@@ -134,11 +134,7 @@ quire16_t q16_fdp_add( quire16_t q, posit16_t pA, posit16_t pB ){
 	if (firstPos>63){ //This means entire fraction is in right 64 bits
 		uZ2.ui[0] = 0;
 		shiftRight = firstPos-99;//99 = 63+ 4+ 32
-		/*if (shiftRight<0){//shiftLeft
-			uZ2.ui[1] =  ((uint64_t)frac32Z) << -shiftRight;
-		}
-		else
-			uZ2.ui[1] = (uint64_t) frac32Z >> shiftRight;*/
+
 		uZ2.ui[1] = (shiftRight<0) ? ((uint64_t)frac32Z << -shiftRight) : ((uint64_t) frac32Z >> shiftRight);
 	}
 	else{//frac32Z can be in both left64 and right64

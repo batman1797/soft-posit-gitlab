@@ -41,7 +41,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-#ifdef SOFTPOSITQUAD
+#ifdef SOFTPOSIT_QUAD
 
 void checkQuadExtraP32TwoBits(__float128 f32, __float128 temp, bool * bitsNPlusOne, bool * bitsMore ){
 	temp /= 2;
@@ -267,7 +267,197 @@ posit32_t convertQuadToP32(__float128 f32){
 	return uZ.p;
 
 }
-#else
+
+posit_2_t convertQuadToPX2(__float128 f32, int x){
+
+	union ui32_pX2 uZ;
+	bool sign, regS;
+	uint_fast32_t reg, frac=0;
+	int_fast32_t exp=0;
+	bool bitNPlusOne=0, bitsMore=0;
+
+	(f32>=0) ? (sign=0) : (sign=1);
+
+	if (f32 == 0 ){
+		uZ.ui = 0;
+		return uZ.p;
+	}
+	else if(f32 == INFINITY || f32 == -INFINITY || f32 == NAN){
+		uZ.ui = 0x80000000;
+		return uZ.p;
+	}
+	else if (f32 == 1) {
+		uZ.ui = 0x40000000;
+		return uZ.p;
+	}
+	else if (f32 == -1){
+		uZ.ui = 0xC0000000;
+		return uZ.p;
+	}
+	/*else if (f32 >= 1.329227995784916e+36){
+		//maxpos
+		uZ.ui = 0x7FFFFFFF;
+		return uZ.p;
+	}
+	else if (f32 <= -1.329227995784916e+36){
+		// -maxpos
+		uZ.ui = 0x80000001;
+		return uZ.p;
+	}
+	else if(f32 <= 7.52316384526264e-37 && !sign){
+		//minpos
+		uZ.ui = 0x1;
+		return uZ.p;
+	}
+	else if(f32 >= -7.52316384526264e-37 && sign){
+		//-minpos
+		uZ.ui = 0xFFFFFFFF;
+		return uZ.p;
+	}*/
+	else if (f32>1 || f32<-1){
+		if (sign){
+			//Make negative numbers positive for easier computation
+			f32 = -f32;
+		}
+
+		regS = 1;
+		reg = 1; //because k = m-1; so need to add back 1
+		// minpos
+		if (x==32 && f32 <= 7.52316384526264e-37){
+			uZ.ui = 1;
+		}
+		else{
+			//regime
+			while (f32>=16){
+				f32 *=0.0625;  // f32/=16;
+				reg++;
+			}
+			while (f32>=2){
+				f32*=0.5;
+				exp++;
+			}
+
+			int fracLength = x-4-reg;
+			if (fracLength<0){
+				//in both cases, reg=29 and 30, e is n+1 bit and frac are sticky bits
+				if(reg==x-3){
+					bitNPlusOne = exp&0x1;
+					//exp>>=1; //taken care of by the pack algo
+					exp&=0x2;
+				}
+				else{//reg=30
+					bitNPlusOne=exp>>1;
+					bitsMore=exp&0x1;
+					exp=0;
+				}
+				if (f32!=1){//because of hidden bit
+					bitsMore =1;
+					frac=0;
+				}
+			}
+			else
+				frac = convertQuadFractionP32 (f32, fracLength, &bitNPlusOne, &bitsMore);
+
+
+			if (reg>(x-2) ){
+				uZ.ui=(regS) ? (0x7FFFFFFF & ((int32_t)0x80000000>>(x-1)) ): (0x1 << (32-x));
+			}
+			//rounding off fraction bits
+			else{
+
+				uint_fast32_t regime = 1;
+				if (regS) regime = ( (1<<reg)-1 ) <<1;
+				if (reg<=28)  exp<<= (28-reg);
+				uZ.ui = ((uint32_t) (regime) << (30-reg)) + ((uint32_t) exp ) + ((uint32_t)(frac<<(32-x)));
+				//minpos
+				if (uZ.ui==0 && frac>0){
+					uZ.ui = 0x1 << (32-x);
+				}
+				if (bitNPlusOne)
+					uZ.ui +=  ( ((uZ.ui>>(32-x)) & 0x1) | bitsMore ) << (32-x);
+			}
+			if (sign) uZ.ui = -uZ.ui & 0xFFFFFFFF;
+
+		}
+	}
+	else if (f32 < 1 || f32 > -1 ){
+		if (sign){
+			//Make negative numbers positive for easier computation
+			f32 = -f32;
+		}
+		regS = 0;
+		reg = 0;
+
+		//regime
+		while (f32<1){
+			f32 *= 16;
+			reg++;
+		}
+
+		while (f32>=2){
+			f32*=0.5;
+			exp++;
+		}
+
+
+		int fracLength = x-4-reg;
+		if (fracLength<0){
+			//in both cases, reg=29 and 30, e is n+1 bit and frac are sticky bits
+			if(reg==x-3){
+				bitNPlusOne = exp&0x1;
+				//exp>>=1; //taken care of by the pack algo
+				exp&=0x2;
+			}
+			else{//reg=30
+				bitNPlusOne=exp>>1;
+				bitsMore=exp&0x1;
+				exp=0;
+			}
+			if (f32!=1){//because of hidden bit
+				bitsMore =1;
+				frac=0;
+			}
+		}
+		else
+			frac = convertQuadFractionP32 (f32, fracLength, &bitNPlusOne, &bitsMore);
+//printf("fracLength: %d reg: %d exp: %d bitNPlusOne: %d bitsMore: %d\n",fracLength, reg, exp, bitNPlusOne, bitsMore);
+//printBinary(&frac,32);
+		if (reg>(x-2) ){
+			uZ.ui=(regS) ? (0x7FFFFFFF & ((int32_t)0x80000000>>(x-1)) ): (0x1 << (32-x));
+		}
+		//rounding off fraction bits
+		else{
+
+			uint_fast32_t regime = 1;
+			if (regS) regime = ( (1<<reg)-1 ) <<1;
+//printBinary(&exp,32);
+			if (reg<=28)  exp<<= (28-reg);
+//printBinary(&exp,32);
+			uZ.ui = ((uint32_t) (regime) << (30-reg)) + ((uint32_t) exp ) + ((uint32_t)(frac<<(32-x)));
+			//minpos
+			if (uZ.ui==0 && frac>0){
+				uZ.ui = 0x1 << (32-x);
+			}
+
+//printBinary(&uZ.ui,32);
+//printf("lastbit: %d bitsMore:%d bitNPlusOne: %d\n", ((uZ.ui>>(32-x)) & 0x1), bitsMore, bitNPlusOne);
+			if (bitNPlusOne){
+				uZ.ui += ( ((uZ.ui>>(32-x)) & 0x1) | bitsMore ) << (32-x);
+			}
+
+
+		}
+		if (sign) uZ.ui = -uZ.ui & 0xFFFFFFFF;
+
+	}
+	else {
+		//NaR - for NaN, INF and all other combinations
+		uZ.ui = 0x80000000;
+	}
+	return uZ.p;
+}
+
+#endif
 
 void checkExtraP32TwoBits(double f32, double temp, bool * bitsNPlusOne, bool * bitsMore ){
 	temp /= 2;
@@ -397,42 +587,30 @@ posit32_t convertDoubleToP32(double f32){
 
 			if (fracLength<0){
 				//in both cases, reg=29 and 30, e is n+1 bit and frac are sticky bits
-				if(reg==29)
-					exp>>=1;
+				if(reg==29){
+					bitNPlusOne = exp&0x1;
+					exp>>=1; //taken care of by the pack algo
+				}
 				else{//reg=30
 					bitNPlusOne=exp>>1;
 					bitsMore=exp&0x1;
+					exp=0;
 				}
-				if (f32>1) bitsMore = 1;
-				frac =0;
-
+				if (f32!=1){//because of hidden bit
+					bitsMore =1;
+					frac=0;
+				}
 			}
 			else
 				frac = convertFractionP32 (f32, fracLength, &bitNPlusOne, &bitsMore);
 
-			if (reg==30){
-				bitNPlusOne = exp&0x2;
-				bitsMore = (exp&0x1);
-				exp = 0;
-				if (frac>0){
-					bitsMore =1;
-					frac=0;
-				}
-			}
-			else if (reg==29){
-				bitNPlusOne = exp&0x1;
-				exp>>=1; //taken care of by the pack algo
-				if (frac>0){
-					bitsMore =1;
-					frac=0;
-				}
-			}
 
 			if (reg>30 ){
 				(regS) ? (uZ.ui= 0x7FFFFFFF): (uZ.ui=0x1);
 			}
 			//rounding off fraction bits
 			else{
+
 				uint_fast32_t regime = 1;
 				if (regS) regime = ( (1<<reg)-1 ) <<1;
 				if (reg<=28)  exp<<= (28-reg);
@@ -462,48 +640,36 @@ posit32_t convertDoubleToP32(double f32){
 			exp++;
 		}
 
-		if (reg==30){
-			bitNPlusOne = exp>>1;
-			if ((f32>1) | (exp&0x1)) bitsMore = 1;
-			exp=0;
-			frac=0;
-		}
-		else if(reg==29){
-			bitNPlusOne = exp&0x1;
-			if (f32>1) bitsMore = 1;
-			exp>>=1;
-			frac=0;
-		}
-		else{
-			//only possible combination for reg=15 to reach here is 7FFF (maxpos) and FFFF (-minpos)
-			//but since it should be caught on top, so no need to handle
-			uint_fast8_t fracLength = 28-reg;
-			frac = convertFractionP32 (f32, fracLength, &bitNPlusOne, &bitsMore);
 
-			if (reg==30){
-				bitNPlusOne = exp&0x2;
-				bitsMore = (exp&0x1);
-				exp = 0;
-				if (frac>0){
-					bitsMore =1;
-					frac=0;
-				}
-			}
-			else if (reg==29){
+		//only possible combination for reg=15 to reach here is 7FFF (maxpos) and FFFF (-minpos)
+		//but since it should be caught on top, so no need to handle
+		int_fast8_t fracLength = 28-reg;
+		if (fracLength<0){
+			//in both cases, reg=29 and 30, e is n+1 bit and frac are sticky bits
+			if(reg==29){
 				bitNPlusOne = exp&0x1;
 				exp>>=1; //taken care of by the pack algo
-				if (frac>0){
-					bitsMore =1;
-					frac=0;
-				}
 			}
-
+			else{//reg=30
+				bitNPlusOne=exp>>1;
+				bitsMore=exp&0x1;
+				exp=0;
+			}
+			if (f32!=1){//because of hidden bit
+				bitsMore =1;
+				frac=0;
+			}
 		}
+		else
+			frac = convertFractionP32 (f32, fracLength, &bitNPlusOne, &bitsMore);
+
+
 		if (reg>30 ){
 			(regS) ? (uZ.ui= 0x7FFFFFFF): (uZ.ui=0x1);
 		}
 		//rounding off fraction bits
 		else{
+
 			uint_fast32_t regime = 1;
 			if (regS) regime = ( (1<<reg)-1 ) <<1;
 			if (reg<=28)  exp<<= (28-reg);
@@ -526,8 +692,197 @@ posit32_t convertFloatToP32(float a){
 }
 
 
+posit_2_t convertDoubleToPX2(double f32, int x){
 
-#endif
+	union ui32_pX2 uZ;
+	bool sign, regS;
+	uint_fast32_t reg, frac=0;
+	int_fast32_t exp=0;
+	bool bitNPlusOne=0, bitsMore=0;
+
+	(f32>=0) ? (sign=0) : (sign=1);
+
+	if (f32 == 0 ){
+		uZ.ui = 0;
+		return uZ.p;
+	}
+	else if(f32 == INFINITY || f32 == -INFINITY || f32 == NAN){
+		uZ.ui = 0x80000000;
+		return uZ.p;
+	}
+	else if (f32 == 1) {
+		uZ.ui = 0x40000000;
+		return uZ.p;
+	}
+	else if (f32 == -1){
+		uZ.ui = 0xC0000000;
+		return uZ.p;
+	}
+	/*else if (f32 >= 1.329227995784916e+36){
+		//maxpos
+		uZ.ui = 0x7FFFFFFF;
+		return uZ.p;
+	}
+	else if (f32 <= -1.329227995784916e+36){
+		// -maxpos
+		uZ.ui = 0x80000001;
+		return uZ.p;
+	}
+	else if(f32 <= 7.52316384526264e-37 && !sign){
+		//minpos
+		uZ.ui = 0x1;
+		return uZ.p;
+	}
+	else if(f32 >= -7.52316384526264e-37 && sign){
+		//-minpos
+		uZ.ui = 0xFFFFFFFF;
+		return uZ.p;
+	}*/
+	else if (f32>1 || f32<-1){
+		if (sign){
+			//Make negative numbers positive for easier computation
+			f32 = -f32;
+		}
+
+		regS = 1;
+		reg = 1; //because k = m-1; so need to add back 1
+		// minpos
+		if (x==32 && f32 <= 7.52316384526264e-37){
+			uZ.ui = 1;
+		}
+		else{
+			//regime
+			while (f32>=16){
+				f32 *=0.0625;  // f32/=16;
+				reg++;
+			}
+			while (f32>=2){
+				f32*=0.5;
+				exp++;
+			}
+
+			int fracLength = x-4-reg;
+			if (fracLength<0){
+				//in both cases, reg=29 and 30, e is n+1 bit and frac are sticky bits
+				if(reg==x-3){
+					bitNPlusOne = exp&0x1;
+					//exp>>=1; //taken care of by the pack algo
+					exp&=0x2;
+				}
+				else{//reg=30
+					bitNPlusOne=exp>>1;
+					bitsMore=exp&0x1;
+					exp=0;
+				}
+				if (f32!=1){//because of hidden bit
+					bitsMore =1;
+					frac=0;
+				}
+			}
+			else
+				frac = convertFractionP32 (f32, fracLength, &bitNPlusOne, &bitsMore);
+
+
+			if (reg>(x-2) ){
+				uZ.ui=(regS) ? (0x7FFFFFFF & ((int32_t)0x80000000>>(x-1)) ): (0x1 << (32-x));
+			}
+			//rounding off fraction bits
+			else{
+
+				uint_fast32_t regime = 1;
+				if (regS) regime = ( (1<<reg)-1 ) <<1;
+
+				if (x==32 && reg==29) exp>>=1;
+				else if (reg<=28)  exp<<= (28-reg);
+
+				uZ.ui = ((uint32_t) (regime) << (30-reg)) + ((uint32_t) exp ) + ((uint32_t)(frac<<(32-x)));
+				//minpos
+				if (uZ.ui==0 && frac>0){
+					uZ.ui = 0x1 << (32-x);
+				}
+				if (bitNPlusOne)
+					uZ.ui +=  ( ((uZ.ui>>(32-x)) & 0x1) | bitsMore ) << (32-x);
+			}
+			if (sign) uZ.ui = -uZ.ui & 0xFFFFFFFF;
+
+		}
+	}
+	else if (f32 < 1 || f32 > -1 ){
+		if (sign){
+			//Make negative numbers positive for easier computation
+			f32 = -f32;
+		}
+		regS = 0;
+		reg = 0;
+
+		//regime
+		while (f32<1){
+			f32 *= 16;
+			reg++;
+		}
+
+		while (f32>=2){
+			f32*=0.5;
+			exp++;
+		}
+
+
+		int fracLength = x-4-reg;
+		if (fracLength<0){
+			//in both cases, reg=29 and 30, e is n+1 bit and frac are sticky bits
+			if(reg==x-3){
+				bitNPlusOne = exp&0x1;
+				//exp>>=1; //taken care of by the pack algo
+				exp&=0x2;
+			}
+			else{//reg=30
+				bitNPlusOne=exp>>1;
+				bitsMore=exp&0x1;
+				exp=0;
+			}
+			if (f32!=1){//because of hidden bit
+				bitsMore =1;
+				frac=0;
+			}
+		}
+		else
+			frac = convertFractionP32 (f32, fracLength, &bitNPlusOne, &bitsMore);
+
+		if (reg>(x-2) ){
+			uZ.ui=(regS) ? (0x7FFFFFFF & ((int32_t)0x80000000>>(x-1)) ): (0x1 << (32-x));
+		}
+		//rounding off fraction bits
+		else{
+
+			uint_fast32_t regime = 1;
+			if (regS) regime = ( (1<<reg)-1 ) <<1;
+
+			if (x==32 && reg==29) exp>>=1;
+			else if (reg<=28)  exp<<= (28-reg);
+
+			uZ.ui = ((uint32_t) (regime) << (30-reg)) + ((uint32_t) exp ) + ((uint32_t)(frac<<(32-x)));
+			//minpos
+			if (uZ.ui==0 && frac>0){
+				uZ.ui = 0x1 << (32-x);
+			}
+
+			if (bitNPlusOne){
+				uZ.ui += ( ((uZ.ui>>(32-x)) & 0x1) | bitsMore ) << (32-x);
+			}
+
+
+		}
+		if (sign) uZ.ui = -uZ.ui & 0xFFFFFFFF;
+
+	}
+	else {
+		//NaR - for NaN, INF and all other combinations
+		uZ.ui = 0x80000000;
+	}
+	return uZ.p;
+}
+
+
 
 
 

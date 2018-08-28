@@ -102,6 +102,7 @@ OBJS_OTHERS = \
   p8_sqrt$(OBJ) \
   p8_to_p16$(OBJ) \
   p8_to_p32$(OBJ) \
+  p8_to_pX2$(OBJ) \
   p8_to_i32$(OBJ) \
   p8_to_i64$(OBJ) \
   p8_to_ui32$(OBJ) \
@@ -126,6 +127,7 @@ OBJS_OTHERS = \
   p16_to_i64$(OBJ) \
   p16_to_p8$(OBJ) \
   p16_to_p32$(OBJ) \
+  p16_to_pX2$(OBJ) \
   p16_roundToInt$(OBJ) \
   p16_add$(OBJ) \
   p16_sub$(OBJ) \
@@ -152,6 +154,7 @@ OBJS_OTHERS = \
   p32_to_i64$(OBJ) \
   p32_to_p8$(OBJ) \
   p32_to_p16$(OBJ) \
+  p32_to_pX2$(OBJ) \
   p32_roundToInt$(OBJ) \
   p32_add$(OBJ) \
   p32_sub$(OBJ) \
@@ -180,7 +183,25 @@ OBJS_OTHERS = \
   c_convertQuire32ToPosit32$(OBJ) \
   c_convertDecToPosit32$(OBJ) \
   c_convertPosit32ToDec$(OBJ) \
-  c_int$(OBJ) 
+  c_int$(OBJ) \
+  s_addMagsPX2$(OBJ) \
+  s_subMagsPX2$(OBJ) \
+  s_mulAddPX2$(OBJ) \
+  pX2_add$(OBJ) \
+  pX2_sub$(OBJ) \
+  pX2_mul$(OBJ) \
+  pX2_div$(OBJ) \
+  pX2_mulAdd$(OBJ) \
+  pX2_roundToInt$(OBJ) \
+  pX2_sqrt$(OBJ) \
+  pX2_eq$(OBJ) \
+  pX2_le$(OBJ) \
+  pX2_lt$(OBJ) \
+  ui32_to_pX2$(OBJ) \
+  ui64_to_pX2$(OBJ) \
+  i32_to_pX2$(OBJ) \
+  i64_to_pX2$(OBJ) \
+  c_convertQuireX2ToPositX2$(OBJ) \
 
 OBJS_ALL = $(OBJS_PRIMITIVES) $(OBJS_SPECIALIZE) $(OBJS_OTHERS)
 

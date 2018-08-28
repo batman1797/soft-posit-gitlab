@@ -148,3 +148,9 @@ int64_t p32_int( posit32_t pA ){
 	return iZ;
 }
 
+int64_t pX2_int( posit_2_t pA ){
+	posit32_t p32 = {.v = pA.v};
+	return p32_int(p32);
+
+}
+

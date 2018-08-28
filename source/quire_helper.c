@@ -40,8 +40,21 @@ void printBinary(uint64_t * s, int size) {
 	int i;
 	uint64_t number = *s;
 	int bitSize = size -1;
-	for(i = 0; i < size; ++i)
-	{
+	for(i = 0; i < size; ++i) {
+		if(i%8 == 0)
+			putchar(' ');
+		printf("%llu", (number >> (bitSize-i))&1);
+	}
+	printf("\n");
+
+}
+
+void printBinaryPX(uint32_t * s, int size) {
+	int i;
+	uint32_t number = *s;
+	number >>= (32-size);
+	int bitSize = size -1;
+	for(i = 0; i < size; ++i){
 		if(i%8 == 0)
 			putchar(' ');
 		printf("%llu", (number >> (bitSize-i))&1);
@@ -55,6 +68,11 @@ void printHex64(uint64_t s) {
 }
 void printHex(uint64_t s) {
 	printf("0x%llx\n", s);
+
+}
+void printHexPX(uint32_t s, int size) {
+	s>>=(32-size);
+	printf("0x%x\n", s);
 
 }
 quire16_t q16_TwosComplement(quire16_t q){
@@ -92,6 +110,25 @@ quire32_t q32_TwosComplement(quire32_t q){
 
 }
 
+quire_2_t qX2_TwosComplement(quire_2_t q){
+	if (!isQX2Zero(q) && !isNaRQX2(q)){
+		int i=7;
+		bool found = false;
+		while(i){
+			if (found){
+				q.v[i] = ~q.v[i];
+			}
+			else{
+				if (q.v[i]!=0){
+					q.v[i] = -q.v[i];
+					found = true;
+				}
+			}
+			i--;
+		}
+	}
+	return q;
 
+}
 
 

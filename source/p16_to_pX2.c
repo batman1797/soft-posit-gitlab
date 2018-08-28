@@ -1,4 +1,3 @@
-
 /*============================================================================
 
 This C source file is part of the SoftPosit Posit Arithmetic Package
@@ -38,63 +37,87 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
-
 #include "platform.h"
 #include "internals.h"
 
-int_fast32_t pX2_to_i32( posit_2_t pA ){
-	posit32_t p32 = {.v = pA.v};
-	return p32_to_i32(p32);
-}
-int_fast32_t p32_to_i32( posit32_t pA ){
+posit_2_t p16_to_pX2( posit16_t pA, int x ) {
 
-    union ui32_p32 uA;
-    uint_fast64_t iZ64, mask, tmp;
-    int_fast32_t iZ;
-    uint_fast32_t scale = 0, uiA;
-    bool bitLast, bitNPlusOne, bitsMore, sign;
+	union ui16_p16 uA;
+	union ui32_pX2 uZ;
+	uint_fast16_t uiA, tmp, regime;
+	uint_fast32_t exp_frac32A=0;
+	bool sign, regSA;
+	int_fast8_t kA=0, regA;
+
+	if (x<2 || x>32){
+		uZ.ui = 0x80000000;
+		return uZ.p;
+	}
 
 	uA.p = pA;
 	uiA = uA.ui;
 
-	if (uiA==0x80000000) return 0x80000000;
-
-	sign = uiA>>31;
-	if (sign) uiA = -uiA & 0xFFFFFFFF;
-
-	if (uiA <= 0x38000000)  return 0;  		// 0 <= |pA| <= 1/2 rounds to zero.
-	else if (uiA < 0x44000000) iZ = 1;		// 1/2 < x < 3/2 rounds to 1.
-	else if (uiA <= 0x4A000000) iZ = 2;		// 3/2 <= x <= 5/2 rounds to 2. // For speed. Can be commented out
-	//overflow so return max integer value
-	else if(uiA>0x7FAFFFFF) iZ=  0x7FFFFFFF;
-	else{
-		uiA -= 0x40000000;
-		while (0x20000000 & uiA) {
-			scale += 4;
-			uiA = (uiA - 0x20000000) << 1;
-		}
-		uiA <<= 1;  								// Skip over termination bit, which is 0.
-		if (0x20000000 & uiA) scale+=2;          	// If first exponent bit is 1, increment the scale.
-		if (0x10000000 & uiA) scale++;
-		iZ64 = ((uiA | 0x10000000ULL)&0x1FFFFFFFULL) << 34;	// Left-justify fraction in 32-bit result (one left bit padding)
-		mask = 0x4000000000000000 >> scale; 	 // Point to the last bit of the integer part.
-
-		bitLast = (iZ64 & mask);               // Extract the bit, without shifting it.
-		mask >>= 1;
-		tmp = (iZ64 & mask);
-		bitNPlusOne = tmp;                   // "True" if nonzero.
-		iZ64 ^= tmp;                           // Erase the bit, if it was set.
-		tmp = iZ64 & (mask - 1);               // tmp has any remaining bits. // This is bitsMore
-		iZ64 ^= tmp;                           // Erase those bits, if any were set.
-
-		if (bitNPlusOne) {                   // logic for round to nearest, tie to even
-			if (bitLast | tmp) iZ64 += (mask << 1);
-		}
-
-		iZ = iZ64 >> (62 - scale);             // Right-justify the integer.
+	if (uiA==0x8000 || uiA==0 ){
+		uZ.ui = (uint32_t)uiA<<16;
+		return uZ.p;
 	}
 
-	if (sign) iZ = (-iZ & 0xFFFFFFFF);
-	return iZ;
+	sign = signP16UI( uiA );
+	if (sign) uiA = -uiA & 0xFFFF;
+
+	regSA = signregP16UI(uiA);
+
+	tmp = (uiA<<2) & 0xFFFF;
+	if (regSA){
+		while (tmp>>15){
+			kA++;
+			tmp= (tmp<<1) & 0xFFFF;
+		}
+	}
+	else{
+		kA=-1;
+		while (!(tmp>>15)){
+			kA--;
+			tmp= (tmp<<1) & 0xFFFF;
+		}
+		tmp&=0x7FFF;
+	}
+	exp_frac32A = tmp<<16;
+
+	if(kA<0){
+		regA = -kA;
+		//if (regA&0x1) exp_frac32A |= 0x80000000;
+		exp_frac32A |= ((uint32_t)(regA&0x1)<<31);
+		regA = (regA+1)>>1;
+		if (regA==0) regA=1;
+		regSA = 0;
+		regime = 0x40000000>>regA;
+	}
+	else{
+		exp_frac32A |= ((uint32_t)(kA&0x1)<<31);
+		(kA==0) ? (regA=1) : (regA = (kA+2)>>1);
+
+		regSA=1;
+		regime = 0x7FFFFFFF - (0x7FFFFFFF>>regA);
+	}
+
+	exp_frac32A >>=(regA+2); //2 because of sign and regime terminating bit
+
+	uZ.ui = regime + exp_frac32A;
+
+	int shift = 32-x;
+	if( (uiA>>shift)!=(0x7FFFFFFF>>shift) ){
+		if( ((uint32_t)0x80000000>>x) & uZ.ui){
+			if ( ( ((uint32_t)0x80000000>>(x-1)) & uZ.ui) || (((uint32_t)0x7FFFFFFF>>x) & uZ.ui) )
+				uZ.ui += (0x1<<shift);
+		}
+	}
+
+	uZ.ui &=((int32_t)0x80000000>>(x-1));
+	if (uZ.ui==0) uZ.ui = 0x1<<shift;
+
+	if (sign) uZ.ui = -uZ.ui & 0xFFFFFFFF;
+
+	return uZ.p;
 }
 

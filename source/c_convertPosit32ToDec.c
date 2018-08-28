@@ -45,7 +45,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 #ifdef SOFTPOSIT_QUAD
-__float128 convertP32ToQuadDec(posit32_t a){
+__float128 convertP32ToQuad(posit32_t a){
 
 	union ui32_p32 uZ;
 	__float128 p32;
@@ -112,11 +112,143 @@ __float128 convertP32ToQuadDec(posit32_t a){
 
 }
 
+__float128 convertPX2ToQuad(posit_2_t a){
+
+	union ui32_pX2 uZ;
+	__float128 p32;
+	uZ.p = a;
+
+	if (uZ.ui==0){
+		p32 = 0;
+		return p32;
+	}
+	else if(uZ.ui==0x7FFFFFFF){ //maxpos
+		p32 = 1.329227995784916e+36;
+		return p32;
+	}
+	else if (uZ.ui==0x80000001){ //-maxpos
+		p32 = -1.329227995784916e+36;
+		return p32;
+	}
+	else if (uZ.ui == 0x80000000){
+		p32 = INFINITY;
+		return p32;
+	}
+
+	bool regS, sign;
+	uint_fast32_t reg, shift=2, frac, tmp;
+	int_fast32_t k=0;
+	int_fast8_t exp;
+	__float128 fraction_max;
+
+	sign = signP32UI( uZ.ui );
+	if (sign)
+		uZ.ui = -uZ.ui & 0xFFFFFFFF;
+	regS = signregP32UI( uZ.ui );
+
+	tmp = tmp = (uZ.ui<<2)&0xFFFFFFFF;
+	if (regS){
+		while (tmp>>31){
+			k++;
+			shift++;
+			tmp= (tmp<<1) & 0xFFFFFFFF;
+		}
+		reg = k+1;
+	}
+	else{
+		k=-1;
+		while (!(tmp>>31)){
+			k--;
+			shift++;
+			tmp= (tmp<<1) & 0xFFFFFFFF;
+		}
+		tmp&=0x7FFFFFFF;
+		reg =-k;
+	}
+	exp = tmp>>29;
+	frac = (tmp & 0x1FFFFFFF) >> shift;
+
+	(reg>28) ? (fraction_max=1) : (fraction_max = pow(2, 28-reg) ) ;
+
+	p32 = (__float128)( pow(16, k)* pow(2, exp) * (1+((__float128)frac/fraction_max)) );
+
+	if (sign)
+		p32 = -p32;
+
+	return p32;
+
+}
+
+
 #endif
 
 
 double convertP32ToDouble(posit32_t a){
 	union ui32_p32 uZ;
+	double d32;
+	uZ.p = a;
+
+	if (uZ.ui==0){
+		return  0;
+	}
+	else if(uZ.ui==0x7FFFFFFF){ //maxpos
+		return  1.329227995784916e+36;
+	}
+	else if (uZ.ui==0x80000001){ //-maxpos
+		return -1.329227995784916e+36;
+	}
+	else if (uZ.ui == 0x80000000){
+		return INFINITY;
+	}
+
+	bool regS, sign;
+	uint_fast32_t reg, shift=2, frac, tmp;
+	int_fast32_t k=0;
+	int_fast8_t exp;
+	double fraction_max;
+
+	sign = signP32UI( uZ.ui );
+	if (sign)
+		uZ.ui = -uZ.ui & 0xFFFFFFFF;
+	regS = signregP32UI( uZ.ui );
+
+	tmp = (uZ.ui<<2)&0xFFFFFFFF;
+	if (regS){
+		while (tmp>>31){
+			k++;
+			shift++;
+			tmp= (tmp<<1) & 0xFFFFFFFF;
+		}
+		reg = k+1;
+	}
+	else{
+		k=-1;
+		while (!(tmp>>31)){
+			k--;
+			shift++;
+			tmp= (tmp<<1) & 0xFFFFFFFF;
+		}
+		tmp&=0x7FFFFFFF;
+		reg =-k;
+	}
+	exp = tmp>>29;
+
+	frac = (tmp & 0x1FFFFFFF) >> shift;
+
+	(reg>28) ? (fraction_max=1) : (fraction_max = pow(2, 28-reg) ) ;
+
+
+	d32 = (double)( pow(16, k)* pow(2, exp) * (1+((double)frac/fraction_max)) );
+	if (sign)
+		d32 = -d32;
+
+	return d32;
+
+}
+
+
+double convertPX2ToDouble(posit_2_t a){
+	union ui32_pX2 uZ;
 	double d32;
 	uZ.p = a;
 

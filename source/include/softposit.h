@@ -185,6 +185,8 @@ posit8_t p16_to_p8( posit16_t );
 posit32_t p16_to_p32( posit16_t );
 //posit64_t p16_to_p64( posit16_t );
 
+posit_2_t p16_to_pX2( posit16_t, int );
+
 posit16_t p16_roundToInt( posit16_t);
 posit16_t p16_add( posit16_t, posit16_t );
 posit16_t p16_sub( posit16_t, posit16_t );
@@ -215,8 +217,10 @@ quire16_t q16_TwosComplement(quire16_t);
 int_fast64_t p16_int( posit16_t);
 
 void printBinary(uint64_t*, int);
+void printBinaryPX(uint32_t*, int);
 void printHex(uint64_t);
 void printHex64(uint64_t);
+void printHexPX(uint32_t, int);
 
 #define q16_clr(q) ({\
 	(q).v[0]=0;\
@@ -284,12 +288,14 @@ bool p32_eq( posit32_t, posit32_t );
 bool p32_le( posit32_t, posit32_t );
 bool p32_lt( posit32_t, posit32_t );
 
+posit_2_t p32_to_pX2( posit32_t, int );
+
 #define isNaRP32UI( a ) ( ((a) ^ 0x80000000) == 0 )
 
 int64_t p32_int( posit32_t);
 
 #ifdef SOFTPOSIT_QUAD
-	__float128 convertP32ToQuadDec(posit32_t);
+	__float128 convertP32ToQuad(posit32_t);
 	posit32_t convertQuadToP32(__float128);
 #endif
 
@@ -359,6 +365,113 @@ static inline quire32_t q32Clr(){
 double convertP32ToDouble(posit32_t);
 posit32_t convertFloatToP32(float);
 posit32_t convertDoubleToP32(double);
+
+
+/*----------------------------------------------------------------------------
+| Dyanamic 2 to 32-bit Posits for es = 2
+*----------------------------------------------------------------------------*/
+
+posit_2_t pX2_add( posit_2_t, posit_2_t, int);
+posit_2_t pX2_sub( posit_2_t, posit_2_t, int);
+posit_2_t pX2_mul( posit_2_t, posit_2_t, int);
+posit_2_t pX2_div( posit_2_t, posit_2_t, int);
+posit_2_t pX2_mulAdd( posit_2_t, posit_2_t, posit_2_t, int);
+posit_2_t pX2_roundToInt( posit_2_t, int );
+posit_2_t ui32_to_pX2( uint32_t, int );
+posit_2_t ui64_to_pX2( uint64_t, int );
+posit_2_t i32_to_pX2( int32_t, int );
+posit_2_t i64_to_pX2( int64_t, int );
+posit_2_t pX2_sqrt( posit_2_t, int );
+
+uint_fast32_t pX2_to_ui32( posit_2_t );
+uint_fast64_t pX2_to_ui64( posit_2_t );
+int_fast32_t pX2_to_i32( posit_2_t );
+int_fast64_t pX2_to_i64( posit_2_t );
+int64_t pX2_int( posit_2_t );
+
+bool pX2_eq( posit_2_t, posit_2_t);
+bool pX2_le( posit_2_t, posit_2_t);
+bool pX2_lt( posit_2_t, posit_2_t);
+
+posit8_t pX2_to_p8( posit_2_t );
+posit16_t pX2_to_p16( posit_2_t );
+posit_2_t pX2_to_pX2( posit_2_t, int);
+static inline posit32_t pX2_to_p32(posit_2_t pA){
+	posit32_t p32 = {.v = pA.v};
+	return p32;
+}
+
+//Helper
+posit_2_t convertDoubleToPX2(double, int);
+
+double convertPX2ToDouble(posit_2_t);
+
+#ifdef SOFTPOSIT_QUAD
+	__float128 convertPX2ToQuad(posit_2_t);
+	posit_2_t convertQuadToPX2(__float128, int);
+#endif
+
+
+quire_2_t qX2_fdp_add( quire_2_t q, posit_2_t pA, posit_2_t );
+quire_2_t qX2_fdp_sub( quire_2_t q, posit_2_t pA, posit_2_t );
+posit_2_t qX2_to_pX2(quire_2_t, int);
+#define isNaRQX2( q ) ( q.v[0]==0x8000000000000000ULL && q.v[1]==0 && q.v[2]==0 && q.v[3]==0 && q.v[4]==0 && q.v[5]==0 && q.v[6]==0 && q.v[7]==0)
+#define isQX2Zero(q) (q.v[0]==0 && q.v[1]==0 && q.v[2]==0 && q.v[3]==0 && q.v[4]==0 && q.v[5]==0 && q.v[6]==0 && q.v[7]==0)
+quire_2_t qX2_TwosComplement(quire_2_t);
+
+#define qX2_clr(q) ({\
+	q.v[0]=0;\
+	q.v[1]=0;\
+	q.v[2]=0;\
+	q.v[3]=0;\
+	q.v[4]=0;\
+	q.v[5]=0;\
+	q.v[6]=0;\
+	q.v[7]=0;\
+	q;\
+})
+
+static inline quire_2_t qX2Clr(){
+	quire_2_t q;
+	q.v[0]=0;
+    q.v[1]=0;
+	q.v[2]=0;
+    q.v[3]=0;
+	q.v[4]=0;
+    q.v[5]=0;
+	q.v[6]=0;
+    q.v[7]=0;
+	return q;
+}
+
+#define castQX2(l0, l1, l2, l3, l4, l5, l6, l7)({\
+		union ui512_qX2 uA;\
+		uA.ui[0] = l0; \
+		uA.ui[1] = l1; \
+		uA.ui[2] = l2; \
+		uA.ui[3] = l3; \
+		uA.ui[4] = l4; \
+		uA.ui[5] = l5; \
+		uA.ui[6] = l6; \
+		uA.ui[7] = l7; \
+		uA.q;\
+})
+
+
+#define castPX2(a)({\
+	posit_2_t pA = {.v = (a)};\
+	pA; \
+})
+
+
+
+#define negPX2(a)({\
+		union ui32_pX2 uA;\
+		uA.p = (a);\
+		uiA.ui = -uA.ui&0xFFFFFFFF;\
+		uiA.p; \
+})
+
 
 /*----------------------------------------------------------------------------
 | 64-bit (double-precision) floating-point operations.

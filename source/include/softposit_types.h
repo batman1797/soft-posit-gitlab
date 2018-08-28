@@ -72,6 +72,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	typedef struct { uint64_t v[2]; } quire16_t;
 	typedef struct { uint64_t v[8]; } quire32_t;
 
+	typedef struct { uint32_t v; } posit_2_t;
+
+	typedef struct { uint64_t v[8]; } quire_2_t;
 
 #endif
 
@@ -95,6 +98,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	union ui32_p32 { uint32_t ui; posit32_t p; };
 	union ui64_p64 { uint64_t ui; posit64_t p; };
 	union ui128_p128c {uint64_t ui[2]; posit128_t p;}; //c to differentiate from original implementation
+
+	union ui32_pX2 { uint32_t ui; posit_2_t p; };
+
 	union ui32_q8 {
 		uint32_t ui;
 		quire8_t q;
@@ -107,6 +113,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	union ui512_q32 {
 		uint64_t ui[8];
 		quire32_t q;
+	};
+
+	union ui512_qX2 {
+		uint64_t ui[8];
+		quire_2_t q;
 	};
 #endif
 
