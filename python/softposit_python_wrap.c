@@ -3669,6 +3669,123 @@ SWIGINTERN bool quire32_t_isNaR(quire32_t *self){
 			(self->v[6] == (uint32_t) 0x0) && 
 			(self->v[7] == (uint32_t) 0x0);
     }
+SWIGINTERN posit_2_t posit_2_t_init(posit_2_t *self){
+        posit_2_t a;
+        return a;
+    }
+SWIGINTERN void posit_2_t_bitsToPX2(posit_2_t *self,int bits){
+        self->v = bits & 0xFFFFFFFF;
+    }
+SWIGINTERN void posit_2_t_toBits(posit_2_t *self,int x){
+	printBinaryPX(((uint32_t*)&self->v), x);
+    }
+SWIGINTERN void posit_2_t_toHex(posit_2_t *self,int x){
+	printHexPX(self->v, x);
+    }
+SWIGINTERN int posit_2_t_toInt(posit_2_t *self){
+	return self->v;
+    }
+SWIGINTERN posit_2_t posit_2_t___rshift__(posit_2_t *self,int n,int x){
+       posit_2_t a; 
+       a.v = (self->v >> n) & ((int32_t)0x80000000>>(x-1));
+       return a;
+    }
+SWIGINTERN posit_2_t posit_2_t___lshift__(posit_2_t *self,int n,int x){
+       posit_2_t a; 
+       a.v = (self->v << n) & 0xFFFFFFFF;
+       return a;
+    }
+SWIGINTERN posit_2_t posit_2_t___invert__(posit_2_t *self,int x){
+       self->v = (~(self->v))  & ((int32_t)0x80000000>>(x-1));
+       return *self;
+    }
+SWIGINTERN posit_2_t posit_2_t___neg__(posit_2_t *self,int x){
+       posit_2_t a;
+       a.v = -(self->v) & ((int32_t)0x80000000>>(x-1));
+       return a;
+    }
+SWIGINTERN posit_2_t posit_2_t___abs__(posit_2_t *self,int x){
+       posit_2_t a;
+       if ((self->v)>>31) a.v = -(self->v) & ((int32_t)0x80000000>>(x-1));
+       else a.v = (self->v) & ((int32_t)0x80000000>>(x-1));
+       return a;
+    }
+SWIGINTERN posit_2_t posit_2_t___and__(posit_2_t *self,posit_2_t other,int x){
+	posit_2_t a;
+        a.v = self->v & other.v;
+        return a;
+    }
+SWIGINTERN posit_2_t posit_2_t___xor__(posit_2_t *self,posit_2_t other,int x){
+	posit_2_t a;
+        a.v = (self->v ^ other.v) & ((int32_t)0x80000000>>(x-1));
+        return a;
+    }
+SWIGINTERN posit_2_t posit_2_t___or__(posit_2_t *self,posit_2_t other,int x){
+	posit_2_t a;
+        a.v = (self->v | other.v) & ((int32_t)0x80000000>>(x-1));
+        return a;
+    }
+SWIGINTERN bool posit_2_t_isNaR(posit_2_t *self){
+        return self->v == (uint32_t) 0x80000000;
+    }
+SWIGINTERN posit_2_t posit_2_t_toNaR(posit_2_t *self){        
+        self->v = (uint32_t) 0x80000000;
+        return *self;
+    }
+SWIGINTERN quire_2_t *new_quire_2_t(void){
+        quire_2_t* q;
+        q->v[0] = 0;
+        q->v[1] = 0;
+        q->v[2] = 0;
+        q->v[3] = 0;
+        q->v[4] = 0;
+        q->v[5] = 0;
+        q->v[6] = 0;
+        q->v[7] = 0;
+        return q;
+    }
+SWIGINTERN void quire_2_t_toBits(quire_2_t *self){
+	printBinary(((uint64_t*)&self->v[0]), 64);
+        printBinary(((uint64_t*)&self->v[1]), 64);
+	printBinary(((uint64_t*)&self->v[2]), 64);
+        printBinary(((uint64_t*)&self->v[3]), 64);
+	printBinary(((uint64_t*)&self->v[4]), 64);
+        printBinary(((uint64_t*)&self->v[5]), 64);
+	printBinary(((uint64_t*)&self->v[6]), 64);
+        printBinary(((uint64_t*)&self->v[7]), 64);
+    }
+SWIGINTERN void quire_2_t_toHex(quire_2_t *self){
+	printHex64(self->v[0]);
+        printHex64(self->v[1]);
+	printHex64(self->v[2]);
+        printHex64(self->v[3]);
+	printHex64(self->v[4]);
+        printHex64(self->v[5]);
+	printHex64(self->v[6]);
+        printHex64(self->v[7]);
+    }
+SWIGINTERN quire_2_t quire_2_t_clr(quire_2_t *self,quire_2_t q){
+        self = &q;
+        self->v[0] = 0;
+        self->v[1] = 0;
+        self->v[2] = 0;
+        self->v[3] = 0;
+        self->v[4] = 0;
+        self->v[5] = 0;
+        self->v[6] = 0;
+        self->v[7] = 0;
+        return *self;
+    }
+SWIGINTERN bool quire_2_t_isNaR(quire_2_t *self){
+        return (self->v[0] == (uint64_t) 0x8000000000000000) && 
+			(self->v[1] == (uint32_t) 0x0) && 
+			(self->v[2] == (uint32_t) 0x0) && 
+			(self->v[3] == (uint32_t) 0x0) && 
+			(self->v[4] == (uint32_t) 0x0) && 
+			(self->v[5] == (uint32_t) 0x0) && 
+			(self->v[6] == (uint32_t) 0x0) && 
+			(self->v[7] == (uint32_t) 0x0);
+    }
 
 #ifdef SWIG_LONG_LONG_AVAILABLE
 SWIGINTERN int
@@ -6057,6 +6174,495 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_posit_2_t_init(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:posit_2_t_init",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t_init" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  result = posit_2_t_init(arg1);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t_bitsToPX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:posit_2_t_bitsToPX2",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t_bitsToPX2" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit_2_t_bitsToPX2" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  posit_2_t_bitsToPX2(arg1,arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t_toBits(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:posit_2_t_toBits",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t_toBits" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit_2_t_toBits" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  posit_2_t_toBits(arg1,arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t_toHex(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:posit_2_t_toHex",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t_toHex" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit_2_t_toHex" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  posit_2_t_toHex(arg1,arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t_toInt(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:posit_2_t_toInt",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t_toInt" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  result = (int)posit_2_t_toInt(arg1);
+  resultobj = SWIG_From_int((int)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t___rshift__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:posit_2_t___rshift__",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t___rshift__" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit_2_t___rshift__" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "posit_2_t___rshift__" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = (int)(val3);
+  result = posit_2_t___rshift__(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t___lshift__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  int arg2 ;
+  int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:posit_2_t___lshift__",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t___lshift__" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit_2_t___lshift__" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "posit_2_t___lshift__" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = (int)(val3);
+  result = posit_2_t___lshift__(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t___invert__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:posit_2_t___invert__",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t___invert__" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit_2_t___invert__" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = posit_2_t___invert__(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t___neg__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:posit_2_t___neg__",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t___neg__" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit_2_t___neg__" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = posit_2_t___neg__(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t___abs__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:posit_2_t___abs__",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t___abs__" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit_2_t___abs__" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = posit_2_t___abs__(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t___and__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  posit_2_t arg2 ;
+  int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:posit_2_t___and__",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t___and__" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "posit_2_t___and__" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "posit_2_t___and__" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "posit_2_t___and__" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = (int)(val3);
+  result = posit_2_t___and__(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t___xor__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  posit_2_t arg2 ;
+  int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:posit_2_t___xor__",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t___xor__" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "posit_2_t___xor__" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "posit_2_t___xor__" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "posit_2_t___xor__" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = (int)(val3);
+  result = posit_2_t___xor__(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t___or__(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  posit_2_t arg2 ;
+  int arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:posit_2_t___or__",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t___or__" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_posit_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "posit_2_t___or__" "', argument " "2"" of type '" "posit_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "posit_2_t___or__" "', argument " "2"" of type '" "posit_2_t""'");
+    } else {
+      arg2 = *((posit_2_t *)(argp2));
+    }
+  }
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "posit_2_t___or__" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = (int)(val3);
+  result = posit_2_t___or__(arg1,arg2,arg3);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t_isNaR(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:posit_2_t_isNaR",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t_isNaR" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  result = (bool)posit_2_t_isNaR(arg1);
+  resultobj = SWIG_From_bool((bool)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_posit_2_t_toNaR(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit_2_t *arg1 = (posit_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:posit_2_t_toNaR",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_posit_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t_toNaR" "', argument " "1"" of type '" "posit_2_t *""'"); 
+  }
+  arg1 = (posit_2_t *)(argp1);
+  result = posit_2_t_toNaR(arg1);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_new_posit_2_t(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   posit_2_t *result = 0 ;
@@ -6162,8 +6768,109 @@ SWIGINTERN PyObject *_wrap_new_quire_2_t(PyObject *SWIGUNUSEDPARM(self), PyObjec
   quire_2_t *result = 0 ;
   
   if (!PyArg_ParseTuple(args,(char *)":new_quire_2_t")) SWIG_fail;
-  result = (quire_2_t *)calloc(1, sizeof(quire_2_t));
+  result = (quire_2_t *)new_quire_2_t();
   resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_quire_2_t, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_quire_2_t_toBits(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t *arg1 = (quire_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:quire_2_t_toBits",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_quire_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "quire_2_t_toBits" "', argument " "1"" of type '" "quire_2_t *""'"); 
+  }
+  arg1 = (quire_2_t *)(argp1);
+  quire_2_t_toBits(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_quire_2_t_toHex(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t *arg1 = (quire_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:quire_2_t_toHex",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_quire_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "quire_2_t_toHex" "', argument " "1"" of type '" "quire_2_t *""'"); 
+  }
+  arg1 = (quire_2_t *)(argp1);
+  quire_2_t_toHex(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_quire_2_t_clr(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t *arg1 = (quire_2_t *) 0 ;
+  quire_2_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  quire_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:quire_2_t_clr",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_quire_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "quire_2_t_clr" "', argument " "1"" of type '" "quire_2_t *""'"); 
+  }
+  arg1 = (quire_2_t *)(argp1);
+  {
+    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_quire_2_t,  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "quire_2_t_clr" "', argument " "2"" of type '" "quire_2_t""'"); 
+    }  
+    if (!argp2) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "quire_2_t_clr" "', argument " "2"" of type '" "quire_2_t""'");
+    } else {
+      arg2 = *((quire_2_t *)(argp2));
+    }
+  }
+  result = quire_2_t_clr(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((quire_2_t *)memcpy((quire_2_t *)calloc(1,sizeof(quire_2_t)),&result,sizeof(quire_2_t)), SWIGTYPE_p_quire_2_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_quire_2_t_isNaR(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  quire_2_t *arg1 = (quire_2_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:quire_2_t_isNaR",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_quire_2_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "quire_2_t_isNaR" "', argument " "1"" of type '" "quire_2_t *""'"); 
+  }
+  arg1 = (quire_2_t *)(argp1);
+  result = (bool)quire_2_t_isNaR(arg1);
+  resultobj = SWIG_From_bool((bool)(result));
   return resultobj;
 fail:
   return NULL;
@@ -11943,12 +12650,31 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"quire32_t_swigregister", quire32_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"posit_2_t_v_set", _wrap_posit_2_t_v_set, METH_VARARGS, NULL},
 	 { (char *)"posit_2_t_v_get", _wrap_posit_2_t_v_get, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t_init", _wrap_posit_2_t_init, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t_bitsToPX2", _wrap_posit_2_t_bitsToPX2, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t_toBits", _wrap_posit_2_t_toBits, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t_toHex", _wrap_posit_2_t_toHex, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t_toInt", _wrap_posit_2_t_toInt, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t___rshift__", _wrap_posit_2_t___rshift__, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t___lshift__", _wrap_posit_2_t___lshift__, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t___invert__", _wrap_posit_2_t___invert__, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t___neg__", _wrap_posit_2_t___neg__, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t___abs__", _wrap_posit_2_t___abs__, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t___and__", _wrap_posit_2_t___and__, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t___xor__", _wrap_posit_2_t___xor__, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t___or__", _wrap_posit_2_t___or__, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t_isNaR", _wrap_posit_2_t_isNaR, METH_VARARGS, NULL},
+	 { (char *)"posit_2_t_toNaR", _wrap_posit_2_t_toNaR, METH_VARARGS, NULL},
 	 { (char *)"new_posit_2_t", _wrap_new_posit_2_t, METH_VARARGS, NULL},
 	 { (char *)"delete_posit_2_t", _wrap_delete_posit_2_t, METH_VARARGS, NULL},
 	 { (char *)"posit_2_t_swigregister", posit_2_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"quire_2_t_v_set", _wrap_quire_2_t_v_set, METH_VARARGS, NULL},
 	 { (char *)"quire_2_t_v_get", _wrap_quire_2_t_v_get, METH_VARARGS, NULL},
 	 { (char *)"new_quire_2_t", _wrap_new_quire_2_t, METH_VARARGS, NULL},
+	 { (char *)"quire_2_t_toBits", _wrap_quire_2_t_toBits, METH_VARARGS, NULL},
+	 { (char *)"quire_2_t_toHex", _wrap_quire_2_t_toHex, METH_VARARGS, NULL},
+	 { (char *)"quire_2_t_clr", _wrap_quire_2_t_clr, METH_VARARGS, NULL},
+	 { (char *)"quire_2_t_isNaR", _wrap_quire_2_t_isNaR, METH_VARARGS, NULL},
 	 { (char *)"delete_quire_2_t", _wrap_delete_quire_2_t, METH_VARARGS, NULL},
 	 { (char *)"quire_2_t_swigregister", quire_2_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"ui8_p8_ui_set", _wrap_ui8_p8_ui_set, METH_VARARGS, NULL},
