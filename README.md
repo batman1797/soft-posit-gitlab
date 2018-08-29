@@ -14,8 +14,8 @@ This version (0.4rc) supports:
         Exhaustively tested for X=(2:20) : pX2_add, pX2_sub, pX2_mul, pX2_div
         Exhaustively tested for X=(2:21) : pX2_mul
         Exhaustively tested for X=(2:14) : pX2_mulAdd
-        Exhaustively tested for X=(2:12) : quireX2_fdp_add (using quire32 as the underlying code)
-        Exhaustively tested for X=(2:13) : quireX2_fdp_sub (using quire32 as the underlying code)
+        Exhaustively tested for X=(2:7) : quireX2_fdp_add (using quire32 as the underlying code)
+        Exhaustively tested for X=(2:7) : quireX2_fdp_sub (using quire32 as the underlying code)
     
     
 
