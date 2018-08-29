@@ -144,9 +144,10 @@ struct posit8{
 
 	//Binary operators
 
-	posit8& operator>>(const int &x) {
-		value = value>>x;
-		return *this;
+	posit8 operator>>(const int &x) {
+		posit8 ans;
+		ans.value = value>>x;
+		return ans;
 	}
 
 	posit8& operator>>=(const int &x) {
@@ -154,9 +155,10 @@ struct posit8{
 		return *this;
 	}
 
-	posit8& operator<<(const int &x) {
-		value = (value<<x)&0xFF;
-		return *this;
+	posit8 operator<<(const int &x) {
+		posit8 ans;
+		ans.value = (value<<x)&0xFF;
+		return ans;
 	}
 
 	posit8& operator<<=(const int &x) {
@@ -173,9 +175,10 @@ struct posit8{
 	}
 
 	//NOT
-	posit8& operator~() {
-		value = ~value;
-		return *this;
+	posit8 operator~() {
+		posit8 ans;
+		ans.value = ~value;
+		return ans;
 	}
 
 	//AND
@@ -249,12 +252,19 @@ struct posit8{
 	long long int toRInt()const{
 		return p8_to_i64(castP8(value));
 	}
-
-	posit8& fma(posit8 a, posit8 b){ // += (a*b)
-		value = castUI(p8_mulAdd(castP8(a.value), castP8(b.value), castP8(value)));
+	posit8& sqrt(){
+		value = castUI( p8_sqrt(castP8(value)) );
 		return *this;
 	}
-
+	posit8& rint(){
+		value = castUI( p8_roundToInt(castP8(value)) );
+		return *this;
+	}
+	posit8 fma(posit8 a, posit8 b){ // + (a*b)
+		posit8 ans;
+		ans.value = castUI(p8_mulAdd(castP8(a.value), castP8(b.value), castP8(value)));
+		return ans;
+	}
 	posit8& toNaR(){
 		value = 0x80;
 		return *this;
@@ -377,9 +387,10 @@ struct posit16{
 
 	//Binary operators
 
-	posit16& operator>>(const int &x) {
-		value = value>>x;
-		return *this;
+	posit16 operator>>(const int &x) {
+		posit16 ans;
+		ans.value = value>>x;
+		return ans;
 	}
 
 	posit16& operator>>=(const int &x) {
@@ -387,9 +398,10 @@ struct posit16{
 		return *this;
 	}
 
-	posit16& operator<<(const int &x) {
-		value = (value<<x)&0xFFFF;
-		return *this;
+	posit16 operator<<(const int &x) {
+		posit16 ans;
+		ans.value = (value<<x)&0xFFFF;
+		return ans;
 	}
 
 	posit16& operator<<=(const int &x) {
@@ -405,9 +417,10 @@ struct posit16{
 	}
 
 	//Binary NOT
-	posit16& operator~() {
-		value = ~value;
-		return *this;
+	posit16 operator~() {
+		posit16 ans;
+		ans.value = ~value;
+		return ans;
 	}
 
 	//AND
@@ -481,13 +494,19 @@ struct posit16{
 	long long int toRInt()const{
 		return p16_to_i64(castP16(value));
 	}
-
-
-	posit16& fma(posit16 a, posit16 b){ // += (a*b)
-		value = castUI(p16_mulAdd(castP16(a.value), castP16(b.value), castP16(value)));
+	posit16& sqrt(){
+		value = castUI( p16_sqrt(castP16(value)) );
 		return *this;
 	}
-
+	posit16& rint(){
+		value = castUI( p16_roundToInt(castP16(value)) );
+		return *this;
+	}
+	posit16 fma(posit16 a, posit16 b){ // + (a*b)
+		posit16 ans;
+		ans.value = castUI(p16_mulAdd(castP16(a.value), castP16(b.value), castP16(value)));
+		return ans;
+	}
 	posit16& toNaR(){
 		value = 0x8000;
 		return *this;
@@ -597,21 +616,22 @@ struct posit32{
 
 	//plus plus
 	posit32& operator++() {
-		value = castUI(p32_add(castP32(value), castP32(0x40)));
+		value = castUI(p32_add(castP32(value), castP32(0x40000000)));
 		return *this;
 	}
 
 	//minus minus
 	posit32& operator--() {
-		value = castUI(p32_sub(castP32(value), castP32(0x40)));
+		value = castUI(p32_sub(castP32(value), castP32(0x40000000)));
 		return *this;
 	}
 
 	//Binary operators
 
-	posit32& operator>>(const int &x) {
-		value = value>>x;
-		return *this;
+	posit32 operator>>(const int &x) {
+		posit32 ans;
+		ans.value = value>>x;
+		return ans;
 	}
 
 	posit32& operator>>=(const int &x) {
@@ -619,9 +639,10 @@ struct posit32{
 		return *this;
 	}
 
-	posit32& operator<<(const int &x) {
-		value = (value<<x)&0xFFFFFFFF;
-		return *this;
+	posit32 operator<<(const int &x) {
+		posit32 ans;
+		ans.value = (value<<x)&0xFFFFFFFF;
+		return ans;
 	}
 
 	posit32& operator<<=(const int &x) {
@@ -638,9 +659,10 @@ struct posit32{
 	}
 
 	//NOT
-	posit32& operator~() {
-		value = ~value;
-		return *this;
+	posit32 operator~() {
+		posit32 ans;
+		ans.value = ~value;
+		return ans;
 	}
 
 	//AND
@@ -714,10 +736,18 @@ struct posit32{
 	long long int toRInt()const{
 		return p32_to_i64(castP32(value));
 	}
-
-	posit32& fma(posit32 a, posit32 b){ // += (a*b)
-		value = castUI(p32_mulAdd(castP32(a.value), castP32(b.value), castP32(value)));
+	posit32& sqrt(){
+		value = castUI( p32_sqrt(castP32(value)) );
 		return *this;
+	}
+	posit32& rint(){
+		value = castUI( p32_roundToInt(castP32(value)) );
+		return *this;
+	}
+	posit32 fma(posit32 a, posit32 b){ // + (a*b)
+		posit32 ans;
+		ans.value = castUI(p32_mulAdd(castP32(a.value), castP32(b.value), castP32(value)));
+		return ans;
 	}
 
 	posit32& toNaR(){
@@ -728,7 +758,264 @@ struct posit32{
 
 };
 
+struct posit_2{
+	uint32_t value;
+	int x;
+	posit_2(double v=0, int x=32) : value(castUI(convertDoubleToPX2(v, x))), x(x) {
+	}
 
+	//Equal
+	posit_2& operator=(const double a) {
+		value = castUI(convertDoubleToPX2(a, x));
+		return *this;
+	}
+	posit_2& operator=(const int a) {
+		value = castUI(i32_to_pX2(a, x));
+		return *this;
+	}
+
+	//Add
+	posit_2 operator+(const posit_2 &a) const{
+		posit_2 ans;
+		ans.value = castUI(pX2_add(castPX2(value), castPX2(a.value), x));
+		ans.x = x;
+		return ans;
+	}
+
+	//Add equal
+	posit_2& operator+=(const posit_2 &a) {
+		value = castUI(pX2_add(castPX2(value), castPX2(a.value), x));
+		return *this;
+	}
+
+	//Subtract
+	posit_2 operator-(const posit_2 &a) const{
+		posit_2 ans;
+		ans.value = castUI(pX2_sub(castPX2(value), castPX2(a.value), x));
+		ans.x = x;
+		return ans;
+	}
+
+	//Subtract equal
+	posit_2& operator-=(const posit_2 &a) {
+		value = castUI(pX2_sub(castPX2(value), castPX2(a.value), x));
+		return *this;
+	}
+
+	//Multiply
+	posit_2 operator*(const posit_2 &a) const{
+		posit_2 ans;
+		ans.value = castUI(pX2_mul(castPX2(value), castPX2(a.value), x));
+		ans.x = x;
+		return ans;
+	}
+
+	//Multiply equal
+	posit_2& operator*=(const posit_2 &a) {
+		value = castUI(pX2_mul(castPX2(value), castPX2(a.value), x));
+		return *this;
+	}
+
+
+	//Divide
+	posit_2 operator/(const posit_2 &a) const{
+		posit_2 ans;
+		ans.value = castUI(pX2_div(castPX2(value), castPX2(a.value), x));
+		ans.x = x;
+		return ans;
+	}
+
+	//Divide equal
+	posit_2& operator/=(const posit_2 &a) {
+		value = castUI(pX2_div(castPX2(value), castPX2(a.value), x));
+		return *this;
+	}
+
+	//less than
+	bool operator<(const posit_2 &a) const{
+		return pX2_lt(castPX2(value), castPX2(a.value));
+	}
+
+	//less than equal
+	bool operator<=(const posit_2 &a) const{
+		return pX2_le(castPX2(value), castPX2(a.value));
+	}
+
+	//equal
+	bool operator==(const posit_2 &a) const{
+		return pX2_eq(castPX2(value), castPX2(a.value));
+	}
+
+
+	//Not equalCPP
+	bool operator!=(const posit_2 &a) const{
+		return !pX2_eq(castPX2(value), castPX2(a.value));
+	}
+
+	//greater than
+	bool operator>(const posit_2 &a) const{
+		return pX2_lt(castPX2(a.value), castPX2(value));
+	}
+
+	//greater than equal
+	bool operator>=(const posit_2 &a) const{
+		return pX2_le(castPX2(a.value), castPX2(value));
+	}
+
+	//plus plus
+	posit_2& operator++() {
+		value = castUI(pX2_add(castPX2(value), castPX2(0x40000000), x));
+		return *this;
+	}
+
+	//minus minus
+	posit_2& operator--() {
+		value = castUI(pX2_sub(castPX2(value), castPX2(0x40000000), x));
+		return *this;
+	}
+
+	//Binary operators
+
+	posit_2 operator>>(const int &x) {
+		posit_2 ans;
+		ans.value = (value>>x) & ((int32_t)0x80000000>>(x-1));
+		ans.x = x;
+		return ans;
+	}
+
+	posit_2& operator>>=(const int &x) {
+		value = (value>>x) & ((int32_t)0x80000000>>(x-1));
+		return *this;
+	}
+
+	posit_2 operator<<(const int &x) {
+		posit_2 ans;
+		ans.value = (value<<x)&0xFFFFFFFF;
+		ans.x = x;
+		return ans;
+	}
+
+	posit_2& operator<<=(const int &x) {
+		value = (value<<x)&0xFFFFFFFF;
+		return *this;
+	}
+
+
+	//Negate
+	posit_2 operator-() const{
+		posit_2 ans;
+		ans.value = -value;
+		ans.x = x;
+		return ans;
+	}
+
+	//NOT
+	posit_2 operator~() {
+		posit_2 ans;
+		ans.value = ~value;
+		ans.x = x;
+		return ans;
+	}
+
+	//AND
+	posit_2 operator&(const posit_2 &a) const{
+		posit_2 ans;
+		ans.value = (value & a.value);
+		return *this;
+	}
+
+	//AND equal
+	posit_2& operator&=(const posit_2 &a) {
+		value = (value & a.value);
+		return *this;
+	}
+
+	//OR
+	posit_2 operator|(const posit_2 &a) const{
+		posit_2 ans;
+		ans.value = (value | a.value);
+		return ans;
+	}
+
+
+	//OR equal
+	posit_2& operator|=(const posit_2 &a) {
+		value = (value | a.value);
+		return *this;
+	}
+
+	//XOR
+	posit_2 operator^(const posit_2 &a) const{
+		posit_2 ans;
+		ans.value = (value ^ a.value);
+		return ans;
+	}
+
+	//XOR equal
+	posit_2& operator^=(const posit_2 &a) {
+		value = (value ^ a.value);
+		return *this;
+	}
+
+	//Logical Operator
+	//!
+	bool operator!()const{
+		return !value;
+	}
+
+	//&&
+	bool operator&&(const posit_2 &a) const{
+		return (value && a.value);
+	}
+
+	//||
+	bool operator||(const posit_2 &a) const{
+		return (value || a.value);
+	}
+
+	bool isNaR(){
+		return isNaRPX2UI(value);
+	}
+
+	double toDouble()const{
+		return convertPX2ToDouble(castPX2(value));
+	}
+
+	long long int toInt()const{
+		return pX2_int(castPX2(value));
+	}
+
+	long long int toRInt()const{
+		return pX2_to_i64(castPX2(value));
+	}
+	posit_2& sqrt(){
+		value = castUI( pX2_sqrt(castPX2(value), x) );
+		return *this;
+	}
+	posit_2& rint(){
+		value = castUI( pX2_roundToInt(castPX2(value), x) );
+		return *this;
+	}
+	posit_2 fma(posit_2 a, posit_2 b){ // + (a*b)
+		posit_2 ans;
+		ans.value = castUI(pX2_mulAdd(castPX2(a.value), castPX2(b.value), castPX2(value), x));
+		ans.x = x;
+		return ans;
+	}
+
+	posit_2 toPositX2(int x){
+		posit_2 ans;
+		ans.value = pX2_to_pX2(castPX2(value), x).v;
+		ans.x = x;
+		return ans;
+	}
+	posit_2& toNaR(){
+		value = 0x80000000;
+		return *this;
+	}
+
+
+};
 
 struct quire8{
 	uint32_t value;
@@ -862,6 +1149,70 @@ struct quire32{
 
 };
 
+struct quire_2{
+	uint64_t v0;
+	uint64_t v1;
+	uint64_t v2;
+	uint64_t v3;
+	uint64_t v4;
+	uint64_t v5;
+	uint64_t v6;
+	uint64_t v7;
+	int x;
+
+	quire_2 (uint64_t v0=0, uint64_t v1=0, uint64_t v2=0, uint64_t v3=0, uint64_t v4=0, uint64_t v5=0, uint64_t v6=0, uint64_t v7=0, int x=32) :
+		v0(v0), v1(v1), v2(v2), v3(v3), v4(v4), v5(v5), v6(v6), v7(v7), x(x){
+	}
+
+	quire_2& clr(){
+		v0 = 0;
+		v1 = 0;
+		v2 = 0;
+		v3 = 0;
+		v4 = 0;
+		v5 = 0;
+		v6 = 0;
+		v7 = 0;
+		return *this;
+	}
+
+	bool isNaR(){
+		return isNaRQX2(castQX2(v0, v1, v2, v3, v4, v5, v6, v7));
+	}
+
+	quire_2& qma(posit_2 a, posit_2 b){ // q += a*b
+		 quire_2_t q = qX2_fdp_add(castQX2(v0, v1, v2, v3, v4, v5, v6, v7),
+				 	 	 	 castPX2(a.value), castPX2(b.value));
+		 v0 = q.v[0];
+		 v1 = q.v[1];
+		 v2 = q.v[2];
+		 v3 = q.v[3];
+		 v4 = q.v[4];
+		 v5 = q.v[5];
+		 v6 = q.v[6];
+		 v7 = q.v[7];
+		 return *this;
+	}
+	quire_2& qms(posit_2 a, posit_2 b){ // q -= a*b
+		 quire_2_t q = qX2_fdp_sub(castQX2(v0, v1, v2, v3, v4, v5, v6, v7), castPX2(a.value), castPX2(b.value));
+		 v0 = q.v[0];
+		 v1 = q.v[1];
+		 v2 = q.v[2];
+		 v3 = q.v[3];
+		 v4 = q.v[4];
+		 v5 = q.v[5];
+		 v6 = q.v[6];
+		 v7 = q.v[7];
+		 return *this;
+	}
+	posit_2 toPosit(){
+		posit_2 a;
+		a.value = castUI(qX2_to_pX2(castQX2(v0, v1, v2, v3, v4, v5, v6, v7), x));
+		a.x = x;
+		return a;
+	}
+
+};
 
 inline posit8 operator+(int a, posit8 b){
 	b.value = castUI(p8_add(i32_to_p8(a), castP8(b.value)));
@@ -879,6 +1230,14 @@ inline posit32 operator+(long long int a, posit32 b){
 	b.value = castUI(p32_add(i64_to_p32(a), castP32(b.value)));
 	return b;
 }
+inline posit_2 operator+(int a, posit_2 b){
+	b.value = castUI(pX2_add(i32_to_pX2(a, b.x), castPX2(b.value), b.x));
+	return b;
+}
+inline posit_2 operator+(long long int a, posit_2 b){
+	b.value = castUI(pX2_add(i64_to_pX2(a, b.x), castPX2(b.value), b.x));
+	return b;
+}
 
 inline posit8 operator+(double a, posit8 b){
 	b.value = castUI(p8_add(convertDoubleToP8(a), castP8(b.value)));
@@ -892,7 +1251,10 @@ inline posit32 operator+(double a, posit32 b){
 	b.value = castUI(p32_add(convertDoubleToP32(a), castP32(b.value)));
 	return b;
 }
-
+inline posit_2 operator+(double a, posit_2 b){
+	b.value = castUI(pX2_add(convertDoubleToPX2(a, b.x), castPX2(b.value), b.x));
+	return b;
+}
 
 
 inline posit8 operator-(int a, posit8 b){
@@ -911,6 +1273,15 @@ inline posit32 operator-(long long int a, posit32 b){
 	b.value = castUI(p32_sub(i64_to_p32(a), castP32(b.value)));
 	return b;
 }
+inline posit_2 operator-(int a, posit_2 b){
+	b.value = castUI(pX2_sub(i32_to_pX2(a, b.x), castPX2(b.value), b.x));
+	return b;
+}
+inline posit_2 operator-(long long int a, posit_2 b){
+	b.value = castUI(pX2_sub(i64_to_pX2(a, b.x), castPX2(b.value), b.x));
+	return b;
+}
+
 
 inline posit8 operator-(double a, posit8 b){
 	b.value = castUI(p8_sub(convertDoubleToP8(a), castP8(b.value)));
@@ -924,6 +1295,11 @@ inline posit32 operator-(double a, posit32 b){
 	b.value = castUI(p32_sub(convertDoubleToP32(a), castP32(b.value)));
 	return b;
 }
+inline posit_2 operator-(double a, posit_2 b){
+	b.value = castUI(pX2_sub(convertDoubleToPX2(a, b.x), castPX2(b.value), b.x));
+	return b;
+}
+
 
 
 inline posit8 operator/(int a, posit8 b){
@@ -942,6 +1318,16 @@ inline posit32 operator/(long long int a, posit32 b){
 	b.value = castUI(p32_div(i64_to_p32(a), castP32(b.value)));
 	return b;
 }
+inline posit_2 operator/(int a, posit_2 b){
+	b.value = castUI(pX2_div(i32_to_pX2(a, b.x), castPX2(b.value), b.x));
+	return b;
+}
+inline posit_2 operator/(long long int a, posit_2 b){
+	b.value = castUI(pX2_div(i64_to_pX2(a, b.x), castPX2(b.value), b.x));
+	return b;
+}
+
+
 
 inline posit8 operator/(double a, posit8 b){
 	b.value = castUI(p8_div(convertDoubleToP8(a), castP8(b.value)));
@@ -955,7 +1341,10 @@ inline posit32 operator/(double a, posit32 b){
 	b.value = castUI(p32_div(convertDoubleToP32(a), castP32(b.value)));
 	return b;
 }
-
+inline posit_2 operator/(double a, posit_2 b){
+	b.value = castUI(pX2_div(convertDoubleToPX2(a, b.x), castPX2(b.value), b.x));
+	return b;
+}
 
 
 
@@ -972,6 +1361,19 @@ inline posit32 operator*(int a, posit32 b){
 	b.value = castUI(p32_mul(i32_to_p32(a), castP32(b.value)));
 	return b;
 }
+inline posit32 operator*(long long int a, posit32 b){
+	b.value = castUI(p32_mul(i64_to_p32(a), castP32(b.value)));
+	return b;
+}
+inline posit_2 operator*(int a, posit_2 b){
+	b.value = castUI(pX2_mul(i32_to_pX2(a, b.x), castPX2(b.value), b.x));
+	return b;
+}
+inline posit_2 operator*(long long int a, posit_2 b){
+	b.value = castUI(pX2_mul(i64_to_pX2(a, b.x), castPX2(b.value), b.x));
+	return b;
+}
+
 
 inline posit8 operator*(double a, posit8 b){
 	b.value = castUI(p8_mul(convertDoubleToP8(a), castP8(b.value)));
@@ -986,50 +1388,83 @@ inline posit32 operator*(double a, posit32 b){
 	b.value = castUI(p32_mul(convertDoubleToP32(a), castP32(b.value)));
 	return b;
 }
+inline posit_2 operator*(double a, posit_2 b){
+	b.value = castUI(pX2_mul(convertDoubleToPX2(a, b.x), castPX2(b.value), b.x));
+	return b;
+}
 
 
 
 //fused-multiply-add
 inline posit8 fma(posit8 a, posit8 b, posit8 c){ // (a*b) + c
-	a.value = castUI(p8_mulAdd(castP8(a.value), castP8(b.value), castP8(c.value)));
-	return a;
+	posit8 ans;
+	ans.value = castUI(p8_mulAdd(castP8(a.value), castP8(b.value), castP8(c.value)));
+	return ans;
 }
 inline posit16 fma(posit16 a, posit16 b, posit16 c){ // (a*b) + c
-	a.value = castUI(p16_mulAdd(castP16(a.value), castP16(b.value), castP16(c.value)));
-	return a;
+	posit16 ans;
+	ans.value = castUI(p16_mulAdd(castP16(a.value), castP16(b.value), castP16(c.value)));
+	return ans;
 }
 inline posit32 fma(posit32 a, posit32 b, posit32 c){ // (a*b) + c
-	a.value = castUI(p32_mulAdd(castP32(a.value), castP32(b.value), castP32(c.value)));
-	return a;
+	posit32 ans;
+	ans.value = castUI(p32_mulAdd(castP32(a.value), castP32(b.value), castP32(c.value)));
+	return ans;
 }
+inline posit_2 fma(posit_2 a, posit_2 b, posit_2 c){ // (a*b) + c
+	posit_2 ans;
+	ans.value = castUI(pX2_mulAdd(castPX2(a.value), castPX2(b.value), castPX2(c.value), c.x));
+	ans.x = c.x;
+	return ans;
+}
+
 
 //Round to nearest integer
 inline posit8 rint(posit8 a){
-	a.value = castUI( p8_roundToInt(castP8(a.value)) );
-	return a;
+	posit8 ans;
+	ans.value = castUI( p8_roundToInt(castP8(a.value)) );
+	return ans;
 }
 inline posit16 rint(posit16 a){
-	a.value = castUI( p16_roundToInt(castP16(a.value)) );
-	return a;
+	posit16 ans;
+	ans.value = castUI( p16_roundToInt(castP16(a.value)) );
+	return ans;
 }
 inline posit32 rint(posit32 a){
-	a.value = castUI( p32_roundToInt(castP32(a.value)) );
-	return a;
+	posit32 ans;
+	ans.value = castUI( p32_roundToInt(castP32(a.value)) );
+	return ans;
+}
+inline posit_2 rint(posit_2 a){
+	posit_2 ans;
+	ans.value = castUI( pX2_roundToInt(castPX2(a.value), a.x) );
+	ans.x = a.x;
+	return ans;
 }
 
 //Square root
 inline posit8 sqrt(posit8 a){
-	a.value = castUI( p8_sqrt(castP8(a.value)) );
-	return a;
+	posit8 ans;
+	ans.value = castUI( p8_sqrt(castP8(a.value)) );
+	return ans;
 }
 inline posit16 sqrt(posit16 a){
-	a.value = castUI( p16_sqrt(castP16(a.value)) );
-	return a;
+	posit16 ans;
+	ans.value = castUI( p16_sqrt(castP16(a.value)) );
+	return ans;
 }
 inline posit32 sqrt(posit32 a){
-	a.value = castUI( p32_sqrt(castP32(a.value)) );
-	return a;
+	posit32 ans;
+	ans.value = castUI( p32_sqrt(castP32(a.value)) );
+	return ans;
 }
+inline posit_2 sqrt(posit_2 a){
+	posit_2 ans;
+	ans.value = castUI( pX2_sqrt(castPX2(a.value), a.x) );
+	ans.x = a.x;
+	return ans;
+}
+
 
 
 // Convert to integer
@@ -1043,6 +1478,9 @@ inline uint32_t uint32 (posit16 a){
 inline uint32_t uint32 (posit32 a){
 	return p32_to_ui32(castP32(a.value));
 }
+inline uint32_t uint32 (posit_2 a){
+	return pX2_to_ui32(castPX2(a.value));
+}
 
 
 
@@ -1054,6 +1492,9 @@ inline int32_t int32(posit16 a){
 }
 inline int32_t int32 (posit32 a){
 	return p32_to_i32(castP32(a.value));
+}
+inline int32_t int32 (posit_2 a){
+	return pX2_to_i32(castPX2(a.value));
 }
 
 
@@ -1067,6 +1508,9 @@ inline uint64_t uint64(posit16 a){
 inline uint64_t uint64 (posit32 a){
 	return p32_to_ui64(castP32(a.value));
 }
+inline uint64_t uint64 (posit_2 a){
+	return pX2_to_ui64(castPX2(a.value));
+}
 
 
 
@@ -1078,6 +1522,9 @@ inline int64_t int64(posit16 a){
 }
 inline int64_t int64 (posit32 a){
 	return p32_to_i64(castP32(a.value));
+}
+inline int64_t int64 (posit_2 a){
+	return pX2_to_i64(castPX2(a.value));
 }
 
 
@@ -1092,6 +1539,11 @@ inline posit8 p8(posit32 a){
 	b.value = castUI(p32_to_p8(castP32(a.value)));
 	return b;
 }
+inline posit8 p8(posit_2 a){
+	posit8 b;
+	b.value = castUI(pX2_to_p8(castPX2(a.value)));
+	return b;
+}
 
 
 inline posit16 p16(posit8 a){
@@ -1102,6 +1554,11 @@ inline posit16 p16(posit8 a){
 inline posit16 p16(posit32 a){
 	posit16 b;
 	b.value = castUI(p32_to_p16(castP32(a.value)));
+	return b;
+}
+inline posit16 p16(posit_2 a){
+	posit16 b;
+	b.value = castUI(pX2_to_p16(castPX2(a.value)));
 	return b;
 }
 
@@ -1116,6 +1573,38 @@ inline posit32 p32(posit16 a){
 	b.value = castUI(p16_to_p32(castP16(a.value)));
 	return b;
 }
+inline posit32 p32(posit_2 a){
+	posit32 b;
+	b.value = castUI(pX2_to_p32(castPX2(a.value)));
+	return b;
+}
+
+
+inline posit_2 pX2(posit8 a, int x){
+	posit_2 b;
+	b.value = castUI(p8_to_pX2(castP8(a.value), x));
+	b.x = x;
+	return b;
+}
+inline posit_2 pX2(posit16 a, int x){
+	posit_2 b;
+	b.value = castUI(p16_to_pX2(castP16(a.value), x));
+	b.x = x;
+	return b;
+}
+inline posit_2 pX2(posit32 a, int x){
+	posit_2 b;
+	b.value = castUI(p32_to_pX2(castP32(a.value), x));
+	b.x = x;
+	return b;
+}
+inline posit_2 pX2(posit_2 a, int x){
+	posit_2 b;
+	b.value = castUI(pX2_to_pX2(castPX2(a.value), x));
+	b.x = x;
+	return b;
+}
+
 
 
 inline posit8 p8(uint32_t a){
@@ -1131,6 +1620,12 @@ inline posit16 p16(uint32_t a){
 inline posit32 p32(uint32_t a){
 	posit32 b;
 	b.value = castUI(ui32_to_p32(a));
+	return b;
+}
+inline posit_2 pX2(uint32_t a, int x){
+	posit_2 b;
+	b.value = castUI(ui32_to_pX2(a, x));
+	b.x = x;
 	return b;
 }
 
@@ -1150,6 +1645,13 @@ inline posit32 p32(int32_t a){
 	b.value = castUI(i32_to_p32(a));
 	return b;
 }
+inline posit_2 pX2(int32_t a, int x){
+	posit_2 b;
+	b.value = castUI(i32_to_pX2(a, x));
+	b.x = x;
+	return b;
+}
+
 
 
 inline posit8 p8(uint64_t a){
@@ -1165,6 +1667,12 @@ inline posit16 p16(uint64_t a){
 inline posit32 p32(uint64_t a){
 	posit32 b;
 	b.value = castUI(ui64_to_p32(a));
+	return b;
+}
+inline posit_2 pX2(uint64_t a, int x){
+	posit_2 b;
+	b.value = castUI(ui64_to_pX2(a, x));
+	b.x = x;
 	return b;
 }
 
@@ -1184,6 +1692,12 @@ inline posit32 p32(int64_t a){
 	b.value = castUI(i64_to_p32(a));
 	return b;
 }
+inline posit_2 p32(int64_t a, int x){
+	posit_2 b;
+	b.value = castUI(i64_to_pX2(a, x));
+	b.x = x;
+	return b;
+}
 
 
 inline posit8 p8(double a){
@@ -1201,6 +1715,13 @@ inline posit32 p32(double a){
 	b.value = castUI(convertDoubleToP32(a));
 	return b;
 }
+inline posit_2 pX2(double a, int x){
+	posit_2 b;
+	b.value = castUI(convertDoubleToPX2(a, x));
+	b.x = x;
+	return b;
+}
+
 
 
 inline posit8 p8(quire8 a){
@@ -1218,6 +1739,18 @@ inline posit32 p32(quire32 a){
 	b.value = castUI(q32_to_p32(castQ32(a.v0, a.v1, a.v2, a.v3, a.v4, a.v5, a.v6, a.v7)));
 	return b;
 }
+inline posit_2 pX2(quire_2 a){
+	posit_2 b;
+	b.value = castUI(qX2_to_pX2(castQX2(a.v0, a.v1, a.v2, a.v3, a.v4, a.v5, a.v6, a.v7), a.x));
+	b.x = a.x;
+	return b;
+}
+inline posit_2 pX2(quire_2 a, int x){
+	posit_2 b;
+	b.value = castUI(qX2_to_pX2(castQX2(a.v0, a.v1, a.v2, a.v3, a.v4, a.v5, a.v6, a.v7), x));
+	b.x = x;
+	return b;
+}
 
 
 //cout helper functions
@@ -1233,6 +1766,11 @@ inline std::ostream& operator<<(std::ostream& os, const posit16& p) {
 }
 
 inline std::ostream& operator<<(std::ostream& os, const posit32& p) {
+    os << p.toDouble();
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const posit_2& p) {
     os << p.toDouble();
     return os;
 }

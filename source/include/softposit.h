@@ -113,6 +113,7 @@ int_fast64_t p8_to_i64( posit8_t);
 posit16_t p8_to_p16( posit8_t );
 posit32_t p8_to_p32( posit8_t );
 //posit64_t p8_to_p64( posit8_t );
+posit_2_t p8_to_pX2( posit8_t, int );
 
 posit8_t p8_roundToInt( posit8_t );
 posit8_t p8_add( posit8_t, posit8_t );
@@ -400,6 +401,8 @@ static inline posit32_t pX2_to_p32(posit_2_t pA){
 	posit32_t p32 = {.v = pA.v};
 	return p32;
 }
+
+#define isNaRPX2UI( a ) ( ((a) ^ 0x80000000) == 0 )
 
 //Helper
 posit_2_t convertDoubleToPX2(double, int);
