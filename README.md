@@ -31,7 +31,7 @@ This code is tested on
  
  Three versions are offered
  
- * **Fast C version**
+ * **Fast C version** :
  * **User friendly C++ version** : Documentation can be found below.
  * **User friendly Python version** : https://gitlab.com/cerlane/SoftPosit-Python/
  
@@ -155,6 +155,8 @@ double dZ = convertP16ToDouble(pZ);
 
 
 Please note that only 64-bit systems are supported. For Mac OSX and Linux, the same Makefile is used. 
+
+Note that architecture specific optimisation is removed. To get maximum speed, please update OPTIMISATION flag in build/Linux-x86_64-GCC/Makefile.
 
 
 ```
