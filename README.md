@@ -57,7 +57,7 @@ int main (int argc, char *argv[]){
     printf("dZ: %.15f\n", dZ);
 
     //To print result in binary
-    uint8_t uiZ = castUI8(pZ);
+    uint8_t uiZ = castUI(pZ);
     printBinary((uint64_t*)&uiZ, 8);
     
     return 0;
@@ -84,13 +84,41 @@ int main (int argc, char *argv[]){
     printf("dZ: %.15f\n", dZ);
 
     //To print result in binary
-    uint16_t uiZ = castUI16(pZ);
+    uint16_t uiZ = castUI(pZ);
     printBinary((uint64_t*)&uiZ, 16);
 
     return 0;
 }
 ```
 
+#### A 24-bit (es=2) example on how to use the code:
+
+
+```
+#include "softposit.h"
+
+int main (int argc, char *argv[]){
+
+    posit_2_t pA, pB, pZ;
+    pA = {.v = 0xF2}; //this is to set the bits (method 1)
+    pB = castPX2(0x23); //this is to set the bits (method 2)
+
+    pZ = pX2_add(pA, pB, 24);
+
+    //To check answer by converting it to double
+    double dZ = convertPX2ToDouble(pZ);
+    printf("dZ: %.15f\n", dZ);
+
+    //To print result in binary
+    printBinaryPX((uint32_t*)&pZ.v, 24);
+    
+    //To print result as double
+    printf("result: %.13f\n", convertPX2ToDouble(pZ));
+    
+    return 0;
+
+}
+```
 
 #### For deep learning, please use quire.
 
