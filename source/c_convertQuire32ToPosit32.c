@@ -1,4 +1,3 @@
-
 /*============================================================================
 
 This C source file is part of the SoftPosit Posit Arithmetic Package
@@ -96,7 +95,7 @@ posit32_t q32_to_p32(quire32_t qA){
 
 			noLZ+=noLZtmp;
 			frac64A = tmp;
-			if (i!=7)
+			if (i!=7 && noLZtmp!=0)
 				frac64A+= ( uZ.ui[i+1]>>(64-noLZtmp) );
 			i++;
 			while(i<8){
