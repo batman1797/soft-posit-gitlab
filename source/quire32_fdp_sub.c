@@ -158,14 +158,14 @@ quire32_t q32_fdp_sub( quire32_t q, posit32_t pA, posit32_t pB ){
 			//Need to check how much of the fraction is in the next 64 bits
 			shiftRight = firstPos - (i*64);
 			uZ2.ui[i] = frac64Z >> shiftRight;
-			if (i!=7) uZ2.ui[i+1] = frac64Z << (64 - shiftRight);
+			if (i!=7 && shiftRight!=0) uZ2.ui[i+1] = frac64Z << (64 - shiftRight);
 			break;
 		}
 	}
 
 
 	//This is the only difference from ADD (signZ2) and (!signZ2)
-	if (signZ1 && !signZ2){//sum of negative numbers
+	/*if (signZ1 && !signZ2){//sum of negative numbers
 		signZ=1;
 		for (i=7; i>=0; i--){
 			if (uZ1.ui[i]>0){
@@ -179,7 +179,7 @@ quire32_t q32_fdp_sub( quire32_t q, posit32_t pA, posit32_t pB ){
 			}
 		}
 	}
-	else if (!signZ2){
+	else */if (!signZ2){
 		for (i=7; i>=0; i--){
 			if (uZ2.ui[i]>0){
 				uZ2.ui[i] = - uZ2.ui[i];
@@ -212,7 +212,7 @@ quire32_t q32_fdp_sub( quire32_t q, posit32_t pA, posit32_t pB ){
 		}
 
 	}
-	if(signZ){
+	/*if(signZ){
 		for (i=7; i>=0; i--){
 			if (uZ.ui[i]>0){
 				uZ.ui[i] = - uZ.ui[i];
@@ -224,7 +224,7 @@ quire32_t q32_fdp_sub( quire32_t q, posit32_t pA, posit32_t pB ){
 				break;
 			}
 		}
-	}
+	}*/
 	//Exception handling
 	if (isNaRQ32(uZ.q) ) uZ.q = q32_clr(uZ.q);
 

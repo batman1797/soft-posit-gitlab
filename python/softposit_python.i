@@ -338,7 +338,7 @@ class posit8:
        return self
    def toBinary(self):
        self.v.toBits()
-   def toBinaryFormated(self):
+   def toBinaryFormatted(self):
        print(convertToColor(self.v.v, 8, 0))
    def toHex(self):
        self.v.toHex()
@@ -677,7 +677,7 @@ class posit16:
        return self
    def toBinary(self):
        self.v.toBits()
-   def toBinaryFormated(self):
+   def toBinaryFormatted(self):
        print(convertToColor(self.v.v, 16, 1))
    def toHex(self):
        self.v.toHex()
@@ -1021,7 +1021,7 @@ class posit32:
        return self
    def toBinary(self):
        self.v.toBits()
-   def toBinaryFormated(self):
+   def toBinaryFormatted(self):
        print(convertToColor(self.v.v, 32, 2))
    def toHex(self):
        self.v.toHex()
@@ -1394,7 +1394,7 @@ class posit_2:
        return self
    def toBinary(self):
        self.v.toBits(self.x)
-   def toBinaryFormated(self):
+   def toBinaryFormatted(self):
        print(convertToColor((self.v.v)>>(32-self.x), self.x, 2))
    def toHex(self):
        self.v.toHex(self.x)

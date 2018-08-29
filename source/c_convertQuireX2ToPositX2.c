@@ -96,8 +96,12 @@ posit_2_t qX2_to_pX2(quire_2_t qA, int x){
 
 			noLZ+=noLZtmp;
 			frac64A = tmp;
-			if (i!=7)
+			if (i!=7 && noLZtmp!=0){
 				frac64A+= ( uZ.ui[i+1]>>(64-noLZtmp) );
+				if( uZ.ui[i+1] & (((uint64_t)0x1<<(64-noLZtmp))-1) )
+					bitsMore=1;
+				i++;
+			}
 			i++;
 			while(i<8){
 				if (uZ.ui[i]>0){
@@ -109,7 +113,6 @@ posit_2_t qX2_to_pX2(quire_2_t qA, int x){
 			break;
 		}
 	}
-
 	//default dot is between bit 271 and 272, extreme left bit is bit 0. Last right bit is bit 511.
 	//Equations derived from quire32_mult  last_pos = 271 - (kA<<2) - expA and first_pos = last_pos - frac_len
 	int kA=(271-noLZ) >> 2;
@@ -144,6 +147,7 @@ posit_2_t qX2_to_pX2(quire_2_t qA, int x){
 		//regime length is smaller than length of posit
 		if (regA<x){
 			if (regA<=(x-4)){
+
 				bitNPlusOne = (frac64A>>(shift+31-x)) & 0x1;
 				if ((frac64A<<(33-shift+x)) !=0) bitsMore=1;
 			}
