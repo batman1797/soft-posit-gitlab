@@ -3506,7 +3506,7 @@ SWIG_AsVal_long_SS_long (PyObject *obj, long long *val)
 #endif
 
 SWIGINTERN void posit32_t_bitsToP32(posit32_t *self,long long bits){
-        self->v = bits & 0xFF;
+        self->v = bits & 0xFFFFFFFF;
     }
 SWIGINTERN void posit32_t_toBits(posit32_t *self){
 	printBinary(((uint64_t*)&self->v), 32);

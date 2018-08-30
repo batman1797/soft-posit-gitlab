@@ -1725,7 +1725,7 @@ class quire_2:
 
 %extend posit32_t {
     void bitsToP32(long long int bits) {
-        $self->v = bits & 0xFF;
+        $self->v = bits & 0xFFFFFFFF;
     }
     void toBits() {
 	printBinary(((uint64_t*)&$self->v), 32);
