@@ -63,6 +63,8 @@ def convertToColor(i, ps, es):
               else:
                  regime = 0
                  colored+=c+"\033[0m"
+           if m==(ps-1):
+              colored+="\033[0m"
        elif exponent==1:
            if e==0:
               colored+="\033[1;37;44m"+c
@@ -72,6 +74,8 @@ def convertToColor(i, ps, es):
            if e==es:
               colored+="\033[0m"
               exponent = 0
+           if m==(ps-1):
+              colored+="\033[0m"
        else:
            if firstFrac==1:
               colored+="\033[1;37;40m"+c
