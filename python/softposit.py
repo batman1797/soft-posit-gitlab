@@ -989,6 +989,10 @@ def p8_to_p32(arg1):
     return _softposit.p8_to_p32(arg1)
 p8_to_p32 = _softposit.p8_to_p32
 
+def p8_to_pX2(arg1, arg2):
+    return _softposit.p8_to_pX2(arg1, arg2)
+p8_to_pX2 = _softposit.p8_to_pX2
+
 def p8_roundToInt(arg1):
     return _softposit.p8_roundToInt(arg1)
 p8_roundToInt = _softposit.p8_roundToInt

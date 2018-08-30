@@ -1724,7 +1724,7 @@ class quire_2:
 };
 
 %extend posit32_t {
-    void bitsToP32(int bits) {
+    void bitsToP32(long long int bits) {
         $self->v = bits & 0xFF;
     }
     void toBits() {
@@ -1875,7 +1875,7 @@ class quire_2:
         posit_2_t a;
         return a;
     }
-    void bitsToPX2(int bits) {
+    void bitsToPX2(long long int bits) {
         $self->v = bits & 0xFFFFFFFF;
     }
     void toBits(int x) {

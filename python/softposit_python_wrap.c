@@ -3458,7 +3458,54 @@ SWIGINTERNINLINE PyObject*
   return PyInt_FromSize_t((size_t) value);
 }
 
-SWIGINTERN void posit32_t_bitsToP32(posit32_t *self,int bits){
+
+#if defined(LLONG_MAX) && !defined(SWIG_LONG_LONG_AVAILABLE)
+#  define SWIG_LONG_LONG_AVAILABLE
+#endif
+
+
+#ifdef SWIG_LONG_LONG_AVAILABLE
+SWIGINTERN int
+SWIG_AsVal_long_SS_long (PyObject *obj, long long *val)
+{
+  int res = SWIG_TypeError;
+  if (PyLong_Check(obj)) {
+    long long v = PyLong_AsLongLong(obj);
+    if (!PyErr_Occurred()) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      PyErr_Clear();
+      res = SWIG_OverflowError;
+    }
+  } else {
+    long v;
+    res = SWIG_AsVal_long (obj,&v);
+    if (SWIG_IsOK(res)) {
+      if (val) *val = v;
+      return res;
+    }
+  }
+#ifdef SWIG_PYTHON_CAST_MODE
+  {
+    const double mant_max = 1LL << DBL_MANT_DIG;
+    const double mant_min = -mant_max;
+    double d;
+    res = SWIG_AsVal_double (obj,&d);
+    if (SWIG_IsOK(res) && !SWIG_CanCastAsInteger(&d, mant_min, mant_max))
+      return SWIG_OverflowError;
+    if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, mant_min, mant_max)) {
+      if (val) *val = (long long)(d);
+      return SWIG_AddCast(res);
+    }
+    res = SWIG_TypeError;
+  }
+#endif
+  return res;
+}
+#endif
+
+SWIGINTERN void posit32_t_bitsToP32(posit32_t *self,long long bits){
         self->v = bits & 0xFF;
     }
 SWIGINTERN void posit32_t_toBits(posit32_t *self){
@@ -3517,11 +3564,6 @@ SWIGINTERN posit32_t posit32_t_toNaR(posit32_t *self){
         self->v = (uint32_t) 0x80000000;
         return *self;
     }
-
-#if defined(LLONG_MAX) && !defined(SWIG_LONG_LONG_AVAILABLE)
-#  define SWIG_LONG_LONG_AVAILABLE
-#endif
-
 
 #ifdef SWIG_LONG_LONG_AVAILABLE
 SWIGINTERN int
@@ -3673,7 +3715,7 @@ SWIGINTERN posit_2_t posit_2_t_init(posit_2_t *self){
         posit_2_t a;
         return a;
     }
-SWIGINTERN void posit_2_t_bitsToPX2(posit_2_t *self,int bits){
+SWIGINTERN void posit_2_t_bitsToPX2(posit_2_t *self,long long bits){
         self->v = bits & 0xFFFFFFFF;
     }
 SWIGINTERN void posit_2_t_toBits(posit_2_t *self,int x){
@@ -3786,48 +3828,6 @@ SWIGINTERN bool quire_2_t_isNaR(quire_2_t *self){
 			(self->v[6] == (uint32_t) 0x0) && 
 			(self->v[7] == (uint32_t) 0x0);
     }
-
-#ifdef SWIG_LONG_LONG_AVAILABLE
-SWIGINTERN int
-SWIG_AsVal_long_SS_long (PyObject *obj, long long *val)
-{
-  int res = SWIG_TypeError;
-  if (PyLong_Check(obj)) {
-    long long v = PyLong_AsLongLong(obj);
-    if (!PyErr_Occurred()) {
-      if (val) *val = v;
-      return SWIG_OK;
-    } else {
-      PyErr_Clear();
-      res = SWIG_OverflowError;
-    }
-  } else {
-    long v;
-    res = SWIG_AsVal_long (obj,&v);
-    if (SWIG_IsOK(res)) {
-      if (val) *val = v;
-      return res;
-    }
-  }
-#ifdef SWIG_PYTHON_CAST_MODE
-  {
-    const double mant_max = 1LL << DBL_MANT_DIG;
-    const double mant_min = -mant_max;
-    double d;
-    res = SWIG_AsVal_double (obj,&d);
-    if (SWIG_IsOK(res) && !SWIG_CanCastAsInteger(&d, mant_min, mant_max))
-      return SWIG_OverflowError;
-    if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, mant_min, mant_max)) {
-      if (val) *val = (long long)(d);
-      return SWIG_AddCast(res);
-    }
-    res = SWIG_TypeError;
-  }
-#endif
-  return res;
-}
-#endif
-
 
 #ifdef SWIG_LONG_LONG_AVAILABLE
 SWIGINTERNINLINE PyObject* 
@@ -4918,10 +4918,10 @@ fail:
 SWIGINTERN PyObject *_wrap_posit32_t_bitsToP32(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   posit32_t *arg1 = (posit32_t *) 0 ;
-  int arg2 ;
+  long long arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  int val2 ;
+  long long val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -4932,11 +4932,11 @@ SWIGINTERN PyObject *_wrap_posit32_t_bitsToP32(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit32_t_bitsToP32" "', argument " "1"" of type '" "posit32_t *""'"); 
   }
   arg1 = (posit32_t *)(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit32_t_bitsToP32" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit32_t_bitsToP32" "', argument " "2"" of type '" "long long""'");
   } 
-  arg2 = (int)(val2);
+  arg2 = (long long)(val2);
   posit32_t_bitsToP32(arg1,arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -6199,10 +6199,10 @@ fail:
 SWIGINTERN PyObject *_wrap_posit_2_t_bitsToPX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   posit_2_t *arg1 = (posit_2_t *) 0 ;
-  int arg2 ;
+  long long arg2 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  int val2 ;
+  long long val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -6213,11 +6213,11 @@ SWIGINTERN PyObject *_wrap_posit_2_t_bitsToPX2(PyObject *SWIGUNUSEDPARM(self), P
     SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "posit_2_t_bitsToPX2" "', argument " "1"" of type '" "posit_2_t *""'"); 
   }
   arg1 = (posit_2_t *)(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit_2_t_bitsToPX2" "', argument " "2"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "posit_2_t_bitsToPX2" "', argument " "2"" of type '" "long long""'");
   } 
-  arg2 = (int)(val2);
+  arg2 = (long long)(val2);
   posit_2_t_bitsToPX2(arg1,arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -8809,6 +8809,43 @@ SWIGINTERN PyObject *_wrap_p8_to_p32(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   }
   result = p8_to_p32(arg1);
   resultobj = SWIG_NewPointerObj((posit32_t *)memcpy((posit32_t *)calloc(1,sizeof(posit32_t)),&result,sizeof(posit32_t)), SWIGTYPE_p_posit32_t, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_p8_to_pX2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  posit8_t arg1 ;
+  int arg2 ;
+  void *argp1 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  posit_2_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:p8_to_pX2",&obj0,&obj1)) SWIG_fail;
+  {
+    res1 = SWIG_ConvertPtr(obj0, &argp1, SWIGTYPE_p_posit8_t,  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "p8_to_pX2" "', argument " "1"" of type '" "posit8_t""'"); 
+    }  
+    if (!argp1) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "p8_to_pX2" "', argument " "1"" of type '" "posit8_t""'");
+    } else {
+      arg1 = *((posit8_t *)(argp1));
+    }
+  }
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "p8_to_pX2" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = (int)(val2);
+  result = p8_to_pX2(arg1,arg2);
+  resultobj = SWIG_NewPointerObj((posit_2_t *)memcpy((posit_2_t *)calloc(1,sizeof(posit_2_t)),&result,sizeof(posit_2_t)), SWIGTYPE_p_posit_2_t, SWIG_POINTER_OWN |  0 );
   return resultobj;
 fail:
   return NULL;
@@ -12765,6 +12802,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"p8_to_i64", _wrap_p8_to_i64, METH_VARARGS, NULL},
 	 { (char *)"p8_to_p16", _wrap_p8_to_p16, METH_VARARGS, NULL},
 	 { (char *)"p8_to_p32", _wrap_p8_to_p32, METH_VARARGS, NULL},
+	 { (char *)"p8_to_pX2", _wrap_p8_to_pX2, METH_VARARGS, NULL},
 	 { (char *)"p8_roundToInt", _wrap_p8_roundToInt, METH_VARARGS, NULL},
 	 { (char *)"p8_add", _wrap_p8_add, METH_VARARGS, NULL},
 	 { (char *)"p8_sub", _wrap_p8_sub, METH_VARARGS, NULL},
