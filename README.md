@@ -1,6 +1,6 @@
 # <img src="https://posithub.org/images/NGA_logo.png"  width="90" height="50"/> SoftPosit
 
-This version (0.4rc) supports:
+This version (0.4.1rc) supports:
 
     32-bit with two exponential bit (posit32_t).  -> Not exhaustively tested
 
