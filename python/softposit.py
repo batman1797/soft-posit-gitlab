@@ -1436,9 +1436,7 @@ def convertToColor(i, ps, es):
                  colored+=c
               else:
                  regime = 0
-                 colored+=c+"\033[0m"
-           if m==(ps-1):
-              colored+="\033[0m"
+                 colored+=c+"\033[0m"           
        elif exponent==1:
            if e==0:
               colored+="\033[1;37;44m"+c
@@ -1448,20 +1446,17 @@ def convertToColor(i, ps, es):
            if e==es:
               colored+="\033[0m"
               exponent = 0
-           if m==(ps-1):
-              colored+="\033[0m"
        else:
            if firstFrac==1:
               colored+="\033[1;37;40m"+c
               firstFrac=0
            else:
               colored+=c
-           if m==(ps-1):
-              colored+="\033[0m"
        m+=1
-       if (m%8==0):
+       if (m!=ps and m%8==0):
            colored+=" "
-   return colored
+
+   return colored+"\033[0m"
 
 class posit8:
    def __init__(self, value):       
