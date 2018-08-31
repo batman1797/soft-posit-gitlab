@@ -9,8 +9,8 @@ This version (0.4.1rc) supports:
     8-bit with zero exponent bit (posit8_t). 
     
     2-bit to 32-bit with two exponent bits (posit_2_t) -> Not fast : Using 32-bits in the background to store all sizes.
-        Exhaustively tested for X=(2:32) : pX2_rint, pX2_to_pX2, pX2_to_i32/64, pX2_to_ui32/64, pX2_sqrt
-        Exhaustively tested for X=(2:12) : ui32/64_to_pX2, i32/64_to_pX2
+        Exhaustively tested for X=(2:32) : pX2_rint, pX2_to_pX2, pX2_to_i32/64, pX2_to_ui32/64, pX2_sqrt, ui/i32_to_pX2
+        Exhaustively tested for X=(2:12) : ui64_to_pX2, i64_to_pX2
         Exhaustively tested for X=(2:20) : pX2_add, pX2_sub, pX2_mul, pX2_div
         Exhaustively tested for X=(2:21) : pX2_mul
         Exhaustively tested for X=(2:14) : pX2_mulAdd
