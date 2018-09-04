@@ -210,7 +210,7 @@ quire16_t q16_fdp_add(quire16_t, posit16_t, posit16_t);
 quire16_t q16_fdp_sub(quire16_t, posit16_t, posit16_t);
 posit16_t convertQ16ToP16(quire16_t);
 posit16_t q16_to_p16(quire16_t);
-#define isNaRQ16( q ) ( q.v[0]==0x8000000000000000ULL && q.v[1]==0 )
+#define isNaRQ16( q ) ( (q).v[0]==0x8000000000000000ULL && (q).v[1]==0 )
 #define isQ16Zero(q) (q.v[0]==0 && q.v[1]==0)
 quire16_t q16_TwosComplement(quire16_t);
 

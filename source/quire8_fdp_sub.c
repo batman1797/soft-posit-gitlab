@@ -130,7 +130,7 @@ quire8_t q8_fdp_sub( quire8_t q, posit8_t pA, posit8_t pB ){
 	uqZ.ui = uqZ2.ui + uqZ1.ui;
 
 	//Exception handling
-	if (isNaRQ8(uqZ.q) ) uqZ.q = q8_clr(uqZ.q);
+	if (isNaRQ8(uqZ.q) ) uqZ.q.v=0;
 
 	return uqZ.q;
 }

@@ -71,7 +71,7 @@ quire32_t q32_fdp_sub( quire32_t q, posit32_t pA, posit32_t pB ){
 	uB.p = pB;
 	uiB = uB.ui;
 
-	uZ2.q = q32_clr(uZ2.q); //set it to zero
+	uZ2.q = q32Clr(uZ2.q); //set it to zero
 	//NaR
 	if (isNaRQ32(q) || isNaRP32UI(uA.ui) || isNaRP32UI(uB.ui)){
 		//set to all zeros
@@ -199,7 +199,7 @@ quire32_t q32_fdp_sub( quire32_t q, posit32_t pA, posit32_t pB ){
 	}
 
 	//Exception handling
-	if (isNaRQ32(uZ.q) ) uZ.q = q32_clr(uZ.q);
+	if (isNaRQ32(uZ.q) ) uZ.q.v[0]=0;
 
 	return uZ.q;
 }

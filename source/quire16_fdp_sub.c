@@ -185,7 +185,7 @@ quire16_t q16_fdp_sub( quire16_t q, posit16_t pA, posit16_t pB ){
 	uZ.ui[0] = (uZ.ui[0]<<1 | (rcarryb3 & 0x1) );
 
 	//Exception handling
-	if (isNaRQ16(uZ.q) ) uZ.q = q16_clr(uZ.q);
+	if (isNaRQ16(uZ.q)) uZ.q.v[0] = 0;
 
 	return uZ.q;
 }
