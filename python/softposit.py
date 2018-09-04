@@ -115,8 +115,8 @@ class posit8_t(_object):
     def init(self):
         return _softposit.posit8_t_init(self)
 
-    def bitsToP8(self, bits):
-        return _softposit.posit8_t_bitsToP8(self, bits)
+    def fromBits(self, bits):
+        return _softposit.posit8_t_fromBits(self, bits)
 
     def toBits(self):
         return _softposit.posit8_t_toBits(self)
@@ -193,8 +193,8 @@ class posit16_t(_object):
     if _newclass:
         v = _swig_property(_softposit.posit16_t_v_get, _softposit.posit16_t_v_set)
 
-    def bitsToP16(self, bits):
-        return _softposit.posit16_t_bitsToP16(self, bits)
+    def fromBits(self, bits):
+        return _softposit.posit16_t_fromBits(self, bits)
 
     def toBits(self):
         return _softposit.posit16_t_toBits(self)
@@ -271,8 +271,8 @@ class posit32_t(_object):
     if _newclass:
         v = _swig_property(_softposit.posit32_t_v_get, _softposit.posit32_t_v_set)
 
-    def bitsToP32(self, bits):
-        return _softposit.posit32_t_bitsToP32(self, bits)
+    def fromBits(self, bits):
+        return _softposit.posit32_t_fromBits(self, bits)
 
     def toBits(self):
         return _softposit.posit32_t_toBits(self)
@@ -540,8 +540,8 @@ class posit_2_t(_object):
     def init(self):
         return _softposit.posit_2_t_init(self)
 
-    def bitsToPX2(self, bits):
-        return _softposit.posit_2_t_bitsToPX2(self, bits)
+    def fromBits(self, bits):
+        return _softposit.posit_2_t_fromBits(self, bits)
 
     def toBits(self, x):
         return _softposit.posit_2_t_toBits(self, x)
@@ -1709,6 +1709,8 @@ class posit8:
    def toNaR(self):
        self.v.toNaR();
        return self
+   def fromBits(self, value):
+       self.v.fromBits(value)
    def toBinary(self):
        self.v.toBits()
    def toBinaryFormatted(self):
@@ -2048,6 +2050,8 @@ class posit16:
    def toNaR(self):
        self.v.toNaR()
        return self
+   def fromBits(self, value):
+       self.v.fromBits(value)
    def toBinary(self):
        self.v.toBits()
    def toBinaryFormatted(self):
@@ -2394,6 +2398,8 @@ class posit32:
        return self
    def toBinary(self):
        self.v.toBits()
+   def fromBits(self, value):
+       self.v.fromBits(value)
    def toBinaryFormatted(self):
        print(convertToColor(self.v.v, 32, 2))
    def toHex(self):
@@ -2765,6 +2771,8 @@ class posit_2:
    def toNaR(self):
        self.v.toNaR();
        return self
+   def fromBits(self, value):
+       self.v.fromBits(value)
    def toBinary(self):
        self.v.toBits(self.x)
    def toBinaryFormatted(self):

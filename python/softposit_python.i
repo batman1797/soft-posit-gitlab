@@ -335,6 +335,8 @@ class posit8:
    def toNaR(self):
        self.v.toNaR();
        return self
+   def fromBits(self, value):
+       self.v.fromBits(value)
    def toBinary(self):
        self.v.toBits()
    def toBinaryFormatted(self):
@@ -674,6 +676,8 @@ class posit16:
    def toNaR(self):
        self.v.toNaR()
        return self
+   def fromBits(self, value):
+       self.v.fromBits(value)
    def toBinary(self):
        self.v.toBits()
    def toBinaryFormatted(self):
@@ -1020,6 +1024,8 @@ class posit32:
        return self
    def toBinary(self):
        self.v.toBits()
+   def fromBits(self, value):
+       self.v.fromBits(value)
    def toBinaryFormatted(self):
        print(convertToColor(self.v.v, 32, 2))
    def toHex(self):
@@ -1391,6 +1397,8 @@ class posit_2:
    def toNaR(self):
        self.v.toNaR();
        return self
+   def fromBits(self, value):
+       self.v.fromBits(value)
    def toBinary(self):
        self.v.toBits(self.x)
    def toBinaryFormatted(self):
@@ -1494,7 +1502,7 @@ class quire_2:
         posit8_t a;
         return a;
     }
-    void bitsToP8(int bits) {
+    void fromBits(int bits) {
         $self->v = bits & 0xFF;
     }
     void toBits() {
@@ -1527,7 +1535,7 @@ class quire_2:
     }
     posit8_t __abs__() {
        posit8_t a;
-       if (($self->v)>>15) a.v = -($self->v) & 0xFF;
+       if (($self->v)>>7) a.v = -($self->v) & 0xFF;
        else a.v = $self->v;
        return a;
     }
@@ -1606,7 +1614,7 @@ class quire_2:
 };
 
 %extend posit16_t {
-    void bitsToP16(int bits) {
+    void fromBits(int bits) {
         $self->v = bits & 0xFFFF;
     }
     void toBits() {
@@ -1723,7 +1731,7 @@ class quire_2:
 };
 
 %extend posit32_t {
-    void bitsToP32(long long int bits) {
+    void fromBits(long long int bits) {
         $self->v = bits & 0xFFFFFFFF;
     }
     void toBits() {
@@ -1874,7 +1882,7 @@ class quire_2:
         posit_2_t a;
         return a;
     }
-    void bitsToPX2(long long int bits) {
+    void fromBits(long long int bits) {
         $self->v = bits & 0xFFFFFFFF;
     }
     void toBits(int x) {

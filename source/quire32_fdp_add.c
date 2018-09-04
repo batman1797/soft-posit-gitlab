@@ -54,13 +54,13 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 	union ui32_p32 uA, uB;
 	union ui512_q32 uZ, uZ1, uZ2;
 	uint_fast32_t uiA, uiB;
-	uint_fast32_t regA, fracA, regime, tmp;
-	bool signA, signB, signZ1, signZ2, signZ=0, regSA, regSB, bitNPlusOne=0, bitsMore=0, rcarry;
-	int_fast32_t expA, expB;
+	uint_fast32_t fracA, tmp;
+	bool signA, signB, signZ2, regSA, regSB, rcarry;
+	int_fast32_t expA;
 	int_fast16_t kA=0, shiftRight=0;
 	uint_fast64_t frac64Z;
 	//For add
-	bool rcarryb, b1, b2, rcarryZ=0, rcarrySignZ;
+	bool rcarryb, b1, b2, rcarryZ=0;
 
 	uZ1.q = q;
 
@@ -84,7 +84,6 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 	signA = signP32UI( uiA );
 	signB = signP32UI( uiB );
 	signZ2 = signA ^ signB;
-	signZ1 = uZ1.ui[0]>>63;
 
 	if(signA) uiA = (-uiA & 0xFFFFFFFF);
 	if(signB) uiB = (-uiB & 0xFFFFFFFF);
@@ -128,8 +127,7 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 	}
 	expA += tmp>>29;
 	frac64Z = (uint_fast64_t) fracA * (((tmp<<2) | 0x80000000) & 0xFFFFFFFF);
-//printf("frac64Z:\n");
-//printBinary(&frac64Z, 64);
+
 	if (expA>3){
 		kA++;
 		expA&=0x3; // -=4
@@ -150,7 +148,7 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 	//Minpos is 120 position to the right of binary point (dot)
 	//Scale = 2^es * k + e  => 2k + e
 	int firstPos = 271 - (kA<<2) - expA;
-//printf("kA: %d expA: %d, firstPos: %d\n", kA, expA, firstPos);
+
 	//Moving in chunk of 64. If it is in first chunk, a part might be in the chunk right to it. Simply have to handle that.
 	int i;
 	for (i=0; i<8; i++){
@@ -158,27 +156,13 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 			//Need to check how much of the fraction is in the next 64 bits
 			shiftRight = firstPos - (i*64);
 			uZ2.ui[i] = frac64Z >> shiftRight;
-//printf("shiftRight: %d i: %d\n", shiftRight, i);
+
 			if (i!=7 && shiftRight!=0) uZ2.ui[i+1] = frac64Z << (64 - shiftRight);
 			break;
 		}
 	}
 
-	/*if(signZ1&signZ2){
-		signZ = 1;
-		for (i=7; i>=0; i--){
-			if (uZ1.ui[i]>0){
-				uZ1.ui[i] = - uZ1.ui[i];
-				i--;
-				while(i>=0){
-					uZ1.ui[i] = ~uZ1.ui[i];
-					i--;
-				}
-				break;
-			}
-		}
-	}
-	else*/ if (signZ2){
+	if (signZ2){
 		for (i=7; i>=0; i--){
 			if (uZ2.ui[i]>0){
 				uZ2.ui[i] = - uZ2.ui[i];
@@ -210,19 +194,6 @@ quire32_t q32_fdp_add( quire32_t q, posit32_t pA, posit32_t pB ){
 		}
 
 	}
-	/*if(signZ){
-		for (i=7; i>=0; i--){
-			if (uZ.ui[i]>0){
-				uZ.ui[i] = - uZ.ui[i];
-				i--;
-				while(i>=0){
-					uZ.ui[i] = ~uZ.ui[i];
-					i--;
-				}
-				break;
-			}
-		}
-	}*/
 
 	//Exception handling
 	if (isNaRQ32(uZ.q) ) uZ.q = q32_clr(uZ.q);
