@@ -42,27 +42,34 @@
 SOURCE_DIR ?= ../../source
 PYTHON_DIR ?= ../../python
 SPECIALIZE_TYPE ?= 8086-SSE
+COMPILER ?= gcc
 
 SOFTPOSIT_OPTS ?= \
   -DINLINE_LEVEL=5 #\
   -DSOFTPOSIT_QUAD -lquadmath 
 
 COMPILE_PYTHON = \
-  gcc -fPIC -c $(PYTHON_DIR)/softposit_python_wrap.c \
+  $(COMPILER) -fPIC -c $(PYTHON_DIR)/softposit_python_wrap.c \
 		-I/usr/include/python \
 		-I$(SOURCE_DIR)/include -I.
 COMPILE_PYTHON3 = \
-  gcc -fPIC -c $(PYTHON_DIR)/softposit_python_wrap.c \
+  $(COMPILER) -fPIC -c $(PYTHON_DIR)/softposit_python_wrap.c \
 		-I/usr/include/python3 \
 		-I$(SOURCE_DIR)/include -I.
 LINK_PYTHON = \
   ld -shared  *.o -o $(PYTHON_DIR)/_softposit.so
-   
-DELETE = rm -f
+
+
+ifeq ($(OS),Windows_NT)
+     DELETE = del /Q /F
+else
+     DELETE = rm -f
+endif
+
 C_INCLUDES = -I. -I$(SOURCE_DIR)/$(SPECIALIZE_TYPE) -I$(SOURCE_DIR)/include
-OPTIMISATION  = -O2 -march=core-avx2
+OPTIMISATION  = -O2 #-march=core-avx2
 COMPILE_C = \
-  gcc -c -Werror-implicit-function-declaration -DSOFTPOSIT_FAST_INT64 \
+  $(COMPILER) -c -Werror-implicit-function-declaration -DSOFTPOSIT_FAST_INT64 \
     $(SOFTPOSIT_OPTS) $(C_INCLUDES) $(OPTIMISATION) \
     -o $@ 
 MAKELIB = ar crs $@
@@ -167,8 +174,6 @@ OBJS_OTHERS = \
   p32_sqrt$(OBJ) \
   quire32_fdp_add$(OBJ) \
   quire32_fdp_sub$(OBJ) \
-  p32_to_p16$(OBJ) \
-  p32_to_p8$(OBJ) \
   ui32_to_p32$(OBJ) \
   ui64_to_p32$(OBJ) \
   i32_to_p32$(OBJ) \
@@ -220,7 +225,6 @@ $(OBJS_SPECIALIZE): %$(OBJ): $(SOURCE_DIR)/$(SPECIALIZE_TYPE)/%.c
 	$(COMPILE_C) $(SOURCE_DIR)/$(SPECIALIZE_TYPE)/$*.c
 
 softposit$(LIB): $(OBJS_ALL)
-	$(DELETE) $@
 	$(MAKELIB) $^
 
 .PHONY: clean
