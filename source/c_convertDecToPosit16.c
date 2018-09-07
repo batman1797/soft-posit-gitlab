@@ -51,7 +51,7 @@ uint_fast16_t convertFractionP16(double f16, uint_fast8_t fracLength, bool * bit
 	uint_fast16_t frac=0;
 
 	if(f16==0) return 0;
-	else if(f16==INFINITY) return INFINITY;
+	else if(f16==INFINITY) return 0x8000;
 
 	f16 -= 1; //remove hidden bit
 	if (fracLength==0)
@@ -257,7 +257,7 @@ posit16_t convertDoubleToP16(double f16){
 		uint_fast16_t frac=0;
 
 		if(f16==0) return 0;
-		else if(f16==INFINITY) return INFINITY;
+		else if(f16==INFINITY) return 0x8000;
 
 		f16 -= 1; //remove hidden bit
 		if (fracLength==0)

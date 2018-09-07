@@ -58,7 +58,7 @@ uint_fast32_t convertQuadFractionP32(__float128 f32, uint_fast16_t fracLength, b
 	uint_fast32_t frac=0;
 
 	if(f32==0) return 0;
-	else if(f32==INFINITY) return INFINITY;
+	else if(f32==INFINITY) return 0x80000000;
 
 	f32 -= 1; //remove hidden bit
 	if (fracLength==0)
@@ -473,7 +473,7 @@ uint_fast32_t convertFractionP32(double f32, uint_fast16_t fracLength, bool * bi
 	uint_fast32_t frac=0;
 
 	if(f32==0) return 0;
-	else if(f32==INFINITY) return INFINITY;
+	else if(f32==INFINITY) return 0x80000000;
 
 	f32 -= 1; //remove hidden bit
 	if (fracLength==0)

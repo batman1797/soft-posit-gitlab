@@ -65,8 +65,7 @@ posit_2_t ui32_to_pX2( uint32_t a, int x ) {
 	}
 	else {
 		fracA = a;
-//printf("\n\n");
-//printBinary(&fracA, 32);
+
 		while ( !(fracA & mask) ) {
 			log2--;
 			fracA <<= 1;
@@ -74,11 +73,10 @@ posit_2_t ui32_to_pX2( uint32_t a, int x ) {
 		k = (log2 >> 2);
 		expA = (log2 & 0x3) ;
 		fracA = (fracA ^ mask);
-//printBinary(&fracA, 32);
-//printf("k: %d expA: %d\n", k, expA);
+
 		if(k>=(x-2)){//maxpos
 			uiA = 0x7FFFFFFF & ((int32_t)0x80000000>>(x-1));
-//printBinary(&uZ.ui, 32);
+
 		}
 		else if (k==(x-3)){//bitNPlusOne-> first exp bit //bitLast is zero
 			uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k));

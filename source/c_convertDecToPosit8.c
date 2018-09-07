@@ -52,7 +52,7 @@ uint_fast16_t convertFractionP8(double f8, uint_fast8_t fracLength, bool * bitsN
 	uint_fast8_t frac=0;
 
 	if(f8==0) return 0;
-	else if(f8==INFINITY) return INFINITY;
+	else if(f8==INFINITY) return 0x80;
 
 	f8 -= 1; //remove hidden bit
 	if (fracLength==0)
