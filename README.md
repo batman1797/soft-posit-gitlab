@@ -22,6 +22,9 @@ This code is tested on
 
 * GNU gcc (SUSE Linux) 4.8.5
 * Apple LLVM version 9.1.0 (clang-902.0.39.2)
+* Windows 10 (Mingw-w64)
+
+Please note that the same Makefile in build/Linux-x86_64-GCC is used for all 3 operating systems.
 
 Via Python
 * Windows Server 2016 Standard Version 10.0.14393 (Microsoft C/C++ Optimizing Compiler  Version 19.15.26726 for x86) 
