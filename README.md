@@ -20,8 +20,11 @@ This version (0.4.1rc) supports:
 
 This code is tested on 
 
- GNU gcc (SUSE Linux) 4.8.5
- Apple LLVM version 9.1.0 (clang-902.0.39.2)
+* GNU gcc (SUSE Linux) 4.8.5
+* Apple LLVM version 9.1.0 (clang-902.0.39.2)
+
+Via Python
+* Windows Server 2016 Standard Version 10.0.14393 (Microsoft C/C++ Optimizing Compiler  Version 19.15.26726 for x86) 
  
  All posit8_t and posit16_t operations are exhaustively tested with exception of p16_mulAdd and q16_fdp_add/sub operations.
  
