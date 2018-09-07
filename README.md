@@ -26,9 +26,7 @@ This code is tested on
 
 Please note that the same Makefile in build/Linux-x86_64-GCC is used for all 3 operating systems.
 
-Via Python
-* Windows Server 2016 Standard Version 10.0.14393 (Microsoft C/C++ Optimizing Compiler  Version 19.15.26726 for x86) 
- 
+
  All posit8_t and posit16_t operations are exhaustively tested with exception of p16_mulAdd and q16_fdp_add/sub operations.
  
  **posit32_t operations are still being tested exhaustively for correctness. It will take weeks to months before these tests complete.**
