@@ -157,7 +157,7 @@ class posit8:
        except TypeError:
           print("TypeError: Unsupported operand type(s) for /: posit8 and ",other.type())   
    def __truediv__(self, other):
-       return self.__div(other)      
+       return self.__div__(other)      
    def __rdiv__(self, other):
        try:
           a = posit8(0)
