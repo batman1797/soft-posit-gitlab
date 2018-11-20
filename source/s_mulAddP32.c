@@ -1,4 +1,3 @@
-
 /*============================================================================
 
 This C source file is part of the SoftPosit Posit Arithmetic Package
@@ -260,7 +259,7 @@ posit32_t
 			//remove hidden bits
 			frac64Z &= 0x3FFFFFFFFFFFFFFF;
 			fracZ = frac64Z >> (regZ + 34);//frac32Z>>16;
-			bitNPlusOne |= (0x200000000 & (frac64Z >>regA ) ) ;
+			bitNPlusOne |= (0x200000000 & (frac64Z >>regZ ) ) ;
 			expZ <<= (28-regZ);
 		}
 		else {
