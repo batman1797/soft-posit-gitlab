@@ -861,9 +861,9 @@ class posit32:
    def __eq__(self, other):
        try:
           if isinstance(other, (int)):
-              a.v = _softposit.p32_eq(self.v, _softposit.i64_to_p32(other))
+              return _softposit.p32_eq(self.v, _softposit.i64_to_p32(other))
           elif isinstance(other, (float)):
-              a.v = _softposit.p32_eq(self.v, _softposit.convertDoubleToP32(other))
+              return _softposit.p32_eq(self.v, _softposit.convertDoubleToP32(other))
           else:
               return _softposit.p32_eq(self.v, other.v)
        except TypeError:
