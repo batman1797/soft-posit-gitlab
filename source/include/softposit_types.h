@@ -1,4 +1,3 @@
-
 /*============================================================================
 
 This C header file is part of the SoftPosit Posit Arithmetic Package
@@ -100,6 +99,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	union ui128_p128c {uint64_t ui[2]; posit128_t p;}; //c to differentiate from original implementation
 
 	union ui32_pX2 { uint32_t ui; posit_2_t p; };
+	
+	union ui64_double   { uint64_t ui; double d; };
 
 	union ui32_q8 {
 		uint32_t ui;
