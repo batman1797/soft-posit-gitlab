@@ -182,7 +182,7 @@ __float128 convertPX2ToQuad(posit_2_t a){
 #endif
 
 
-double convertP32ToDouble(posit32_t a){
+double convertP32ToDouble(posit32_t pA){
     union ui32_p32 uA;
 	union ui64_double uZ;
 	uint_fast32_t uiA, tmp=0;
