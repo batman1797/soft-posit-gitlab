@@ -51,7 +51,7 @@ int_fast32_t p16_to_i32( posit16_t pA ){
 	uA.p = pA;
 	uiA = uA.ui;                             // Copy of the input.
 	//NaR
-	if (uiA==0x8000) return 0x80000000;
+	if (uiA==0x8000) return 0;
 
 	sign = (uiA > 0x8000);                   // sign is True if pA > NaR.
 	if (sign) uiA = -uiA & 0xFFFF;           // A is now |A|.

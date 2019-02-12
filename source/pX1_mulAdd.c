@@ -1,16 +1,9 @@
-
 /*============================================================================
 
 This C source file is part of the SoftPosit Posit Arithmetic Package
-by S. H. Leong (Cerlane) and John Gustafson.
+by S. H. Leong (Cerlane).
 
-Copyright 2017 2018 A*STAR.  All rights reserved.
-
-This C source file was based on SoftFloat IEEE Floating-Point Arithmetic
-Package, Release 3d, by John R. Hauser.
-
-Copyright 2011, 2012, 2013, 2014, 2015, 2016, 2017 The Regents of the
-University of California.  All rights reserved.
+Copyright 2017, 2018 A*STAR.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -42,55 +35,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-uint_fast64_t p16_to_ui64( posit16_t pA ) {
-	union ui16_p16 uA;
-	uint_fast64_t mask, iZ, tmp;
-	uint_fast16_t scale = 0, uiA;
-	bool bitLast, bitNPlusOne;
+posit_1_t pX1_mulAdd( posit_1_t a, posit_1_t b, posit_1_t c, int x ) {
+	//a*b + c
+	union ui32_pX1 uA;
+    uint_fast32_t uiA;
+    union ui32_pX1 uB;
+    uint_fast32_t uiB;
+    union ui32_pX1 uC;
+    uint_fast32_t uiC;
 
-	uA.p = pA;
-	uiA = uA.ui;
-	//NaR
-	//if (uiA==0x8000) return 0;
-	//negative
-	if (uiA>=0x8000) return 0;
-
-	if (uiA <= 0x3000) {
-		return 0;
-	}
-	else if (uiA < 0x4800) {
-		iZ = 1;
-	}
-	else if (uiA <= 0x5400) {
-		iZ = 2;
-	}
-	else {
-		uiA -= 0x4000;
-		while (0x2000 & uiA) {
-			scale += 2;
-			uiA = (uiA - 0x2000) << 1;
-		}
-		uiA <<= 1;
-		if (0x2000 & uiA) scale++;
-		iZ = ((uint64_t)uiA | 0x2000) << 49;
-
-		mask = 0x4000000000000000 >> scale;
-
-		bitLast = (iZ & mask);
-		mask >>= 1;
-		tmp = (iZ & mask);
-		bitNPlusOne = tmp;
-		iZ ^= tmp;
-		tmp = iZ & (mask - 1);  // bitsMore
-		iZ ^= tmp;
-
-		if (bitNPlusOne)
-			if (bitLast | tmp) iZ += (mask << 1);
-
-		iZ = (uint64_t)iZ >> (62 - scale);
-
-	}
-	return iZ;
+    uA.p = a;
+    uiA = uA.ui;
+    uB.p = b;
+    uiB = uB.ui;
+    uC.p = c;
+    uiC = uC.ui;
+    return softposit_mulAddPX1( uiA, uiB, uiC, 0, x);
 
 }
 

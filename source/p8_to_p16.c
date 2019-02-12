@@ -89,7 +89,7 @@ posit16_t p8_to_p16( posit8_t pA ) {
 		regime = 0x4000>>regA;
 	}
 	else{
-		if (kA&0x1) exp_frac16A |= 0x8000 ;
+		if (kA&0x1) exp_frac16A |= 0x8000;
 		regA = (kA+2)>>1;
 		if (regA==0) regA=1;
 		regSA=1;

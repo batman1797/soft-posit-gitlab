@@ -52,8 +52,8 @@ uint_fast64_t p8_to_ui64( posit8_t pA ) {
 	uA.p = pA;
 	uiA = uA.ui;                             // Copy of the input.
 	//NaR
-	if (uiA==0x80) return 0x8000000000000000;
-	else if (uiA>0x80) return 0; 	//negative
+	//if (uiA==0x80) return 0;
+	if (uiA>=0x80) return 0; 	//negative
 
 	if (uiA <= 0x20) {                     // 0 <= |pA| <= 1/2 rounds to zero.
 		return 0;

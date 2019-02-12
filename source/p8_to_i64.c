@@ -52,7 +52,7 @@ int_fast64_t p8_to_i64( posit8_t pA ) {
 	uA.p = pA;
 	uiA = uA.ui;                             // Copy of the input.
 	//NaR
-	if (uiA==0x80) return 0x8000000000000000LL;
+	if (uiA==0x80) return 0;
 
 	sign = uiA>>7;
 	if (sign) uiA = -uiA & 0xFF;

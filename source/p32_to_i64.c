@@ -58,7 +58,7 @@ int_fast64_t p32_to_i64( posit32_t pA ){
 	uA.p = pA;
 	uiA = uA.ui;
 
-	if (uiA==0x80000000) return 0x8000000000000000;
+	if (uiA==0x80000000) return 0;
 
 	sign = uiA>>31;
 	if (sign) uiA = -uiA & 0xFFFFFFFF;

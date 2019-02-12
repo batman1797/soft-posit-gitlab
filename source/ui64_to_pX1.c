@@ -1,3 +1,4 @@
+
 /*============================================================================
 
 This C source file is part of the SoftPosit Posit Arithmetic Package
@@ -8,8 +9,8 @@ Copyright 2017 2018 A*STAR.  All rights reserved.
 This C source file was based on SoftFloat IEEE Floating-Point Arithmetic
 Package, Release 3d, by John R. Hauser.
 
-Copyright 2011, 2012, 2013, 2014, 2015, 2016, 2017 The Regents of the
-University of California.  All rights reserved.
+Copyright 2011, 2012, 2013, 2014, 2015, 2016 The Regents of the University of
+California.  All Rights Reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -37,92 +38,73 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
+
+#include <stdint.h>
+
 #include "platform.h"
 #include "internals.h"
 
-posit_2_t p8_to_pX2( posit8_t pA, int x ) {
+posit_1_t ui64_to_pX1 ( uint64_t a, int x ) {
+	int_fast8_t k, log2 = 60;//length of bit (e.g. 576460752303423488 = 2^59) in int (64 but because we have only 64 bits, so one bit off to accommodate that fact)
+	union ui32_pX1 uZ;
+	uint_fast64_t uiA=0;
+	uint_fast64_t mask = 0x8000000000000000, frac64A;
+	uint_fast32_t expA;
 
-	union ui8_p8 uA;
-	union ui32_pX2 uZ;
-	uint_fast8_t uiA, tmp;
-	uint_fast32_t exp_frac32A=0, regime;
-	bool sign, regSA;
-	int_fast8_t kA=0, regA;
-
-	if (x<2 || x>32){
-		uZ.ui = 0x80000000;
-		return uZ.p;
+	//NaR
+	if (a == 0x8000000000000000 || x<2 || x>32)
+		uiA = 0x80000000;
+	else if (x==2){
+		if (a>0) uiA=0x40000000;
 	}
-
-	uA.p = pA;
-	uiA = uA.ui;
-
-	if (uiA==0x80 || uiA==0 ){
-		uZ.ui = (uint32_t)uiA<<24;
-		return uZ.p;
+	else if ( a > 0x0800000000000000){//576460752303423488
+		uiA = 0x7FFFFFFF & ((uint32_t)0x80000000>>(x-1)); // 1152921504606847000
 	}
+	else if ( a < 0x2 )
+		uiA = (a << 30);
+	else {
+		frac64A = a;
+		while ( !(frac64A & mask) ) {
+			log2--;
+			frac64A <<= 1;
+		}
 
-	sign = signP8UI( uiA );
-	if (sign) uiA = -uiA & 0xFF;
-	if(x==2){
-		uZ.ui=(uiA>0)?(0x40000000):(0);
-	}
-	else{
-		regSA = signregP8UI(uiA);
+		k = (log2 >> 1);
 
-		tmp = (uiA<<2) & 0xFF;
-		if (regSA){
-			while (tmp>>7){
-				kA++;
-				tmp= (tmp<<1) & 0xFF;
+		expA = (log2 & 0x1) ;
+		frac64A = (frac64A ^ mask);
+printf("log2: %d k: %d\n", log2, k);
+		if(k>=(x-2)){//maxpos
+			uiA = 0x7FFFFFFF & ((int32_t)0x80000000>>(x-1));
+		}
+		else if (k==(x-3)){//bitNPlusOne-> exp bit //bitLast is zero
+			uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k));
+			if( (expA & 0x1) &&  frac64A ) //bitNPlusOne //bitsMore
+				 uiA |= ((uint32_t)0x80000000>>(x-1));
+		}
+		else if (k==(x-4)){ //bitLast = exp
+			uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k)) | (expA<< (27 - k));
+printBinary(&uiA, 32);
+			mask = (uint64_t)0x800000000 << (k + 32-x);
+printBinary(&mask, 64);
+printBinary(&frac64A, 64);
+			if (mask & frac64A){ //bitNPlusOne
+				if (((mask - 1) & frac64A) | (expA&0x1)) {
+					uiA+= ((uint32_t)0x80000000>>(x-1));
+				}
 			}
 		}
 		else{
-			kA=-1;
-			while (!(tmp>>7)){
-				kA--;
-				tmp= (tmp<<1) & 0xFF;
-			}
-			tmp&=0x7F;
-		}
-		exp_frac32A = tmp<<22;
-
-		if(kA<0){
-			regA = -kA;
-			// Place exponent bits
-			exp_frac32A |= ( ((regA&0x1)| ((regA+1)&0x2))<<29 );
-
-			regA = (regA+3)>>2;
-			if (regA==0) regA=1;
-			regSA = 0;
-			regime = 0x40000000>>regA;
-		}
-		else{
-			exp_frac32A |= ( (kA&0x3) << 29 );
-
-			regA = (kA+4)>>2;
-			if (regA==0) regA=1;
-			regSA=1;
-			regime = 0x7FFFFFFF - (0x7FFFFFFF>>regA);
-		}
-
-		exp_frac32A =((uint_fast32_t)exp_frac32A) >> (regA+1); //2 because of sign and regime terminating bit
-
-		uZ.ui = regime + exp_frac32A;
-
-		int shift = 32-x;
-		if( (uZ.ui>>shift)!=(0x7FFFFFFF>>shift) ){
-			if( ((uint32_t)0x80000000>>x) & uZ.ui){
-				if ( ( ((uint32_t)0x80000000>>(x-1)) & uZ.ui) || (((uint32_t)0x7FFFFFFF>>x) & uZ.ui) )
-					uZ.ui += (0x1<<shift);
+			uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k)) | (expA<< (27 - k)) | ((frac64A>>(k+36)) & ((int32_t)0x80000000>>(x-1)));
+printBinary(&uiA, 32);
+			mask = (uint64_t)0x800000000 << (k + 32-x);  //bitNPlusOne position
+			if (mask & frac64A) {
+				if (((mask - 1) & frac64A) | ((mask << 1) & frac64A)) {
+					uiA+= ((uint32_t)0x80000000>>(x-1));
+				}
 			}
 		}
-		uZ.ui &=((int32_t)0x80000000>>(x-1));
-		if (uZ.ui==0) uZ.ui = 0x1<<shift;
 	}
-
-	if (sign) uZ.ui = -uZ.ui & 0xFFFFFFFF;
-
+	uZ.ui = uiA;
 	return uZ.p;
 }
-

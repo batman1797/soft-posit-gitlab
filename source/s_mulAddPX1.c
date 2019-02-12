@@ -43,11 +43,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "internals.h"
 
 //a*b+c
-posit_2_t
-  softposit_mulAddPX2(
+posit_1_t
+  softposit_mulAddPX1(
      uint_fast32_t uiA, uint_fast32_t uiB, uint_fast32_t uiC, uint_fast32_t op, int x ){
 
-	union ui32_pX2 uZ;
+	union ui32_pX1 uZ;
 	int regZ;
 	uint_fast32_t fracA, fracZ, regime, tmp;
 	bool signA, signB, signC, signZ, regSA, regSB, regSC, regSZ, bitNPlusOne=0, bitsMore=0, rcarry;
@@ -125,8 +125,8 @@ posit_2_t
 			}
 			tmp&=0x7FFFFFFF;
 		}
-		expA = tmp>>29; //to get 2 bits
-		fracA = ((tmp<<2) | 0x80000000) & 0xFFFFFFFF;
+		expA = tmp>>30; //to get 2 bits
+		fracA = ((tmp<<1) | 0x80000000) & 0xFFFFFFFF;
 
 		tmp = (uiB<<2)&0xFFFFFFFF;
 		if (regSB){
@@ -143,21 +143,18 @@ posit_2_t
 			}
 			tmp&=0x7FFFFFFF;
 		}
-		expA += tmp>>29;
-		frac64Z = (uint_fast64_t) fracA * (((tmp<<2) | 0x80000000) & 0xFFFFFFFF);
+		expA += tmp>>30;
+		frac64Z = (uint_fast64_t) fracA * (((tmp<<1) | 0x80000000) & 0xFFFFFFFF);
 
-		if (expA>3){
+		if (expA>1){
 			kA++;
-			expA&=0x3; // -=4
+			expA^=0x2;
 		}
 
 		rcarry = frac64Z>>63;//1st bit of frac64Z
 		if (rcarry){
-			expA++;
-			if (expA>3){
-				kA ++;
-				expA&=0x3;
-			}
+			if (expA) kA ++;
+			expA^=1;
 			frac64Z>>=1;
 		}
 
@@ -177,11 +174,13 @@ posit_2_t
 				}
 				tmp&=0x7FFFFFFF;
 			}
-
-			expC = tmp>>29; //to get 2 bits
-			frac64C = (((tmp<<1) | 0x40000000ULL) & 0x7FFFFFFFULL)<<32;
-			shiftRight = ((kA-kC)<<2) + (expA-expC);
-
+//printBinary(&expC, 32);
+			expC = tmp>>30; //to get 1 bits
+			frac64C = ((tmp | 0x40000000ULL) & 0x7FFFFFFFULL)<<32;
+			shiftRight = ((kA-kC)<<1) + (expA-expC);
+//printf("shiftRight: %d kA: %d kC: %d\n", shiftRight, kA, kC);
+//printBinary(&frac64Z, 64);
+//printBinary(&frac64C, 64);
 			if (shiftRight<0){ // |uiC| > |Prod|
 				if (shiftRight<=-63){
 					bitsMore = 1;
@@ -189,7 +188,7 @@ posit_2_t
 					//set bitsMore to one?
 				}
 				else if ((frac64Z<<(64+shiftRight))!=0) bitsMore = 1;
-
+//printf("bitsMore: %d\n", bitsMore);
 				if (signZ==signC)
 					frac64Z = frac64C + (frac64Z>>-shiftRight);
 				else {//different signs
@@ -199,6 +198,8 @@ posit_2_t
 				}
 				kZ = kC;
 				expZ = expC;
+//printf("kZ: %d expZ: %d\n", kZ, expZ);
+//printBinary(&frac64Z, 64);
 			}
 			else if (shiftRight>0){// |uiC| < |Prod|
 				//if (frac32C&((1<<shiftRight)-1)) bitsMore = 1;
@@ -241,29 +242,30 @@ posit_2_t
 			rcarry = (uint64_t)frac64Z>>63; //first left bit
 
 			if(rcarry){
-				expZ++;
-				if (expZ>3){
-					kZ++;
-					expZ&=0x3;
-				}
+				if (expZ) kZ ++;
+				expZ^=1;
+				if (frac64Z&0x1) bitsMore = 1;
 				frac64Z=(frac64Z>>1)&0x7FFFFFFFFFFFFFFF;
 			}
 			else {
 				//for subtract cases
 				if (frac64Z!=0){
-					while((frac64Z>>59)==0){
+					while((frac64Z>>61)==0){
 						kZ--;
-						frac64Z<<=4;
-					}
-					while((frac64Z>>62)==0){
-						expZ--;
-						frac64Z<<=1;
-						if (expZ<0){
-							kZ--;
-							expZ=3;
-						}
+						frac64Z<<=2;
 					}
 				}
+				bool ecarry = (0x4000000000000000 & frac64Z)>>62;
+
+				if(!ecarry){
+					if (expZ==0) kZ--;
+					expZ^=1;
+					frac64Z<<=1;
+				}
+
+//printf("kZ: %d expZ: %d\n", kZ, expZ);
+//printf("frac64Z:\n");
+//printBinary(&frac64Z,64);
 
 			}
 
@@ -283,7 +285,8 @@ posit_2_t
 			regSZ=1;
 			regime = 0x7FFFFFFF - (0x7FFFFFFF>>regZ);
 		}
-
+//printf("regZ: %d regSZ: %d kZ: %d expZ: %d\n", regZ, regSZ, kZ, expZ);
+//printBinary(&frac64Z,64);
 		if(regZ>(x-2)){
 			//max or min pos. exp and frac does not matter.
 			uZ.ui=(regSZ) ? (0x7FFFFFFF & ((int32_t)0x80000000>>(x-1)) ): (0x1 << (32-x));
@@ -293,32 +296,21 @@ posit_2_t
 			if (regZ<x){
 				//remove hidden bits
 				frac64Z &= 0x3FFFFFFFFFFFFFFF;
-				fracZ = frac64Z >> (regZ + 34);//frac32Z>>16;
-
-				if (regZ<=(x-4)){
-					bitNPlusOne |= (((uint64_t)0x8000000000000000>>(x-regZ-2)) & frac64Z) ;
-					bitsMore = (((uint64_t)0x7FFFFFFFFFFFFFFF>>(x-regZ-2)) & frac64Z) ;
-					fracZ &=((int32_t)0x80000000>>(x-1));
+				fracZ = frac64Z >> (regZ + 33);//frac32Z>>16;
+//printBinary(&frac64Z,64);
+//printBinary(&fracZ,32);
+				if (regZ!=(x-2)){
+					bitNPlusOne |= (((uint64_t)0x8000000000000000>>(x-regZ-1)) & frac64Z);
+					bitsMore = ((0x7FFFFFFFFFFFFFFF>>(x-regZ-1)) & frac64Z);
+					fracZ&=((int32_t)0x80000000>>(x-1));
 				}
-				else {
-
-					if (regZ==(x-2)){
-
-						bitNPlusOne = expZ&0x2;
-						bitsMore = (expZ&0x1);
-						expZ = 0;
-					}
-					else if (regZ==(x-3)){
-
-						bitNPlusOne = expZ&0x1;
-						expZ &=0x2;
-
-					}
-					if (frac64Z>0){
-						fracZ=0;
-						bitsMore =1;
-
-					}
+				else if (frac64Z>0){
+					fracZ=0;
+					bitsMore=1;
+				}
+				if(regZ==(x-2) && expZ){
+					bitNPlusOne=1;
+					expZ=0;
 				}
 			}
 			else{
@@ -326,12 +318,14 @@ posit_2_t
 				expZ=0;
 				fracZ=0;
 			}
-
-			expZ <<= (28-regZ);
+//printBinary(&fracZ, 32);
+//printf("expZ: %d bitNPlusOne: %d bitsMore; %d\n", expZ, bitNPlusOne, bitsMore);
+			expZ <<= (29-regZ);
 
 			uZ.ui = packToP32UI(regime, expZ, fracZ);
-
+//printBinary(&uZ.ui, 32);
 			if (bitNPlusOne){
+				//(((uint64_t)0xFFFFFFFFFFFFFFFF>>(x+1)) & frac64Z) ? (bitsMore=1) : (bitsMore=0);
 				uZ.ui += (uint32_t)(((uZ.ui>>(32-x))&1) | bitsMore) << (32-x) ;
 			}
 
@@ -339,6 +333,8 @@ posit_2_t
 		if (signZ) uZ.ui = -uZ.ui & 0xFFFFFFFF;
 		return uZ.p;
     }
+//printf("expA: %d expC: %d expZ: %d kZ: %d\n", expA, expC, expZ, kZ);
+
 
 
 }

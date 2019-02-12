@@ -6,11 +6,11 @@ by S. H. Leong (Cerlane).
 
 Copyright 2017, 2018 A*STAR.  All rights reserved.
 
-This C source file is part of the SoftFloat IEEE Floating-Point Arithmetic
+This C source file was based on SoftFloat IEEE Floating-Point Arithmetic
 Package, Release 3d, by John R. Hauser.
 
-Copyright 2011, 2012, 2013, 2014, 2015, 2016 The Regents of the University of
-California.  All rights reserved.
+Copyright 2011, 2012, 2013, 2014, 2015, 2016, 2017 The Regents of the
+University of California.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -42,43 +42,46 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
+posit_1_t softposit_subMagsPX1( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
+
 	int regA;
 	uint_fast64_t frac64A=0, frac64B=0;
 	uint_fast32_t fracA=0, regime, tmp;
-	bool sign, regSA, regSB, rcarry=0, bitNPlusOne=0, bitsMore=0;
+	bool sign, regSA, regSB, ecarry=0, bitNPlusOne=0, bitsMore=0;
 	int_fast8_t kA=0;
 	int_fast32_t expA=0;
 	int_fast16_t shiftRight;
-	union ui32_pX2 uZ;
-
+	union ui32_pX1 uZ;
 
 	sign = signP32UI( uiA );
-	if (sign){
+	if (sign)
 		uiA = -uiA & 0xFFFFFFFF;
+	else
 		uiB = -uiB & 0xFFFFFFFF;
-	}
 
+	if (uiA==uiB){ //essential, if not need special handling
+		uZ.ui = 0;
+		return uZ.p;
+	}
 	if ((int_fast32_t)uiA < (int_fast32_t)uiB){
 		uiA ^= uiB;
 		uiB ^= uiA;
 		uiA ^= uiB;
+		(sign) ? (sign = 0 ) : (sign=1); //A becomes B
 	}
 	regSA = signregP32UI( uiA );
-    regSB = signregP32UI( uiB );
+	regSB = signregP32UI( uiB );
 
-    if (x==2){
-    	uZ.ui = (regSA|regSB) ? (0x40000000) : (0x0);
-    }
-    else{
-    	//int tmpX = x-2;
+	if (x==2){
+		uZ.ui = (regSA==regSB) ? (0x0): (0x40000000) ;
+	}
+	else{
+
 		tmp = (uiA<<2)&0xFFFFFFFF;
-
 		if (regSA){
 			while (tmp>>31){
 				kA++;
 				tmp= (tmp<<1) & 0xFFFFFFFF;
-
 			}
 		}
 		else{
@@ -86,13 +89,13 @@ posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 			while (!(tmp>>31)){
 				kA--;
 				tmp= (tmp<<1) & 0xFFFFFFFF;
-
 			}
 			tmp&=0x7FFFFFFF;
 		}
 
-		expA = tmp>>29; //to get 2 bits
-		frac64A = ((0x40000000ULL | tmp<<1) & 0x7FFFFFFFULL) <<32;
+
+		expA = tmp>>30; //to get 1 bits
+		frac64A = ((0x40000000ULL | tmp) & 0x7FFFFFFFULL) <<32;
 		shiftRight = kA;
 
 		tmp = (uiB<<2) & 0xFFFFFFFF;
@@ -101,6 +104,7 @@ posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 				shiftRight--;
 				tmp= (tmp<<1) & 0xFFFFFFFF;
 			}
+
 		}
 		else{
 			shiftRight++;
@@ -109,26 +113,31 @@ posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 				tmp= (tmp<<1) & 0xFFFFFFFF;
 			}
 			tmp&=0x7FFFFFFF;
+
 		}
-		frac64B = ((0x40000000ULL | tmp<<1) & 0x7FFFFFFFULL) <<32;
+		frac64B = ((0x40000000ULL | tmp) & 0x7FFFFFFFULL) <<32;
 		//This is 4kZ + expZ; (where kZ=kA-kB and expZ=expA-expB)
-		shiftRight = (shiftRight<<2) + expA - (tmp>>29);
-
-		//Manage CLANG (LLVM) compiler when shifting right more than number of bits
-		(shiftRight>63) ? (frac64B=0): (frac64B >>= shiftRight); //frac64B >>= shiftRight
-
-		frac64A += frac64B;
-
-		rcarry = 0x8000000000000000 & frac64A; //first left bit
-		if (rcarry){
-			expA++;
-			if (expA>3){
-				kA ++;
-				expA&=0x3;
-			}
-			frac64A>>=1;
+		shiftRight = (shiftRight<<1) + expA - (tmp>>30);
+		if (shiftRight>60){
+			uZ.ui = uiA;
+			if (sign) uZ.ui = -uZ.ui & 0xFFFFFFFF;
+			return uZ.p;
 		}
+		else
+			(frac64B >>= shiftRight);
 
+		frac64A -= frac64B;
+
+		while((frac64A>>61)==0){
+			kA--;
+			frac64A<<=2;
+		}
+		ecarry = (0x4000000000000000 & frac64A);//(0x4000000000000000 & frac64A)>>62;
+		if (!ecarry){
+			if (expA==0) kA--;
+			expA^=1;
+			frac64A<<=1;
+		}
 
 		if(kA<0){
 			regA = -kA;
@@ -140,37 +149,33 @@ posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 			regSA=1;
 			regime = 0x7FFFFFFF - (0x7FFFFFFF>>regA);
 		}
-
 		if(regA>(x-2)){
-			//max or min pos. exp and frac does not matter.
-			uZ.ui=(regSA) ? (0x7FFFFFFF & ((int32_t)0x80000000>>(x-1)) ): (0x1 << (32-x));
+				//max or min pos. exp and frac does not matter.
+				uZ.ui=(regSA) ? (0x7FFFFFFF & ((int32_t)0x80000000>>(x-1)) ): (0x1 << (32-x));
 		}
 		else{
 			//remove hidden bits
-			frac64A = (frac64A & 0x3FFFFFFFFFFFFFFF) >>(regA + 2) ; // 2 bits exp
+			frac64A = (frac64A & 0x3FFFFFFFFFFFFFFF) >>(regA + 1) ; // 2 bits exp
 			fracA = frac64A>>32;
 
 			//regime length is smaller than length of posit
 			if (regA<x){
 				if (regA<=(x-4)){
-					bitNPlusOne |= (((uint64_t)0x80000000<<(32-x))& frac64A) ;
+					bitNPlusOne |= (((uint64_t)0x80000000<<(32-x)) & frac64A) ;
 					//expA <<= (28-regA);
 				}
 				else {
-					if (regA==(x-2)){
-						bitNPlusOne = expA&0x2;
-						bitsMore = (expA&0x1);
-						expA = 0;
-					}
-					else if (regA==(x-3)){
-						bitNPlusOne = expA&0x1;
-						//expA>>=1;
-						expA &=0x2;
-					}
-					if (fracA>0){
+					if (regA!=(x-2))
+						bitNPlusOne |= (((uint64_t)0x8000000000000000>>x) & frac64A);
+					else if (frac64A>0){
 						fracA=0;
 						bitsMore =1;
 					}
+					if (regA==(x-2) && expA){
+						bitNPlusOne = 1;
+						expA=0;
+					}
+
 				}
 			}
 			else{
@@ -180,17 +185,16 @@ posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 			}
 			fracA &=((int32_t)0x80000000>>(x-1));
 
-			expA <<= (28-regA);
+			expA <<= (29-regA);
 			uZ.ui = packToP32UI(regime, expA, fracA);
-
 
 			//n+1 frac bit is 1. Need to check if another bit is 1 too if not round to even
 			if (bitNPlusOne){
-				(((uint64_t)0xFFFFFFFFFFFFFFFF>>(x+1)) & frac64A) ? (bitsMore=1) : (bitsMore=0);
+				((0x7FFFFFFFFFFFFFFF>>x) & frac64A) ? (bitsMore=1) : (bitsMore=0);
 				uZ.ui += (uint32_t)(((uZ.ui>>(32-x))&1) | bitsMore) << (32-x) ;
 			}
 		}
-    }
+	}
 
 	if (sign) uZ.ui = -uZ.ui & 0xFFFFFFFF;
 	return uZ.p;

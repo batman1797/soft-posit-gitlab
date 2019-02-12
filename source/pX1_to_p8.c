@@ -1,3 +1,4 @@
+
 /*============================================================================
 
 This C source file is part of the SoftPosit Posit Arithmetic Package
@@ -7,9 +8,6 @@ Copyright 2017 2018 A*STAR.  All rights reserved.
 
 This C source file was based on SoftFloat IEEE Floating-Point Arithmetic
 Package, Release 3d, by John R. Hauser.
-
-Copyright 2011, 2012, 2013, 2014, 2015, 2016, 2017 The Regents of the
-University of California.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -37,91 +35,83 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
+
 #include "platform.h"
 #include "internals.h"
 
-posit_2_t p8_to_pX2( posit8_t pA, int x ) {
 
-	union ui8_p8 uA;
-	union ui32_pX2 uZ;
-	uint_fast8_t uiA, tmp;
-	uint_fast32_t exp_frac32A=0, regime;
-	bool sign, regSA;
+posit8_t pX1_to_p8( posit_1_t pA ){
+
+	union ui32_pX1 uA;
+	union ui8_p8 uZ;
+	uint_fast32_t uiA, tmp, regime;
+	uint_fast32_t exp_frac32A=0;
+	bool sign, regSA, bitsMore=0;
 	int_fast8_t kA=0, regA;
-
-	if (x<2 || x>32){
-		uZ.ui = 0x80000000;
-		return uZ.p;
-	}
 
 	uA.p = pA;
 	uiA = uA.ui;
 
-	if (uiA==0x80 || uiA==0 ){
-		uZ.ui = (uint32_t)uiA<<24;
+	if (uiA==0x80000000 || uiA==0 ){
+		uZ.ui = (uiA>>24) & 0xFF;
 		return uZ.p;
 	}
 
-	sign = signP8UI( uiA );
-	if (sign) uiA = -uiA & 0xFF;
-	if(x==2){
-		uZ.ui=(uiA>0)?(0x40000000):(0);
+	sign = signP32UI( uiA );
+	if (sign) uiA = -uiA & 0xFFFFFFFF;
+	regSA = signregP32UI(uiA);
+
+	tmp = (uiA<<2)&0xFFFFFFFF;
+	if (regSA){
+		while (tmp>>31){
+			kA++;
+			tmp= (tmp<<1) & 0xFFFFFFFF;
+		}
 	}
 	else{
-		regSA = signregP8UI(uiA);
-
-		tmp = (uiA<<2) & 0xFF;
-		if (regSA){
-			while (tmp>>7){
-				kA++;
-				tmp= (tmp<<1) & 0xFF;
-			}
+		kA=-1;
+		while (!(tmp>>31)){
+			kA--;
+			tmp= (tmp<<1) & 0xFFFFFFFF;
 		}
-		else{
-			kA=-1;
-			while (!(tmp>>7)){
-				kA--;
-				tmp= (tmp<<1) & 0xFF;
-			}
-			tmp&=0x7F;
-		}
-		exp_frac32A = tmp<<22;
+		tmp&=0x7FFFFFFF;
 
-		if(kA<0){
-			regA = -kA;
-			// Place exponent bits
-			exp_frac32A |= ( ((regA&0x1)| ((regA+1)&0x2))<<29 );
-
-			regA = (regA+3)>>2;
-			if (regA==0) regA=1;
-			regSA = 0;
-			regime = 0x40000000>>regA;
-		}
-		else{
-			exp_frac32A |= ( (kA&0x3) << 29 );
-
-			regA = (kA+4)>>2;
-			if (regA==0) regA=1;
-			regSA=1;
-			regime = 0x7FFFFFFF - (0x7FFFFFFF>>regA);
-		}
-
-		exp_frac32A =((uint_fast32_t)exp_frac32A) >> (regA+1); //2 because of sign and regime terminating bit
-
-		uZ.ui = regime + exp_frac32A;
-
-		int shift = 32-x;
-		if( (uZ.ui>>shift)!=(0x7FFFFFFF>>shift) ){
-			if( ((uint32_t)0x80000000>>x) & uZ.ui){
-				if ( ( ((uint32_t)0x80000000>>(x-1)) & uZ.ui) || (((uint32_t)0x7FFFFFFF>>x) & uZ.ui) )
-					uZ.ui += (0x1<<shift);
-			}
-		}
-		uZ.ui &=((int32_t)0x80000000>>(x-1));
-		if (uZ.ui==0) uZ.ui = 0x1<<shift;
 	}
 
-	if (sign) uZ.ui = -uZ.ui & 0xFFFFFFFF;
+	if (kA<-3 || kA>=3){
+		(kA<0) ? (uZ.ui=0x1):(uZ.ui= 0x7F);
+	}
+	else{
+		//2nd bit exp
+		exp_frac32A = tmp;
+		if(kA<0){
+			regA = ((-kA)<<1) - (exp_frac32A>>30);
+			if (regA==0) regA=1;
+			regSA = 0;
+			regime = 0x40>>regA;
+		}
+		else{
+
+			(kA==0)?(regA=1 + (exp_frac32A>>30)): (regA = ((kA+1)<<1) + (exp_frac32A>>30) -1);
+			regSA=1;
+			regime = 0x7F - (0x7F>>regA);
+		}
+
+		if (regA>5){
+			uZ.ui = regime;
+		}
+		else{
+			uZ.ui = regime + ( ((exp_frac32A)&0x3FFFFFFF)>>(regA+24) );
+		}
+	}
+
+	if ( exp_frac32A & (0x800000<<regA)){
+		bitsMore = exp_frac32A & ((0x800000<<regA)-1);
+		uZ.ui += (uZ.ui&1) | bitsMore;
+
+	}
+
+	if (sign) uZ.ui = -uZ.ui & 0xFF;
 
 	return uZ.p;
 }

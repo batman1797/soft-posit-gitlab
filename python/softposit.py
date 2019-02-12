@@ -811,6 +811,32 @@ class ui32_pX2(_object):
 ui32_pX2_swigregister = _softposit.ui32_pX2_swigregister
 ui32_pX2_swigregister(ui32_pX2)
 
+class ui64_double(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ui64_double, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, ui64_double, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["ui"] = _softposit.ui64_double_ui_set
+    __swig_getmethods__["ui"] = _softposit.ui64_double_ui_get
+    if _newclass:
+        ui = _swig_property(_softposit.ui64_double_ui_get, _softposit.ui64_double_ui_set)
+    __swig_setmethods__["d"] = _softposit.ui64_double_d_set
+    __swig_getmethods__["d"] = _softposit.ui64_double_d_get
+    if _newclass:
+        d = _swig_property(_softposit.ui64_double_d_get, _softposit.ui64_double_d_set)
+
+    def __init__(self):
+        this = _softposit.new_ui64_double()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _softposit.delete_ui64_double
+    __del__ = lambda self: None
+ui64_double_swigregister = _softposit.ui64_double_swigregister
+ui64_double_swigregister(ui64_double)
+
 class ui32_q8(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, ui32_q8, name, value)
@@ -1459,11 +1485,24 @@ def convertToColor(i, ps, es):
    return colored+"\033[0m"
 
 class posit8:
-   def __init__(self, value):       
-       if isinstance(value, (int)):
-           self.v = _softposit.i64_to_p8(value)
-       else:
-           self.v = _softposit.convertDoubleToP8(value)
+   def __init__(self, value=None, bits=None):
+       try:
+           if bits is not None:
+               if isinstance(bits, (int)):
+                   self.v = posit8_t()
+                   self.v.v = bits & 0xFF
+               else:
+                   raise Exception("Bits can only be set with integer values")
+           else:
+               if value is None:
+                   self.v = posit8_t()
+                   self.v.v = 0
+               elif isinstance(value, (int)):
+                   self.v = _softposit.i64_to_p8(value)
+               else:
+                   self.v = _softposit.convertDoubleToP8(value)
+       except Exception as error:
+           print(repr(error))
    def type(self):
        return 'posit8'
    def __add__(self, other):
@@ -1686,8 +1725,9 @@ class posit8:
        self.v = _softposit.p8_roundToInt(self.v)
        return self
    def sqrt(self):
-       self.v = _softposit.p8_sqrt(self.v)
-       return self
+       a = posit8(0)
+       a.v = _softposit.p8_sqrt(self.v)
+       return a
    def __repr__(self):
        a = float(_softposit.convertP8ToDouble(self.v))
        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
@@ -1707,8 +1747,9 @@ class posit8:
    def isNaR(self):
        return self.v.isNaR();
    def toNaR(self):
-       self.v.toNaR();
-       return self
+       a = posit8(0)
+       a.v.toNaR();
+       return a
    def fromBits(self, value):
        self.v.fromBits(value)
    def toBinary(self):
@@ -1803,11 +1844,24 @@ class quire8:
        self.v.toHex()
 
 class posit16:
-   def __init__(self, value):
-       if isinstance(value, (int)):
-           self.v = _softposit.i64_to_p16(value);
-       else:      
-           self.v = _softposit.convertDoubleToP16(value);
+   def __init__(self, value=None, bits=None):
+       try:
+           if bits is not None:
+               if isinstance(bits, (int)):
+                   self.v = posit16_t()
+                   self.v.v = bits & 0xFFFF
+               else:
+                   raise Exception("Bits can only be set with integer values")
+           else:
+               if value is None:
+                   self.v = posit16_t()
+                   self.v.v = 0
+               elif isinstance(value, (int)):
+                   self.v = _softposit.i64_to_p16(value)
+               else:
+                   self.v = _softposit.convertDoubleToP16(value)
+       except Exception as error:
+           print(repr(error))
    def type(self):
        return 'posit16'
    def __add__(self, other):
@@ -2027,8 +2081,9 @@ class posit16:
        self.v = _softposit.p16_roundToInt(self.v)
        return self
    def sqrt(self):
-       self.v = _softposit.p16_sqrt(self.v)
-       return self
+       a = posit16(0)
+       a.v = _softposit.p16_sqrt(self.v)
+       return a
    def __repr__(self):
        a = float(_softposit.convertP16ToDouble(self.v))
        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
@@ -2048,8 +2103,9 @@ class posit16:
    def isNaR(self):
        return self.v.isNaR()
    def toNaR(self):
-       self.v.toNaR()
-       return self
+       a = posit16(0)
+       a.v.toNaR()
+       return a
    def fromBits(self, value):
        self.v.fromBits(value)
    def toBinary(self):
@@ -2145,11 +2201,24 @@ class quire16:
        self.v.toHex()
 
 class posit32:
-   def __init__(self, value):
-       if isinstance(value, (int)):
-           self.v = _softposit.i64_to_p32(value);
-       else:      
-           self.v = _softposit.convertDoubleToP32(value);
+   def __init__(self, value=None, bits=None):
+       try:
+           if bits is not None:
+               if isinstance(bits, (int)):
+                   self.v = posit32_t()
+                   self.v.v = bits&0xFFFFFFFF
+               else:
+                   raise Exception("Bits can only be set with integer values")
+           else:
+               if value is None:
+                   self.v = posit32_t()
+                   self.v.v = 0
+               elif isinstance(value, (int)):
+                   self.v = _softposit.i64_to_p32(value)
+               else:
+                   self.v = _softposit.convertDoubleToP32(value)
+       except Exception as error:
+           print(repr(error))
    def type(self):
        return 'posit32'
    def __add__(self, other):
@@ -2235,9 +2304,9 @@ class posit32:
    def __eq__(self, other):
        try:
           if isinstance(other, (int)):
-              a.v = _softposit.p32_eq(self.v, _softposit.i64_to_p32(other))
+              return _softposit.p32_eq(self.v, _softposit.i64_to_p32(other))
           elif isinstance(other, (float)):
-              a.v = _softposit.p32_eq(self.v, _softposit.convertDoubleToP32(other))
+              return _softposit.p32_eq(self.v, _softposit.convertDoubleToP32(other))
           else:
               return _softposit.p32_eq(self.v, other.v)
        except TypeError:
@@ -2373,8 +2442,9 @@ class posit32:
        self.v = _softposit.p32_roundToInt(self.v)
        return self
    def sqrt(self):
-       self.v = _softposit.p32_sqrt(self.v)
-       return self
+       a = posit32(0)
+       a.v = _softposit.p32_sqrt(self.v)
+       return a
    def __repr__(self):
        a = float(_softposit.convertP32ToDouble(self.v))
        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
@@ -2394,8 +2464,9 @@ class posit32:
    def isNaR(self):
        return self.v.isNaR();
    def toNaR(self):
-       self.v.toNaR();
-       return self
+       a = posit32(0)
+       a.v.toNaR();
+       return a
    def toBinary(self):
        self.v.toBits()
    def fromBits(self, value):
@@ -2491,12 +2562,27 @@ class quire32:
 
 
 class posit_2:
-   def __init__(self, value, x):
+   def __init__(self, value=None, x=None, bits=None):
        self.x = x  
-       if isinstance(value, (int)):
-           self.v = _softposit.i64_to_pX2(value, x)           
-       else:
-           self.v = _softposit.convertDoubleToPX2(value, x)
+       try:
+           if x is None:
+               raise Exception("Needs to specific posit size, x")
+           if bits is not None:
+               if isinstance(bits, (int)):
+                   self.v = posit_2_t()
+                   self.v.v = bits<<(32-x)
+               else:
+                   raise Exception("Bits can only be set with integer values")
+           else:
+               if value is None:
+                   self.v = posit_2_t()
+                   self.v.v = 0
+               elif isinstance(value, (int)):
+                   self.v = _softposit.i64_to_pX2(value, x)
+               else:
+                   self.v = _softposit.convertDoubleToPX2(value, x)
+       except Exception as error:
+           print(repr(error))
    def type(self):
        return 'posit' + str(self.x) +'_2'
    def __add__(self, other):
@@ -2748,8 +2834,9 @@ class posit_2:
        self.v = _softposit.pX2_roundToInt(self.v, self.x)
        return self
    def sqrt(self):
-       self.v = _softposit.pX2_sqrt(self.v, self.x)
-       return self
+       a = posit_2(0, self.x)
+       a.v = _softposit.pX2_sqrt(self.v, self.x)
+       return a
    def __repr__(self):
        a = float(_softposit.convertPX2ToDouble(self.v))
        if (a == float('inf')) or (a==float('-inf')) or (a==float('nan')):
@@ -2769,8 +2856,9 @@ class posit_2:
    def isNaR(self):
        return self.v.isNaR();
    def toNaR(self):
-       self.v.toNaR();
-       return self
+       a = posit_2(0)
+       a.v.toNaR();
+       return a
    def fromBits(self, value):
        self.v.fromBits(value)
    def toBinary(self):
@@ -2864,8 +2952,6 @@ class quire_2:
        self.v.toBits()
    def toHex(self):
        self.v.toHex()
-
-
 
 
 # This file is compatible with both classic and new-style classes.

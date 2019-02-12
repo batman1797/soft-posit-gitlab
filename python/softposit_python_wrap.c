@@ -3002,14 +3002,15 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 #define SWIGTYPE_p_ui32_q8 swig_types[20]
 #define SWIGTYPE_p_ui512_q32 swig_types[21]
 #define SWIGTYPE_p_ui512_qX2 swig_types[22]
-#define SWIGTYPE_p_ui64_p64 swig_types[23]
-#define SWIGTYPE_p_ui8_p8 swig_types[24]
-#define SWIGTYPE_p_unsigned_char swig_types[25]
-#define SWIGTYPE_p_unsigned_int swig_types[26]
-#define SWIGTYPE_p_unsigned_long_long swig_types[27]
-#define SWIGTYPE_p_unsigned_short swig_types[28]
-static swig_type_info *swig_types[30];
-static swig_module_info swig_module = {swig_types, 29, 0, 0, 0, 0};
+#define SWIGTYPE_p_ui64_double swig_types[23]
+#define SWIGTYPE_p_ui64_p64 swig_types[24]
+#define SWIGTYPE_p_ui8_p8 swig_types[25]
+#define SWIGTYPE_p_unsigned_char swig_types[26]
+#define SWIGTYPE_p_unsigned_int swig_types[27]
+#define SWIGTYPE_p_unsigned_long_long swig_types[28]
+#define SWIGTYPE_p_unsigned_short swig_types[29]
+static swig_type_info *swig_types[31];
+static swig_module_info swig_module = {swig_types, 30, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3670,23 +3671,23 @@ SWIGINTERN quire32_t *new_quire32_t(void){
         return q;
     }
 SWIGINTERN void quire32_t_toBits(quire32_t *self){
-	printBinary(((uint64_t*)&self->v[0]), 64);
+		printBinary(((uint64_t*)&self->v[0]), 64);
         printBinary(((uint64_t*)&self->v[1]), 64);
-	printBinary(((uint64_t*)&self->v[2]), 64);
+		printBinary(((uint64_t*)&self->v[2]), 64);
         printBinary(((uint64_t*)&self->v[3]), 64);
-	printBinary(((uint64_t*)&self->v[4]), 64);
+		printBinary(((uint64_t*)&self->v[4]), 64);
         printBinary(((uint64_t*)&self->v[5]), 64);
-	printBinary(((uint64_t*)&self->v[6]), 64);
+		printBinary(((uint64_t*)&self->v[6]), 64);
         printBinary(((uint64_t*)&self->v[7]), 64);
     }
 SWIGINTERN void quire32_t_toHex(quire32_t *self){
-	printHex64(self->v[0]);
+		printHex64(self->v[0]);
         printHex64(self->v[1]);
-	printHex64(self->v[2]);
+		printHex64(self->v[2]);
         printHex64(self->v[3]);
-	printHex64(self->v[4]);
+		printHex64(self->v[4]);
         printHex64(self->v[5]);
-	printHex64(self->v[6]);
+		printHex64(self->v[6]);
         printHex64(self->v[7]);
     }
 SWIGINTERN quire32_t quire32_t_clr(quire32_t *self,quire32_t q){
@@ -3719,13 +3720,13 @@ SWIGINTERN void posit_2_t_fromBits(posit_2_t *self,long long bits){
         self->v = bits & 0xFFFFFFFF;
     }
 SWIGINTERN void posit_2_t_toBits(posit_2_t *self,int x){
-	printBinaryPX(((uint32_t*)&self->v), x);
+		printBinaryPX(((uint32_t*)&self->v), x);
     }
 SWIGINTERN void posit_2_t_toHex(posit_2_t *self,int x){
-	printHexPX(self->v, x);
+		printHexPX(self->v, x);
     }
 SWIGINTERN int posit_2_t_toInt(posit_2_t *self){
-	return self->v;
+		return self->v;
     }
 SWIGINTERN posit_2_t posit_2_t___rshift__(posit_2_t *self,int n,int x){
        posit_2_t a; 
@@ -3829,6 +3830,9 @@ SWIGINTERN bool quire_2_t_isNaR(quire_2_t *self){
 			(self->v[7] == (uint32_t) 0x0);
     }
 
+  #define SWIG_From_double   PyFloat_FromDouble 
+
+
 #ifdef SWIG_LONG_LONG_AVAILABLE
 SWIGINTERNINLINE PyObject* 
 SWIG_From_long_SS_long  (long long value)
@@ -3837,9 +3841,6 @@ SWIG_From_long_SS_long  (long long value)
     PyLong_FromLongLong(value) : PyInt_FromLong((long)(value));
 }
 #endif
-
-
-  #define SWIG_From_double   PyFloat_FromDouble 
 
 
 /* Getting isfinite working pre C99 across multiple platforms is non-trivial. Users can provide SWIG_isfinite on older platforms. */
@@ -7779,6 +7780,151 @@ SWIGINTERN PyObject *ui32_pX2_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObj
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char *)"O:swigregister", &obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_ui32_pX2, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_ui64_double_ui_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui64_double *arg1 = (union ui64_double *) 0 ;
+  uint64_t arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  unsigned long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ui64_double_ui_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui64_double, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ui64_double_ui_set" "', argument " "1"" of type '" "union ui64_double *""'"); 
+  }
+  arg1 = (union ui64_double *)(argp1);
+  ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ui64_double_ui_set" "', argument " "2"" of type '" "uint64_t""'");
+  } 
+  arg2 = (uint64_t)(val2);
+  if (arg1) (arg1)->ui = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ui64_double_ui_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui64_double *arg1 = (union ui64_double *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  uint64_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:ui64_double_ui_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui64_double, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ui64_double_ui_get" "', argument " "1"" of type '" "union ui64_double *""'"); 
+  }
+  arg1 = (union ui64_double *)(argp1);
+  result = (uint64_t) ((arg1)->ui);
+  resultobj = SWIG_From_unsigned_SS_long_SS_long((unsigned long long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ui64_double_d_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui64_double *arg1 = (union ui64_double *) 0 ;
+  double arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ui64_double_d_set",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui64_double, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ui64_double_d_set" "', argument " "1"" of type '" "union ui64_double *""'"); 
+  }
+  arg1 = (union ui64_double *)(argp1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ui64_double_d_set" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = (double)(val2);
+  if (arg1) (arg1)->d = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ui64_double_d_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui64_double *arg1 = (union ui64_double *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:ui64_double_d_get",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui64_double, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ui64_double_d_get" "', argument " "1"" of type '" "union ui64_double *""'"); 
+  }
+  arg1 = (union ui64_double *)(argp1);
+  result = (double) ((arg1)->d);
+  resultobj = SWIG_From_double((double)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_ui64_double(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui64_double *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_ui64_double")) SWIG_fail;
+  result = (union ui64_double *)calloc(1, sizeof(union ui64_double));
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ui64_double, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_ui64_double(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  union ui64_double *arg1 = (union ui64_double *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_ui64_double",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_ui64_double, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ui64_double" "', argument " "1"" of type '" "union ui64_double *""'"); 
+  }
+  arg1 = (union ui64_double *)(argp1);
+  free((char *) arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *ui64_double_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char *)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_ui64_double, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -12756,6 +12902,13 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_ui32_pX2", _wrap_new_ui32_pX2, METH_VARARGS, NULL},
 	 { (char *)"delete_ui32_pX2", _wrap_delete_ui32_pX2, METH_VARARGS, NULL},
 	 { (char *)"ui32_pX2_swigregister", ui32_pX2_swigregister, METH_VARARGS, NULL},
+	 { (char *)"ui64_double_ui_set", _wrap_ui64_double_ui_set, METH_VARARGS, NULL},
+	 { (char *)"ui64_double_ui_get", _wrap_ui64_double_ui_get, METH_VARARGS, NULL},
+	 { (char *)"ui64_double_d_set", _wrap_ui64_double_d_set, METH_VARARGS, NULL},
+	 { (char *)"ui64_double_d_get", _wrap_ui64_double_d_get, METH_VARARGS, NULL},
+	 { (char *)"new_ui64_double", _wrap_new_ui64_double, METH_VARARGS, NULL},
+	 { (char *)"delete_ui64_double", _wrap_delete_ui64_double, METH_VARARGS, NULL},
+	 { (char *)"ui64_double_swigregister", ui64_double_swigregister, METH_VARARGS, NULL},
 	 { (char *)"ui32_q8_ui_set", _wrap_ui32_q8_ui_set, METH_VARARGS, NULL},
 	 { (char *)"ui32_q8_ui_get", _wrap_ui32_q8_ui_get, METH_VARARGS, NULL},
 	 { (char *)"ui32_q8_q_set", _wrap_ui32_q8_q_set, METH_VARARGS, NULL},
@@ -12937,6 +13090,7 @@ static swig_type_info _swigt__p_ui32_pX2 = {"_p_ui32_pX2", "union ui32_pX2 *|ui3
 static swig_type_info _swigt__p_ui32_q8 = {"_p_ui32_q8", "union ui32_q8 *|ui32_q8 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ui512_q32 = {"_p_ui512_q32", "union ui512_q32 *|ui512_q32 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ui512_qX2 = {"_p_ui512_qX2", "union ui512_qX2 *|ui512_qX2 *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_ui64_double = {"_p_ui64_double", "union ui64_double *|ui64_double *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ui64_p64 = {"_p_ui64_p64", "union ui64_p64 *|ui64_p64 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ui8_p8 = {"_p_ui8_p8", "union ui8_p8 *|ui8_p8 *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_unsigned_char = {"_p_unsigned_char", "unsigned char *|uint_least8_t *|uint_fast8_t *|uint8_t *", 0, 0, (void*)0, 0};
@@ -12968,6 +13122,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_ui32_q8,
   &_swigt__p_ui512_q32,
   &_swigt__p_ui512_qX2,
+  &_swigt__p_ui64_double,
   &_swigt__p_ui64_p64,
   &_swigt__p_ui8_p8,
   &_swigt__p_unsigned_char,
@@ -12999,6 +13154,7 @@ static swig_cast_info _swigc__p_ui32_pX2[] = {  {&_swigt__p_ui32_pX2, 0, 0, 0},{
 static swig_cast_info _swigc__p_ui32_q8[] = {  {&_swigt__p_ui32_q8, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ui512_q32[] = {  {&_swigt__p_ui512_q32, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ui512_qX2[] = {  {&_swigt__p_ui512_qX2, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ui64_double[] = {  {&_swigt__p_ui64_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ui64_p64[] = {  {&_swigt__p_ui64_p64, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ui8_p8[] = {  {&_swigt__p_ui8_p8, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_unsigned_char[] = {  {&_swigt__p_unsigned_char, 0, 0, 0},{0, 0, 0, 0}};
@@ -13030,6 +13186,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_ui32_q8,
   _swigc__p_ui512_q32,
   _swigc__p_ui512_qX2,
+  _swigc__p_ui64_double,
   _swigc__p_ui64_p64,
   _swigc__p_ui8_p8,
   _swigc__p_unsigned_char,

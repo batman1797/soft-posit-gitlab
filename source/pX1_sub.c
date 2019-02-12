@@ -1,16 +1,11 @@
 
 /*============================================================================
 
-This C source file is part of the SoftPosit Posit Arithmetic Package
-by S. H. Leong (Cerlane) and John Gustafson.
-
-Copyright 2017 2018 A*STAR.  All rights reserved.
-
-This C source file was based on SoftFloat IEEE Floating-Point Arithmetic
+This C source file is part of the SoftFloat IEEE Floating-Point Arithmetic
 Package, Release 3d, by John R. Hauser.
 
-Copyright 2011, 2012, 2013, 2014, 2015, 2016, 2017 The Regents of the
-University of California.  All rights reserved.
+Copyright 2011, 2012, 2013, 2014, 2015, 2016 The Regents of the University of
+California.  All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions are met:
@@ -42,55 +37,52 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-uint_fast64_t p16_to_ui64( posit16_t pA ) {
-	union ui16_p16 uA;
-	uint_fast64_t mask, iZ, tmp;
-	uint_fast16_t scale = 0, uiA;
-	bool bitLast, bitNPlusOne;
+posit_1_t pX1_sub( posit_1_t a, posit_1_t b, int x) {
+	union ui32_pX1 uA, uB, uZ;
+	uint_fast32_t uiA, uiB;
 
-	uA.p = pA;
+    if (x<2 || x>32){
+    	uZ.ui = 0x80000000;
+    	return uZ.p;
+    }
+
+	uA.p = a;
 	uiA = uA.ui;
-	//NaR
-	//if (uiA==0x8000) return 0;
-	//negative
-	if (uiA>=0x8000) return 0;
+	uB.p = b;
+	uiB = uB.ui;
 
-	if (uiA <= 0x3000) {
-		return 0;
+#ifdef SOFTPOSIT_EXACT
+		uZ.ui.exact = (uiA.ui.exact & uiB.ui.exact);
+#endif
+
+	//infinity
+	if ( uiA==0x80000000 || uiB==0x80000000 ){
+#ifdef SOFTPOSIT_EXACT
+		uZ.ui.v = 0x80000000;
+		uZ.ui.exact = 0;
+#else
+		uZ.ui = 0x80000000;
+#endif
+		return uZ.p;
 	}
-	else if (uiA < 0x4800) {
-		iZ = 1;
+	//Zero
+	else if ( uiA==0 || uiB==0 ){
+#ifdef SOFTPOSIT_EXACT
+		uZ.ui.v = (uiA | -uiB);
+		uZ.ui.exact = 0;
+#else
+		uZ.ui = (uiA | -uiB);
+#endif
+		return uZ.p;
 	}
-	else if (uiA <= 0x5400) {
-		iZ = 2;
-	}
-	else {
-		uiA -= 0x4000;
-		while (0x2000 & uiA) {
-			scale += 2;
-			uiA = (uiA - 0x2000) << 1;
-		}
-		uiA <<= 1;
-		if (0x2000 & uiA) scale++;
-		iZ = ((uint64_t)uiA | 0x2000) << 49;
 
-		mask = 0x4000000000000000 >> scale;
+	//different signs
+	if ((uiA^uiB)>>31)
+		return softposit_addMagsPX1(uiA, (-uiB & 0xFFFFFFFF), x);
+	else
+		return softposit_subMagsPX1(uiA, (-uiB & 0xFFFFFFFF), x);
 
-		bitLast = (iZ & mask);
-		mask >>= 1;
-		tmp = (iZ & mask);
-		bitNPlusOne = tmp;
-		iZ ^= tmp;
-		tmp = iZ & (mask - 1);  // bitsMore
-		iZ ^= tmp;
 
-		if (bitNPlusOne)
-			if (bitLast | tmp) iZ += (mask << 1);
-
-		iZ = (uint64_t)iZ >> (62 - scale);
-
-	}
-	return iZ;
 
 }
 

@@ -45,7 +45,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "internals.h"
 
 posit_2_t ui64_to_pX2 ( uint64_t a, int x ) {
-	int_fast8_t k, log2 = 63;//length of bit (e.g. 18445618173802707967) in int (64 but because we have only 64 bits, so one bit off to accommodate that fact)
+	int_fast8_t k, log2 = 63;//length of bit (e.g. 18445618173802708991) in int (64 but because we have only 64 bits, so one bit off to accommodate that fact)
 	union ui32_pX2 uZ;
 	uint_fast64_t uiA=0;
 	uint_fast64_t mask = 0x8000000000000000, frac64A;
@@ -57,7 +57,7 @@ posit_2_t ui64_to_pX2 ( uint64_t a, int x ) {
 	else if (x==2){
 		if (a>0) uiA=0x40000000;
 	}
-	else if ( a > 0xFFFBFFFFFFFFFBFF){//18445618173802707967
+	else if ( a > 0xFFFBFFFFFFFFFFFF){//18445618173802708991
 		uiA = 0x7FFFC000; // 18446744073709552000
 		if (x<18)  uiA&=((int32_t)0x80000000>>(x-1));
 	}

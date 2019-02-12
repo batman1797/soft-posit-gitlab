@@ -1,3 +1,4 @@
+
 /*============================================================================
 
 This C source file is part of the SoftPosit Posit Arithmetic Package
@@ -183,7 +184,7 @@ __float128 convertPX2ToQuad(posit_2_t a){
 
 
 double convertP32ToDouble(posit32_t pA){
-    union ui32_p32 uA;
+	union ui32_p32 uA;
 	union ui64_double uZ;
 	uint_fast32_t uiA, tmp=0;
 	uint_fast64_t expA=0, uiZ, fracA=0;
@@ -227,6 +228,68 @@ double convertP32ToDouble(posit32_t pA){
 		return uZ.d;
 	}
 }
+/*double convertP32ToDoubleOld(posit32_t pA){
+	union ui32_p32 uZ;
+	double d32;
+	uZ.p = pA;
+
+	if (uZ.ui==0){
+		return  0;
+	}
+	else if(uZ.ui==0x7FFFFFFF){ //maxpos
+		return  1.329227995784916e+36;
+	}
+	else if (uZ.ui==0x80000001){ //-maxpos
+		return -1.329227995784916e+36;
+	}
+	else if (uZ.ui == 0x80000000){
+		return INFINITY;
+	}
+
+	bool regS, sign;
+	uint_fast32_t reg, shift=2, frac, tmp;
+	int_fast32_t k=0;
+	int_fast8_t exp;
+	double fraction_max;
+
+	sign = signP32UI( uZ.ui );
+	if (sign)
+		uZ.ui = -uZ.ui & 0xFFFFFFFF;
+	regS = signregP32UI( uZ.ui );
+
+	tmp = (uZ.ui<<2)&0xFFFFFFFF;
+	if (regS){
+		while (tmp>>31){
+			k++;
+			shift++;
+			tmp= (tmp<<1) & 0xFFFFFFFF;
+		}
+		reg = k+1;
+	}
+	else{
+		k=-1;
+		while (!(tmp>>31)){
+			k--;
+			shift++;
+			tmp= (tmp<<1) & 0xFFFFFFFF;
+		}
+		tmp&=0x7FFFFFFF;
+		reg =-k;
+	}
+	exp = tmp>>29;
+
+	frac = (tmp & 0x1FFFFFFF) >> shift;
+
+	(reg>28) ? (fraction_max=1) : (fraction_max = pow(2, 28-reg) ) ;
+
+
+	d32 = (double)( pow(16, k)* pow(2, exp) * (1+((double)frac/fraction_max)) );
+	if (sign)
+		d32 = -d32;
+
+	return d32;
+
+}*/
 
 
 double convertPX2ToDouble(posit_2_t a){

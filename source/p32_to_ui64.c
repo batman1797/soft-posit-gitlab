@@ -60,9 +60,9 @@ uint_fast64_t p32_to_ui64( posit32_t pA ) {
     uiA = uA.ui;
 
     //NaR
-	if (uiA==0x80000000) return 0x8000000000000000ULL;
+	//if (uiA==0x80000000) return 0;
 	//negative
-	else if (uiA>0x80000000) return 0;
+	if (uiA>=0x80000000) return 0;
 
 	if (uiA <= 0x38000000) {                     // 0 <= |pA| <= 1/2 rounds to zero.
 		return 0;

@@ -53,15 +53,15 @@ uint_fast32_t p32_to_ui32( posit32_t pA ) {
     union ui32_p32 uA;
     uint_fast64_t iZ64, mask, tmp;
     uint_fast32_t iZ, scale = 0, uiA;
-    bool bitLast, bitNPlusOne, bitsMore;
+    bool bitLast, bitNPlusOne;
 
     uA.p = pA;
     uiA = uA.ui;
 
     //NaR
-	if (uiA==0x80000000) return uiA;
+	//if (uiA==0x80000000) return 0;
 	//negative
-	else if (uiA>0x80000000) return 0;
+	if (uiA>=0x80000000) return 0;
 
 	if (uiA <= 0x38000000) {                     // 0 <= |pA| <= 1/2 rounds to zero.
 		return 0;

@@ -42,7 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
+posit_1_t softposit_addMagsPX1( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 	int regA;
 	uint_fast64_t frac64A=0, frac64B=0;
 	uint_fast32_t fracA=0, regime, tmp;
@@ -50,7 +50,7 @@ posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 	int_fast8_t kA=0;
 	int_fast32_t expA=0;
 	int_fast16_t shiftRight;
-	union ui32_pX2 uZ;
+	union ui32_pX1 uZ;
 
 
 	sign = signP32UI( uiA );
@@ -71,14 +71,12 @@ posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
     	uZ.ui = (regSA|regSB) ? (0x40000000) : (0x0);
     }
     else{
-    	//int tmpX = x-2;
 		tmp = (uiA<<2)&0xFFFFFFFF;
 
 		if (regSA){
 			while (tmp>>31){
 				kA++;
 				tmp= (tmp<<1) & 0xFFFFFFFF;
-
 			}
 		}
 		else{
@@ -86,13 +84,12 @@ posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 			while (!(tmp>>31)){
 				kA--;
 				tmp= (tmp<<1) & 0xFFFFFFFF;
-
 			}
 			tmp&=0x7FFFFFFF;
 		}
 
-		expA = tmp>>29; //to get 2 bits
-		frac64A = ((0x40000000ULL | tmp<<1) & 0x7FFFFFFFULL) <<32;
+		expA = tmp>>30; //to get 1 bits
+		frac64A = ((0x40000000ULL | tmp) & 0x7FFFFFFFULL) <<32;
 		shiftRight = kA;
 
 		tmp = (uiB<<2) & 0xFFFFFFFF;
@@ -110,25 +107,31 @@ posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 			}
 			tmp&=0x7FFFFFFF;
 		}
-		frac64B = ((0x40000000ULL | tmp<<1) & 0x7FFFFFFFULL) <<32;
-		//This is 4kZ + expZ; (where kZ=kA-kB and expZ=expA-expB)
-		shiftRight = (shiftRight<<2) + expA - (tmp>>29);
 
-		//Manage CLANG (LLVM) compiler when shifting right more than number of bits
-		(shiftRight>63) ? (frac64B=0): (frac64B >>= shiftRight); //frac64B >>= shiftRight
+		frac64B = ((0x40000000ULL | tmp) & 0x7FFFFFFFULL) <<32;
+		//This is 2kZ + expZ; (where kZ=kA-kB and expZ=expA-expB)
+		shiftRight = (shiftRight<<1) + expA - (tmp>>30);
 
-		frac64A += frac64B;
-
-		rcarry = 0x8000000000000000 & frac64A; //first left bit
-		if (rcarry){
-			expA++;
-			if (expA>3){
-				kA ++;
-				expA&=0x3;
-			}
+		if (shiftRight==0){
+			frac64A += frac64B;
+			//rcarry is one
+			if (expA) kA ++;
+			expA^=1;
 			frac64A>>=1;
 		}
+		else{
+			//Manage CLANG (LLVM) compiler when shifting right more than number of bits
+			(shiftRight>63) ? (frac64B=0): (frac64B >>= shiftRight); //frac64B >>= shiftRight
 
+			frac64A += frac64B;
+
+			rcarry = 0x8000000000000000 & frac64A; //first left bit
+			if (rcarry){
+				if (expA) kA ++;
+				expA^=1;;
+				frac64A>>=1;
+			}
+		}
 
 		if(kA<0){
 			regA = -kA;
@@ -147,30 +150,20 @@ posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 		}
 		else{
 			//remove hidden bits
-			frac64A = (frac64A & 0x3FFFFFFFFFFFFFFF) >>(regA + 2) ; // 2 bits exp
+			frac64A = (frac64A & 0x3FFFFFFFFFFFFFFF) >>(regA + 1) ; // 2 bits exp
 			fracA = frac64A>>32;
 
 			//regime length is smaller than length of posit
 			if (regA<x){
-				if (regA<=(x-4)){
-					bitNPlusOne |= (((uint64_t)0x80000000<<(32-x))& frac64A) ;
-					//expA <<= (28-regA);
+				if (regA!=(x-2))
+					bitNPlusOne |= (((uint64_t)0x8000000000000000>>x) & frac64A);
+				else if (frac64A>0){
+					fracA=0;
+					bitsMore =1;
 				}
-				else {
-					if (regA==(x-2)){
-						bitNPlusOne = expA&0x2;
-						bitsMore = (expA&0x1);
-						expA = 0;
-					}
-					else if (regA==(x-3)){
-						bitNPlusOne = expA&0x1;
-						//expA>>=1;
-						expA &=0x2;
-					}
-					if (fracA>0){
-						fracA=0;
-						bitsMore =1;
-					}
+				if (regA==(x-2) && expA){
+					bitNPlusOne = 1;
+					expA=0;
 				}
 			}
 			else{
@@ -180,13 +173,12 @@ posit_2_t softposit_addMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 			}
 			fracA &=((int32_t)0x80000000>>(x-1));
 
-			expA <<= (28-regA);
+			expA <<= (29-regA);
 			uZ.ui = packToP32UI(regime, expA, fracA);
-
 
 			//n+1 frac bit is 1. Need to check if another bit is 1 too if not round to even
 			if (bitNPlusOne){
-				(((uint64_t)0xFFFFFFFFFFFFFFFF>>(x+1)) & frac64A) ? (bitsMore=1) : (bitsMore=0);
+				((0x7FFFFFFFFFFFFFFF>>x) & frac64A) ? (bitsMore=1) : (bitsMore=0);
 				uZ.ui += (uint32_t)(((uZ.ui>>(32-x))&1) | bitsMore) << (32-x) ;
 			}
 		}

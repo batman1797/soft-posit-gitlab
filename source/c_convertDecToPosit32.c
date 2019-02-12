@@ -420,8 +420,7 @@ posit_2_t convertQuadToPX2(__float128 f32, int x){
 		}
 		else
 			frac = convertQuadFractionP32 (f32, fracLength, &bitNPlusOne, &bitsMore);
-//printf("fracLength: %d reg: %d exp: %d bitNPlusOne: %d bitsMore: %d\n",fracLength, reg, exp, bitNPlusOne, bitsMore);
-//printBinary(&frac,32);
+
 		if (reg>(x-2) ){
 			uZ.ui=(regS) ? (0x7FFFFFFF & ((int32_t)0x80000000>>(x-1)) ): (0x1 << (32-x));
 		}
@@ -430,17 +429,15 @@ posit_2_t convertQuadToPX2(__float128 f32, int x){
 
 			uint_fast32_t regime = 1;
 			if (regS) regime = ( (1<<reg)-1 ) <<1;
-//printBinary(&exp,32);
+
 			if (reg<=28)  exp<<= (28-reg);
-//printBinary(&exp,32);
+
 			uZ.ui = ((uint32_t) (regime) << (30-reg)) + ((uint32_t) exp ) + ((uint32_t)(frac<<(32-x)));
 			//minpos
 			if (uZ.ui==0 && frac>0){
 				uZ.ui = 0x1 << (32-x);
 			}
 
-//printBinary(&uZ.ui,32);
-//printf("lastbit: %d bitsMore:%d bitNPlusOne: %d\n", ((uZ.ui>>(32-x)) & 0x1), bitsMore, bitNPlusOne);
 			if (bitNPlusOne){
 				uZ.ui += ( ((uZ.ui>>(32-x)) & 0x1) | bitsMore ) << (32-x);
 			}
@@ -512,10 +509,7 @@ uint_fast32_t convertFractionP32(double f32, uint_fast16_t fracLength, bool * bi
 }
 
 posit32_t convertDoubleToP32(double f32){
-	//posit32 b = {.f = a };
-	//return convertDecToP32(b);
-//}
-//posit32_t convertDecToP32(posit32 a){
+
 	union ui32_p32 uZ;
 	bool sign, regS;
 	uint_fast32_t reg, frac=0;
@@ -788,7 +782,6 @@ posit_2_t convertDoubleToPX2(double f32, int x){
 			}
 			//rounding off fraction bits
 			else{
-
 				uint_fast32_t regime = 1;
 				if (regS) regime = ( (1<<reg)-1 ) <<1;
 
@@ -825,7 +818,6 @@ posit_2_t convertDoubleToPX2(double f32, int x){
 			f32*=0.5;
 			exp++;
 		}
-
 
 		int fracLength = x-4-reg;
 		if (fracLength<0){
@@ -869,8 +861,6 @@ posit_2_t convertDoubleToPX2(double f32, int x){
 			if (bitNPlusOne){
 				uZ.ui += ( ((uZ.ui>>(32-x)) & 0x1) | bitsMore ) << (32-x);
 			}
-
-
 		}
 		if (sign) uZ.ui = -uZ.ui & 0xFFFFFFFF;
 

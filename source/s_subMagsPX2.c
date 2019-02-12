@@ -44,7 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 posit_2_t softposit_subMagsPX2( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 
-	int regA, regB;
+	int regA;
 	uint_fast64_t frac64A=0, frac64B=0;
 	uint_fast32_t fracA=0, regime, tmp;
 	bool sign, regSA, regSB, ecarry=0, bitNPlusOne=0, bitsMore=0;

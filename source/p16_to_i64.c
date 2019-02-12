@@ -52,7 +52,7 @@ int_fast64_t p16_to_i64( posit16_t pA ){
 	uiA = uA.ui;
 
 	// NaR
-	if (uiA==0x8000) return 0x8000000000000000LL;
+	if (uiA==0x8000) return 0;
 
 	sign = uiA>>15;
 	if (sign) uiA = -uiA & 0xFFFF;

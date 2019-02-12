@@ -1,10 +1,9 @@
-
 /*============================================================================
 
 This C source file is part of the SoftPosit Posit Arithmetic Package
-by S. H. Leong (Cerlane) and John Gustafson.
+by S. H. Leong (Cerlane).
 
-Copyright 2017, 2018 A*STAR.  All rights reserved.
+Copyright 2017 2018 A*STAR.  All rights reserved.
 
 This C source file was based on SoftFloat IEEE Floating-Point Arithmetic
 Package, Release 3d, by John R. Hauser.
@@ -38,57 +37,94 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 =============================================================================*/
-
 #include "platform.h"
 #include "internals.h"
 
-int_fast32_t p8_to_i32( posit8_t pA ){
+posit_1_t p8_to_pX1( posit8_t pA, int x ) {
+
 	union ui8_p8 uA;
-	int_fast32_t mask, iZ, tmp;
-	uint_fast8_t scale = 0, uiA;
-	bool bitLast, bitNPlusOne, sign;
+	union ui32_pX1 uZ;
+	uint_fast8_t uiA, tmp;
+	uint_fast32_t exp_frac32A=0, regime;
+	bool sign, regSA;
+	int_fast8_t kA=0, regA;
+
+	if (x<2 || x>32){
+		uZ.ui = 0x80000000;
+		return uZ.p;
+	}
 
 	uA.p = pA;
-	uiA = uA.ui;                             // Copy of the input.
-	//NaR
-	if (uiA==0x80) return 0;
+	uiA = uA.ui;
 
-	sign = (uiA > 0x80);                   // sign is True if pA > NaR.
-	if (sign) uiA = -uiA & 0xFF;           // A is now |A|.
+	if (uiA==0x80 || uiA==0 ){
+		uZ.ui = (uint32_t)uiA<<24;
+		return uZ.p;
+	}
 
-	if (uiA <= 0x20) {                     // 0 <= |pA| <= 1/2 rounds to zero.
-		return 0;
+	sign = signP8UI( uiA );
+	if (sign) uiA = -uiA & 0xFF;
+
+	if(x==2){
+		uZ.ui=(uiA>0)?(0x40000000):(0);
 	}
-	else if (uiA < 0x50) {                 // 1/2 < x < 3/2 rounds to 1.
-		iZ = 1;
-	}
-	else {                                   // Decode the posit, left-justifying as we go.
-		uiA -= 0x40;                       // Strip off first regime bit (which is a 1).
-		while (0x20 & uiA) {               // Increment scale one for each regime sign bit.
-			scale ++;                      // Regime sign bit is always 1 in this range.
-			uiA = (uiA - 0x20) << 1;       // Remove the bit; line up the next regime bit.
+	else{
+		regSA = signregP8UI(uiA);
+
+		tmp = (uiA<<2) & 0xFF;
+		if (regSA){
+			while (tmp>>7){
+				kA++;
+				tmp= (tmp<<1) & 0xFF;
+			}
 		}
-		uiA <<= 1;                           // Skip over termination bit, which is 0.
+		else{
+			kA=-1;
+			while (!(tmp>>7)){
+				kA--;
+				tmp= (tmp<<1) & 0xFF;
+			}
+			tmp&=0x7F;
+		}
+		exp_frac32A = tmp<<24;
 
-		iZ = (uiA | 0x40) << 24;         // Left-justify fraction in 32-bit result (one left bit padding)
-		mask = 0x40000000 >> scale;          // Point to the last bit of the integer part.
+		if(kA<0){
+			regA = -kA;
+			// Place exponent bits
+			if (regA&0x1) exp_frac32A |= 0x80000000;
 
-		bitLast = (iZ & mask);               // Extract the bit, without shifting it.
-		mask >>= 1;
-		tmp = (iZ & mask);
-		bitNPlusOne = tmp;                   // "True" if nonzero.
-		iZ ^= tmp;                           // Erase the bit, if it was set.
-		tmp = iZ & (mask - 1);               // tmp has any remaining bits. // This is bitsMore
-		iZ ^= tmp;                           // Erase those bits, if any were set.
+			regA = (regA+1)>>1;
+			if (regA==0) regA=1;
+			regSA = 0;
+			regime = 0x40000000>>regA;
+		}
+		else{
+			if (kA&0x1) exp_frac32A |= 0x80000000;
 
-		if (bitNPlusOne) {                   // logic for round to nearest, tie to even
-			if (bitLast | tmp) iZ += (mask << 1);
+			regA = (kA+2)>>1;
+			if (regA==0) regA=1;
+			regSA=1;
+			regime = 0x7FFFFFFF - (0x7FFFFFFF>>regA);
+		}
+		exp_frac32A >>=(regA+2); //2 because of sign and regime terminating bit
+
+		uZ.ui = regime + exp_frac32A;
+
+		int shift = 32-x;
+
+		if( (uZ.ui>>shift)!=(0x7FFFFFFF>>shift) ){
+			if( ((uint32_t)0x80000000>>x) & uZ.ui){
+				if ( ( ((uint32_t)0x80000000>>(x-1)) & uZ.ui) || (((uint32_t)0x7FFFFFFF>>x) & uZ.ui) )
+					uZ.ui += (0x1<<shift);
+			}
 		}
 
-		iZ = iZ >> (30 - scale);             // Right-justify the integer.
+		uZ.ui &=((int32_t)0x80000000>>(x-1));
+		if (uZ.ui==0) uZ.ui = 0x1<<shift;
 	}
 
-	if (sign) iZ = -iZ;                      // Apply the sign of the input.
-	return iZ;
+	if (sign) uZ.ui = -uZ.ui & 0xFFFFFFFF;
+
+	return uZ.p;
 }
 

@@ -35,8 +35,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-posit32_t p32_mulAdd( posit32_t a, posit32_t b, posit32_t c )
-{
+posit32_t p32_mulAdd( posit32_t a, posit32_t b, posit32_t c ) {
+
     union ui32_p32 uA;
     uint_fast32_t uiA;
     union ui32_p32 uB;

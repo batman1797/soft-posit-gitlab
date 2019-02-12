@@ -1,3 +1,4 @@
+
 /*============================================================================
 
 This C source file is part of the SoftPosit Posit Arithmetic Package
@@ -255,6 +256,7 @@ posit32_t
 		(regSZ) ? (uZ.ui= 0x7FFFFFFF): (uZ.ui=0x1);
 	}
 	else{
+
 		if (regZ<=28){
 			//remove hidden bits
 			frac64Z &= 0x3FFFFFFFFFFFFFFF;

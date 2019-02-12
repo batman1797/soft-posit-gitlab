@@ -62,59 +62,73 @@ posit_2_t p16_to_pX2( posit16_t pA, int x ) {
 		return uZ.p;
 	}
 
+
 	sign = signP16UI( uiA );
 	if (sign) uiA = -uiA & 0xFFFF;
 
-	regSA = signregP16UI(uiA);
-
-	tmp = (uiA<<2) & 0xFFFF;
-	if (regSA){
-		while (tmp>>15){
-			kA++;
-			tmp= (tmp<<1) & 0xFFFF;
-		}
+	if(x==2){
+		uZ.ui=(uiA>0)?(0x40000000):(0);
 	}
 	else{
-		kA=-1;
-		while (!(tmp>>15)){
-			kA--;
-			tmp= (tmp<<1) & 0xFFFF;
+		regSA = signregP16UI(uiA);
+
+		tmp = (uiA<<2) & 0xFFFF;
+		if (regSA){
+			while (tmp>>15){
+				kA++;
+				tmp= (tmp<<1) & 0xFFFF;
+			}
 		}
-		tmp&=0x7FFF;
-	}
-	exp_frac32A = tmp<<16;
+		else{
+			kA=-1;
+			while (!(tmp>>15)){
+				kA--;
+				tmp= (tmp<<1) & 0xFFFF;
+			}
+			tmp&=0x7FFF;
+		}
+		exp_frac32A = tmp<<16;
 
-	if(kA<0){
-		regA = -kA;
-		//if (regA&0x1) exp_frac32A |= 0x80000000;
-		exp_frac32A |= ((uint32_t)(regA&0x1)<<31);
-		regA = (regA+1)>>1;
-		if (regA==0) regA=1;
-		regSA = 0;
-		regime = 0x40000000>>regA;
-	}
-	else{
-		exp_frac32A |= ((uint32_t)(kA&0x1)<<31);
-		(kA==0) ? (regA=1) : (regA = (kA+2)>>1);
+		if(kA<0){
+			regA = -kA;
+			//if (regA&0x1) exp_frac32A |= 0x80000000;
+			exp_frac32A |= ((uint32_t)(regA&0x1)<<31);
+			regA = (regA+1)>>1;
+			if (regA==0) regA=1;
+			regSA = 0;
+			regime = 0x40000000>>regA;
+		}
+		else{
+			exp_frac32A |= ((uint32_t)(kA&0x1)<<31);
+			(kA==0) ? (regA=1) : (regA = (kA+2)>>1);
 
-		regSA=1;
-		regime = 0x7FFFFFFF - (0x7FFFFFFF>>regA);
-	}
+			regSA=1;
+			regime = 0x7FFFFFFF - (0x7FFFFFFF>>regA);
+		}
 
-	exp_frac32A >>=(regA+2); //2 because of sign and regime terminating bit
+		if(regA>(x-2)){
+			//max or min pos. exp and frac does not matter.
+			uZ.ui=(regSA) ? (0x7FFFFFFF & ((int32_t)0x80000000>>(x-1)) ): (0x1 << (32-x));
+		}
+		else{
 
-	uZ.ui = regime + exp_frac32A;
+			exp_frac32A >>=(regA+2); //2 because of sign and regime terminating bit
 
-	int shift = 32-x;
-	if( (uiA>>shift)!=(0x7FFFFFFF>>shift) ){
-		if( ((uint32_t)0x80000000>>x) & uZ.ui){
-			if ( ( ((uint32_t)0x80000000>>(x-1)) & uZ.ui) || (((uint32_t)0x7FFFFFFF>>x) & uZ.ui) )
-				uZ.ui += (0x1<<shift);
+			uZ.ui = regime + exp_frac32A;
+
+			int shift = 32-x;
+			if( (uZ.ui>>shift)!=(0x7FFFFFFF>>shift) ){
+				if( ((uint32_t)0x80000000>>x) & uZ.ui){
+					if ( ( ((uint32_t)0x80000000>>(x-1)) & uZ.ui) || (((uint32_t)0x7FFFFFFF>>x) & uZ.ui) )
+						uZ.ui += (0x1<<shift);
+				}
+			}
+
+			uZ.ui &=((int32_t)0x80000000>>(x-1));
+			if (uZ.ui==0) uZ.ui = 0x1<<shift;
 		}
 	}
 
-	uZ.ui &=((int32_t)0x80000000>>(x-1));
-	if (uZ.ui==0) uZ.ui = 0x1<<shift;
 
 	if (sign) uZ.ui = -uZ.ui & 0xFFFFFFFF;
 

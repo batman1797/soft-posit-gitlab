@@ -4,7 +4,7 @@
 This C source file is part of the SoftPosit Posit Arithmetic Package
 by S. H. Leong (Cerlane) and John Gustafson.
 
-Copyright 2017, 2018 A*STAR.  All rights reserved.
+Copyright 2017 2018 A*STAR.  All rights reserved.
 
 This C source file was based on SoftFloat IEEE Floating-Point Arithmetic
 Package, Release 3d, by John R. Hauser.
@@ -42,53 +42,59 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-int_fast32_t p8_to_i32( posit8_t pA ){
-	union ui8_p8 uA;
-	int_fast32_t mask, iZ, tmp;
-	uint_fast8_t scale = 0, uiA;
-	bool bitLast, bitNPlusOne, sign;
+uint_fast32_t pX1_to_ui32( posit_1_t pA ) {
+
+	union ui32_pX1 uA;
+	 uint_fast64_t iZ64, mask, tmp;
+	uint_fast32_t iZ, scale = 0, uiA;
+	bool bitLast, bitNPlusOne;
 
 	uA.p = pA;
 	uiA = uA.ui;                             // Copy of the input.
 	//NaR
-	if (uiA==0x80) return 0;
+	//if (uiA==0x80000000) return 0;
+	if (uiA>=0x80000000) return 0; 	//negative
 
-	sign = (uiA > 0x80);                   // sign is True if pA > NaR.
-	if (sign) uiA = -uiA & 0xFF;           // A is now |A|.
-
-	if (uiA <= 0x20) {                     // 0 <= |pA| <= 1/2 rounds to zero.
+	if (uiA <= 0x30000000) {                     // 0 <= |pA| <= 1/2 rounds to zero.
 		return 0;
 	}
-	else if (uiA < 0x50) {                 // 1/2 < x < 3/2 rounds to 1.
-		iZ = 1;
+	else if (uiA < 0x48000000) {                 // 1/2 < x < 3/2 rounds to 1.
+		return 1;
+	}
+	else if (uiA <= 0x54000000) {                // 3/2 <= x <= 5/2 rounds to 2.
+		return 2;
+	}
+	else if (uiA>0x7FFFBFFF){ //4294836223
+		return 4294967295;
+
 	}
 	else {                                   // Decode the posit, left-justifying as we go.
-		uiA -= 0x40;                       // Strip off first regime bit (which is a 1).
-		while (0x20 & uiA) {               // Increment scale one for each regime sign bit.
-			scale ++;                      // Regime sign bit is always 1 in this range.
-			uiA = (uiA - 0x20) << 1;       // Remove the bit; line up the next regime bit.
+		uiA -= 0x40000000;                       // Strip off first regime bit (which is a 1).
+		while (0x20000000 & uiA) {               // Increment scale by 2 for each regime sign bit.
+			scale += 2;                      // Regime sign bit is always 1 in this range.
+			uiA = (uiA - 0x20000000) << 1;       // Remove the bit; line up the next regime bit.
 		}
 		uiA <<= 1;                           // Skip over termination bit, which is 0.
+		if (0x20000000 & uiA) scale++;           // If exponent is 1, increment the scale.
+		iZ64 = (uiA | 0x20000000) << 33;         // Left-justify fraction in 64-bit result (one left bit padding)
+		mask = 0x4000000000000000 >> scale;          // Point to the last bit of the integer part.
 
-		iZ = (uiA | 0x40) << 24;         // Left-justify fraction in 32-bit result (one left bit padding)
-		mask = 0x40000000 >> scale;          // Point to the last bit of the integer part.
-
-		bitLast = (iZ & mask);               // Extract the bit, without shifting it.
+		bitLast = (iZ64 & mask);               // Extract the bit, without shifting it.
 		mask >>= 1;
-		tmp = (iZ & mask);
+		tmp = (iZ64 & mask);
 		bitNPlusOne = tmp;                   // "True" if nonzero.
-		iZ ^= tmp;                           // Erase the bit, if it was set.
-		tmp = iZ & (mask - 1);               // tmp has any remaining bits. // This is bitsMore
-		iZ ^= tmp;                           // Erase those bits, if any were set.
+		iZ64 ^= tmp;                           // Erase the bit, if it was set.
+		tmp = iZ64 & (mask - 1);               // tmp has any remaining bits. // This is bitsMore
+		iZ64 ^= tmp;                           // Erase those bits, if any were set.
 
 		if (bitNPlusOne) {                   // logic for round to nearest, tie to even
-			if (bitLast | tmp) iZ += (mask << 1);
+			if (bitLast | tmp) iZ64 += (mask << 1);
 		}
+		iZ = iZ64 >> (62 - scale);             // Right-justify the integer.
 
-		iZ = iZ >> (30 - scale);             // Right-justify the integer.
 	}
 
-	if (sign) iZ = -iZ;                      // Apply the sign of the input.
 	return iZ;
+
 }
 

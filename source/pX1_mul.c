@@ -43,9 +43,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "internals.h"
 
 
-posit_2_t pX2_mul( posit_2_t pA, posit_2_t pB, int x ){
+posit_1_t pX1_mul( posit_1_t pA, posit_1_t pB, int x ){
 
-	union ui32_pX2 uA, uB, uZ;
+	union ui32_pX1 uA, uB, uZ;
 	uint_fast32_t uiA, uiB;
 	int regA;
 	uint_fast32_t fracA, regime, tmp;
@@ -115,17 +115,15 @@ posit_2_t pX2_mul( posit_2_t pA, posit_2_t pB, int x ){
 		}
 		else{
 			kA=-1;
-
 			while (!(tmp>>31)){
 				kA--;
 				tmp= (tmp<<1) & 0xFFFFFFFF;
-				//tmpX--;
 			}
 			tmp&=0x7FFFFFFF;
 
     	}
-		expA = tmp>>29; //to get 2 bits
-		fracA = ((tmp<<1) | 0x40000000) & 0x7FFFFFFF;
+		expA = tmp>>30; //to get 1 bits
+		fracA = (tmp | 0x40000000) & 0x7FFFFFFF;
 
 		tmp = (uiB<<2)&0xFFFFFFFF;
 		if (regSB){
@@ -143,20 +141,16 @@ posit_2_t pX2_mul( posit_2_t pA, posit_2_t pB, int x ){
 			tmp&=0x7FFFFFFF;
 
 		}
-		expA += tmp>>29;
-		frac64Z = (uint_fast64_t) fracA * (((tmp<<1) | 0x40000000) & 0x7FFFFFFF);
-		if (expA>3){
+		expA += tmp>>30;
+		frac64Z = (uint_fast64_t) fracA * ((tmp | 0x40000000) & 0x7FFFFFFF);
+		if (expA>1){
 			kA++;
-			expA&=0x3; // -=4
+			expA^=0x2;
 		}
-
 		rcarry = frac64Z>>61;//3rd bit of frac64Z
 		if (rcarry){
-			expA++;
-			if (expA>3){
-				kA ++;
-				expA&=0x3;
-			}
+			if (expA) kA ++;
+			expA^=1;
 			frac64Z>>=1;
 		}
     }
@@ -177,33 +171,25 @@ posit_2_t pX2_mul( posit_2_t pA, posit_2_t pB, int x ){
 		uZ.ui=(regSA) ? (0x7FFFFFFF & ((int32_t)0x80000000>>(x-1)) ): (0x1 << (32-x));
 	}
 	else{
+
 		//remove carry and rcarry bits and shift to correct position (2 bits exp, so + 1 than 16 bits)
-		frac64Z = (frac64Z&0xFFFFFFFFFFFFFFF) >> regA;
+		frac64Z = (frac64Z &0xFFFFFFFFFFFFFFF)>> (regA-1);
 		fracA = (uint_fast32_t) (frac64Z>>32);
 
 		//regime length is smaller than length of posit
 		if (regA<x){
-			if (regA<=(x-4)){
+			if (regA!=(x-2)){
 				bitNPlusOne |= (((uint64_t)0x8000000000000000>>x) & frac64Z);
 				bitsMore = ((0x7FFFFFFFFFFFFFFF>>x) & frac64Z);
 				fracA&=((int32_t)0x80000000>>(x-1));
 			}
-			else {
-				if (regA==(x-2)){
-					bitNPlusOne = expA&0x2;
-					bitsMore = (expA&0x1);
-					expA = 0;
-				}
-				else if (regA==(x-3)){
-					bitNPlusOne = expA&0x1;
-					//expA>>=1; //taken care of by the pack algo
-					expA &=0x2;
-				}
-
-				if (frac64Z>0){
-					fracA=0;
-					bitsMore =1;
-				}
+			else if (frac64Z>0){
+				fracA=0;
+				bitsMore=1;
+			}
+			if(regA==(x-2) && expA){
+				bitNPlusOne=1;
+				expA=0;
 			}
 		}
 		else{
@@ -211,8 +197,7 @@ posit_2_t pX2_mul( posit_2_t pA, posit_2_t pB, int x ){
 			expA=0;
 			fracA=0;
 		}
-
-		expA <<= (28-regA);
+		expA <<= (29-regA);
 		uZ.ui = packToP32UI(regime, expA, fracA);
 
 		if (bitNPlusOne){
