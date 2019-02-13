@@ -379,9 +379,9 @@ Cast binary expressed in unsigned integer to posit :
     
 Cast posit into binary expressed in unsigned integer
 
-    uint16_t castUI16(posit16_t)
+    uint16_t castUI(posit16_t)
     
-    uint8_t castUI8(posit8_t)
+    uint8_t castUI(posit8_t)
     
 
 ## Easy to use C++ version
