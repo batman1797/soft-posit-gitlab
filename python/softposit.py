@@ -2670,7 +2670,7 @@ class posit_2:
        except TypeError:
           print("TypeError: Unsupported operand type(s) for /: posit_2 and ",other.type())   
    def __truediv__(self, other):
-       return self.__div(other)      
+       return self.__div__(other)
    def __rdiv__(self, other):
        try:
           a = posit_2(0, self.x)
