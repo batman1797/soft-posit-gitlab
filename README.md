@@ -39,8 +39,7 @@ Please note that the same Makefile in build/Linux-x86_64-GCC is used for all 3 o
  * **User friendly Python version** : https://gitlab.com/cerlane/SoftPosit-Python/
  * **Julia** : Currently only simple .so support. Documentation can be found below.
  
- 
-[[_TOC_]]
+
 
 ## Fast C version
 
@@ -506,5 +505,26 @@ int main(int argc, char *argv[]){
 * Check if quire is NaR
    * bool (instance of quire).isNaR()
    
+## Julia
+
+Credits to Milan Klöwer.
+
+### Build shared library
+
+```
+cd SoftPosit/build/Linux_x86_64_GCC/
+make -j6 julia
+```
+
+### Simple Tests
+
+```
+julia> t = ccall((:convertDoubleToP16, "/path/to/SoftPosit/build/Linux-x86_64-GCC/softposit.so"), UInt16, (Float64,),1.0)
+0x4000
+
+julia> t = ccall((:convertDoubleToP16, "/path/to/SoftPosit/build/Linux-x86_64-GCC/softposit.so"), UInt16, (Float64,),-1.0)
+0xc000
+
+```
    
     
