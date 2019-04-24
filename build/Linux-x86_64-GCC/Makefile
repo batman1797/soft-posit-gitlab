@@ -44,7 +44,7 @@ PYTHON_DIR ?= ../../python
 SPECIALIZE_TYPE ?= 8086-SSE
 COMPILER ?= gcc
 
-SOFTPOSIT_OPTS ?= -std=c99 \
+SOFTPOSIT_OPTS ?= -std=gnu99\
   -DINLINE_LEVEL=5 #\
   -DSOFTPOSIT_QUAD -lquadmath 
 
