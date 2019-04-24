@@ -34,14 +34,14 @@ Please note that the same Makefile in build/Linux-x86_64-GCC is used for all 3 o
 
  Versions are offered
  
- *  [Fast C version](## Fast C version) : The main source code where all other versions are based on.
+ *  [Fast C version](#cversion) : The main source code where all other versions are based on.
  * **User friendly C++ version** : Documentation can be found below.
  * **User friendly Python version** : https://gitlab.com/cerlane/SoftPosit-Python/
  * **Julia** : Currently only simple .so support. Documentation can be found below.
  
 
 
-## Fast C version
+## Fast C version <a name="#cversion"/>
 
 
 ### Examples
