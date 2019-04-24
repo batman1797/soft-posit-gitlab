@@ -34,14 +34,14 @@ Please note that the same Makefile in build/Linux-x86_64-GCC is used for all 3 o
 
  Versions are offered
  
- *  [Fast C version](#cversion) : The main source code where all other versions are based on.
- * **User friendly C++ version** : Documentation can be found below.
- * **User friendly Python version** : https://gitlab.com/cerlane/SoftPosit-Python/
- * **Julia** : Currently only simple .so support. Documentation can be found below.
+ * [Fast C version](#cversion) : The main source code where all other versions are based on.
+ * [User friendly C++ version](#cppversion)  : Documentation can be found below.
+ * [User friendly Python version](https://gitlab.com/cerlane/SoftPosit-Python/) : https://gitlab.com/cerlane/SoftPosit-Python/
+ * [Julia](#jversion)  : Currently only simple .so support. Documentation can be found below.
  
 
 
-## Fast C version <a name="#cversion"/>
+## <a name="cversion"/>Fast C version 
 
 
 ### Examples
@@ -386,7 +386,7 @@ Cast posit into binary expressed in unsigned integer
     uint8_t castUI(posit8_t)
     
 
-## Easy to use C++ version
+## <a name="cppversion"/>Easy to use C++ version 
 
 
 ### Build and Link
@@ -505,7 +505,7 @@ int main(int argc, char *argv[]){
 * Check if quire is NaR
    * bool (instance of quire).isNaR()
    
-## Julia
+## <a name="jversion"/>Julia 
 
 Credits to Milan Klöwer.
 
