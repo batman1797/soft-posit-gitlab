@@ -44,7 +44,7 @@ PYTHON_DIR ?= ../../python
 SPECIALIZE_TYPE ?= 8086-SSE
 COMPILER ?= gcc
 
-SOFTPOSIT_OPTS ?= \
+SOFTPOSIT_OPTS ?= -std=c99 \
   -DINLINE_LEVEL=5 #\
   -DSOFTPOSIT_QUAD -lquadmath 
 
@@ -73,9 +73,11 @@ COMPILE_C = \
     $(SOFTPOSIT_OPTS) $(C_INCLUDES) $(OPTIMISATION) \
     -o $@ 
 MAKELIB = ar crs $@
+MAKESLIB = $(COMPILER) -shared $^
 
 OBJ = .o
 LIB = .a
+SLIB = .so
 
 .PHONY: all
 all: softposit$(LIB)
@@ -93,6 +95,8 @@ python3: all
 	$(COMPILE_PYTHON3)
 	$(LINK_PYTHON)
 
+julia: SOFTPOSIT_OPTS+= -fPIC
+julia: softposit$(SLIB)
 
 OBJS_PRIMITIVES = 
 
@@ -226,8 +230,11 @@ $(OBJS_SPECIALIZE): %$(OBJ): $(SOURCE_DIR)/$(SPECIALIZE_TYPE)/%.c
 
 softposit$(LIB): $(OBJS_ALL)
 	$(MAKELIB) $^
+	
+softposit$(SLIB): $(OBJS_ALL)
+	$(MAKESLIB) -o $@
 
 .PHONY: clean
 clean:
-	$(DELETE) $(OBJS_ALL) softposit_python_wrap.o softposit$(LIB)
+	$(DELETE) $(OBJS_ALL) softposit_python_wrap.o softposit$(LIB) softposit$(SLIB)
 
