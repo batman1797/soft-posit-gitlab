@@ -32,12 +32,15 @@ Please note that the same Makefile in build/Linux-x86_64-GCC is used for all 3 o
  **posit32_t operations are still being tested exhaustively for correctness. It will take weeks to months before these tests complete.**
  
  
- Three versions are offered
+ Versions are offered
  
  * **Fast C version** :
  * **User friendly C++ version** : Documentation can be found below.
  * **User friendly Python version** : https://gitlab.com/cerlane/SoftPosit-Python/
+ * **Julia** : Currently only simple .so support. Documentation can be found below.
  
+ 
+[[_TOC_]]
 
 ## Fast C version
 
