@@ -117,7 +117,7 @@ posit_2_t pX2_div( posit_2_t pA, posit_2_t pB, int x ) {
 		}
 		expA = tmp>>29; //to get 2 bits
 		fracA = ((tmp<<1) | 0x40000000) & 0x7FFFFFFF;
-		frac64A = fracA << 30;
+		frac64A = (uint64_t)fracA << 30;
 
 		tmp = (uiB<<2)&0xFFFFFFFF;
 		if (regSB){
