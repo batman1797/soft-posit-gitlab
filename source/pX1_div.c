@@ -1,4 +1,3 @@
-
 /*============================================================================
 
 This C source file is part of the SoftPosit Posit Arithmetic Package
@@ -118,7 +117,7 @@ posit_1_t pX1_div( posit_1_t pA, posit_1_t pB, int x ) {
 		}
 		expA = tmp>>30; //to get 1 bits
 		fracA = (tmp | 0x40000000) & 0x7FFFFFFF;
-		frac64A = fracA << 30;
+		frac64A = (uint64_t) fracA << 30;
 
 		tmp = (uiB<<2)&0xFFFFFFFF;
 		if (regSB){
