@@ -1,6 +1,6 @@
 # <img src="https://posithub.org/images/NGA_logo.png"  width="90" height="50"/> SoftPosit
 
-This version (0.4.1rc) supports:
+This version (0.4.1) supports:
 
     32-bit with two exponent bit (posit32_t).  -> Not exhaustively tested
 
@@ -507,7 +507,9 @@ int main(int argc, char *argv[]){
    
 ## <a name="jversion"/>Julia 
 
-Credits to Milan Klöwer.
+* Julia implementation on top of [SoftPosit](https://github.com/milankl/SoftPosit.jl)
+
+Credits to Milan Klöwer. 
 
 ### Build shared library
 
