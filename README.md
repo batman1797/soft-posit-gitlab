@@ -531,7 +531,7 @@ julia> t = ccall((:convertDoubleToP16, "/path/to/SoftPosit/build/Linux-x86_64-GC
 
 ## <a href="known"/>Known implementations on top of SoftPosit
 
-* [Milan Klöwer's Julia implementation] (https://github.com/milankl/SoftPosit.jl)
+* [Milan Klöwer's Julia implementation](https://github.com/milankl/SoftPosit.jl)
 * [SpeedGo Computing's TensorFlow](https://github.com/xman/tensorflow/tree/posit)
 * [SpeedGo Computing's Numpy](https://github.com/xman/numpy-posit)
 * [Cerlane Leong's SoftPosit-Python](https://gitlab.com/cerlane/SoftPosit-Python)
