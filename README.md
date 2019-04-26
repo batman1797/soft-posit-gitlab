@@ -38,7 +38,7 @@ Please note that the same Makefile in build/Linux-x86_64-GCC is used for all 3 o
  * [User friendly C++ version](#cppversion)  : Documentation can be found below.
  * [User friendly Python version](https://gitlab.com/cerlane/SoftPosit-Python/) : https://gitlab.com/cerlane/SoftPosit-Python/
  * [Julia](#jversion)  : Currently only simple .so support. Documentation can be found below.
- 
+ * [Others](#known)
 
 
 ## <a name="cversion"/>Fast C version 
@@ -507,7 +507,7 @@ int main(int argc, char *argv[]){
    
 ## <a name="jversion"/>Julia 
 
-* Julia implementation on top of [SoftPosit](https://github.com/milankl/SoftPosit.jl)
+* [Julia implementation] (https://github.com/milankl/SoftPosit.jl) on top of SoftPosit
 
 Credits to Milan Klöwer. 
 
@@ -528,5 +528,14 @@ julia> t = ccall((:convertDoubleToP16, "/path/to/SoftPosit/build/Linux-x86_64-GC
 0xc000
 
 ```
+
+## <a href="known"/>Known implementations on top of SoftPosit
+
+* [Milan Klöwer's Julia implementation] (https://github.com/milankl/SoftPosit.jl)
+* [SpeedGo Computing's TensorFlow](https://github.com/xman/tensorflow/tree/posit)
+* [SpeedGo Computing's Numpy](https://github.com/xman/numpy-posit)
+* [Cerlane Leong's SoftPosit-Python](https://gitlab.com/cerlane/SoftPosit-Python)
+* [David Thien's SoftPosit bindings Racket](https://github.com/DavidThien/softposit-rkt)
+* [Bill Zorn's SoftPosit and SoftFloat Python](https://pypi.org/project/sfpy/)
    
     
