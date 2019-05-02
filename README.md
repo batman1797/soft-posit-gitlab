@@ -509,16 +509,25 @@ int main(int argc, char *argv[]){
 
 * [Julia implementation] (https://github.com/milankl/SoftPosit.jl) on top of SoftPosit
 
+### Install via Julia package manager
+
+```
+> add https://github.com/milankl/SoftPosit.jl
+
+```
+
 Credits to Milan Klöwer. 
 
-### Build shared library
+### Behind the scene
+
+#### Build shared library
 
 ```
 cd SoftPosit/build/Linux_x86_64_GCC/
 make -j6 julia
 ```
 
-### Simple Tests
+#### Simple Tests
 
 ```
 julia> t = ccall((:convertDoubleToP16, "/path/to/SoftPosit/build/Linux-x86_64-GCC/softposit.so"), UInt16, (Float64,),1.0)
