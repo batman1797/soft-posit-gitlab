@@ -1,6 +1,6 @@
 # <img src="https://posithub.org/images/NGA_logo.png"  width="90" height="50"/> SoftPosit
 
-This version (0.4.1rc) supports:
+This version (0.4.1) supports:
 
     32-bit with two exponent bit (posit32_t).  -> Not exhaustively tested
 
@@ -31,15 +31,17 @@ Please note that the same Makefile in build/Linux-x86_64-GCC is used for all 3 o
  
  **posit32_t operations are still being tested exhaustively for correctness. It will take weeks to months before these tests complete.**
  
- 
- Three versions are offered
- 
- * **Fast C version** :
- * **User friendly C++ version** : Documentation can be found below.
- * **User friendly Python version** : https://gitlab.com/cerlane/SoftPosit-Python/
- 
 
-## Fast C version
+ Versions are offered
+ 
+ * [Fast C version](#cversion) : The main source code where all other versions are based on.
+ * [User friendly C++ version](#cppversion)  : Documentation can be found below.
+ * [User friendly Python version](https://gitlab.com/cerlane/SoftPosit-Python/) : https://gitlab.com/cerlane/SoftPosit-Python/
+ * [Julia](#jversion)  : Currently only simple .so support. Documentation can be found below.
+ * [Others](#known)
+
+
+## <a name="cversion"/>Fast C version 
 
 
 ### Examples
@@ -384,7 +386,7 @@ Cast posit into binary expressed in unsigned integer
     uint8_t castUI(posit8_t)
     
 
-## Easy to use C++ version
+## <a name="cppversion"/>Easy to use C++ version 
 
 
 ### Build and Link
@@ -503,5 +505,46 @@ int main(int argc, char *argv[]){
 * Check if quire is NaR
    * bool (instance of quire).isNaR()
    
+## <a name="jversion"/>Julia 
+
+* [Julia implementation] (https://github.com/milankl/SoftPosit.jl) on top of SoftPosit
+
+### Install via Julia package manager
+
+```
+> add https://github.com/milankl/SoftPosit.jl
+
+```
+
+Credits to Milan Klöwer. 
+
+### Behind the scene
+
+#### Build shared library
+
+```
+cd SoftPosit/build/Linux_x86_64_GCC/
+make -j6 julia
+```
+
+#### Simple Tests
+
+```
+julia> t = ccall((:convertDoubleToP16, "/path/to/SoftPosit/build/Linux-x86_64-GCC/softposit.so"), UInt16, (Float64,),1.0)
+0x4000
+
+julia> t = ccall((:convertDoubleToP16, "/path/to/SoftPosit/build/Linux-x86_64-GCC/softposit.so"), UInt16, (Float64,),-1.0)
+0xc000
+
+```
+
+## <a href="known"/>Known implementations on top of SoftPosit
+
+* [Milan Klöwer's Julia implementation](https://github.com/milankl/SoftPosit.jl)
+* [SpeedGo Computing's TensorFlow](https://github.com/xman/tensorflow/tree/posit)
+* [SpeedGo Computing's Numpy](https://github.com/xman/numpy-posit)
+* [Cerlane Leong's SoftPosit-Python](https://gitlab.com/cerlane/SoftPosit-Python)
+* [David Thien's SoftPosit bindings Racket](https://github.com/DavidThien/softposit-rkt)
+* [Bill Zorn's SoftPosit and SoftFloat Python](https://pypi.org/project/sfpy/)
    
     
