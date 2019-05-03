@@ -1,4 +1,3 @@
-
 /*============================================================================
 
 This C source file is part of the SoftPosit Posit Arithmetic Package
@@ -108,7 +107,7 @@ posit32_t p32_div( posit32_t pA, posit32_t pB )
 	}
 	expA = tmp>>29; //to get 2 bits
 	fracA = ((tmp<<1) | 0x40000000) & 0x7FFFFFFF;
-	frac64A = (uint64_t)fracA << 30;
+	frac64A = (uint64_t) fracA << 30;
 
 	tmp = (uiB<<2)&0xFFFFFFFF;
 	if (regSB){

@@ -44,8 +44,8 @@ posit_2_t p16_to_pX2( posit16_t pA, int x ) {
 
 	union ui16_p16 uA;
 	union ui32_pX2 uZ;
-	uint_fast16_t uiA, tmp, regime;
-	uint_fast32_t exp_frac32A=0;
+	uint_fast16_t uiA, tmp;
+	uint_fast32_t exp_frac32A=0, regime;
 	bool sign, regSA;
 	int_fast8_t kA=0, regA;
 
@@ -87,7 +87,7 @@ posit_2_t p16_to_pX2( posit16_t pA, int x ) {
 			}
 			tmp&=0x7FFF;
 		}
-		exp_frac32A = tmp<<16;
+		exp_frac32A = (uint32_t) tmp<<16;
 
 		if(kA<0){
 			regA = -kA;

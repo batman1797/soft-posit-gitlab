@@ -44,8 +44,8 @@ posit32_t p16_to_p32( posit16_t pA ) {
 
 	union ui16_p16 uA;
 	union ui32_p32 uZ;
-	uint_fast16_t uiA, tmp, regime;
-	uint_fast32_t exp_frac32A=0;
+	uint_fast16_t uiA, tmp;
+	uint_fast32_t exp_frac32A=0, regime;
 	bool sign, regSA;
 	int_fast8_t kA=0, regA;
 
@@ -77,7 +77,8 @@ posit32_t p16_to_p32( posit16_t pA ) {
 		}
 		tmp&=0x7FFF;
 	}
-	exp_frac32A = tmp<<16;
+	exp_frac32A = (uint32_t) tmp<<16;
+
 
 	if(kA<0){
 		regA = -kA;
@@ -94,6 +95,7 @@ posit32_t p16_to_p32( posit16_t pA ) {
 
 		regSA=1;
 		regime = 0x7FFFFFFF - (0x7FFFFFFF>>regA);
+
 	}
 
 	exp_frac32A >>=(regA+2); //2 because of sign and regime terminating bit
