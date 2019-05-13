@@ -68,7 +68,7 @@ int_fast32_t pX1_to_i32( posit_1_t pA ) {
 		iZ = 2;
 	}
 	else if (uiA>0x7FFF9FFF){ //2147418112
-		iZ = 2147483647;
+		return (sign) ? (-2147483648) : (2147483647);
 
 	}
 	else {                                   // Decode the posit, left-justifying as we go.
