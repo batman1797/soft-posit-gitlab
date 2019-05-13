@@ -54,7 +54,7 @@ double convertP8ToDouble(posit8_t a){
 		return -64;
 	}
 	else if (uZ.ui == 0x80){ //NaR
-		return INFINITY;
+		return NAN;
 	}
 
 	bool regS, sign;

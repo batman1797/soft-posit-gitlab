@@ -57,7 +57,7 @@ void printBinaryPX(uint32_t * s, int size) {
 	for(i = 0; i < size; ++i){
 		if(i%8 == 0)
 			putchar(' ');
-		printf("%llu", (number >> (bitSize-i))&1);
+		printf("%u", (number >> (bitSize-i))&1);
 	}
 	printf("\n");
 

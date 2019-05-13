@@ -55,7 +55,7 @@ double convertP16ToDouble(posit16_t a){
 		return -268435456;
 	}
 	else if (uZ.ui == 0x8000){ //NaR -> 32768
-		return INFINITY;
+		return NAN;
 	}
 
 	bool regS, sign;

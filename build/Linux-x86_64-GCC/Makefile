@@ -98,6 +98,8 @@ python3: all
 julia: SOFTPOSIT_OPTS+= -fPIC
 julia: softposit$(SLIB)
 
+
+
 OBJS_PRIMITIVES = 
 
 OBJS_SPECIALIZE = 
@@ -210,13 +212,15 @@ OBJS_OTHERS = \
   ui64_to_pX2$(OBJ) \
   i32_to_pX2$(OBJ) \
   i64_to_pX2$(OBJ) \
-  c_convertQuireX2ToPositX2$(OBJ) \
+  c_convertQuireX2ToPositX2$(OBJ) 
+ 
 
-OBJS_ALL = $(OBJS_PRIMITIVES) $(OBJS_SPECIALIZE) $(OBJS_OTHERS)
+OBJS_ALL := $(OBJS_PRIMITIVES) $(OBJS_SPECIALIZE) $(OBJS_OTHERS) 
 
 $(OBJS_ALL): \
   platform.h \
   $(SOURCE_DIR)/include/primitives.h
+ 
 $(OBJS_SPECIALIZE) $(OBJS_OTHERS): \
   $(SOURCE_DIR)/include/softposit_types.h $(SOURCE_DIR)/include/internals.h \
   $(SOURCE_DIR)/$(SPECIALIZE_TYPE)/specialize.h \
@@ -228,11 +232,12 @@ $(OBJS_PRIMITIVES) $(OBJS_OTHERS): %$(OBJ): $(SOURCE_DIR)/%.c
 $(OBJS_SPECIALIZE): %$(OBJ): $(SOURCE_DIR)/$(SPECIALIZE_TYPE)/%.c
 	$(COMPILE_C) $(SOURCE_DIR)/$(SPECIALIZE_TYPE)/$*.c
 
-softposit$(LIB): $(OBJS_ALL)
+softposit$(LIB): $(OBJS_ALL) 
 	$(MAKELIB) $^
 	
-softposit$(SLIB): $(OBJS_ALL)
+softposit$(SLIB): $(OBJS_ALL) 
 	$(MAKESLIB) -o $@
+
 
 .PHONY: clean
 clean:

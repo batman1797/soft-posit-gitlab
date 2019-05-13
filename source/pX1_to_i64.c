@@ -62,10 +62,10 @@ int_fast64_t pX1_to_i64( posit_1_t pA ) {
 		return 0;
 	}
 	else if (uiA < 0x48000000) {                 // 1/2 < x < 3/2 rounds to 1.
-		return 1;
+		iZ = 1;
 	}
 	else if (uiA <= 0x54000000) {                // 3/2 <= x <= 5/2 rounds to 2.
-		return 2;
+		iZ = 2;
 	}
 	else {                                   // Decode the posit, left-justifying as we go.
 		uiA -= 0x40000000;                       // Strip off first regime bit (which is a 1).
@@ -75,7 +75,7 @@ int_fast64_t pX1_to_i64( posit_1_t pA ) {
 		}
 		uiA <<= 1;                           // Skip over termination bit, which is 0.
 		if (0x20000000 & uiA) scale++;           // If exponent is 1, increment the scale.
-		iZ = (uiA | 0x20000000) << 33;         // Left-justify fraction in 64-bit result (one left bit padding)
+		iZ = ((uint64_t)uiA | 0x20000000) << 33;         // Left-justify fraction in 64-bit result (one left bit padding)
 		mask = 0x4000000000000000 >> scale;          // Point to the last bit of the integer part.
 
 		bitLast = (iZ & mask);               // Extract the bit, without shifting it.

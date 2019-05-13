@@ -45,7 +45,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 posit32_t i32_to_p32( int32_t a ) {
-	int_fast8_t k, log2 = 31;//length of bit (e.g. 4294966271) in int (32 but because we have only 32 bits, so one bit off to accomdate that fact)
+	int_fast8_t k, log2 = 31;//length of bit (e.g. 4294966271) in int (32 but because we have only 32 bits, so one bit off to accommodate that fact)
 	union ui32_p32 uZ;
 	uint_fast32_t uiA;
 	uint_fast32_t expA, mask = 0x80000000, fracA;

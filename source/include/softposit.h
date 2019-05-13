@@ -113,6 +113,8 @@ int_fast64_t p8_to_i64( posit8_t);
 posit16_t p8_to_p16( posit8_t );
 posit32_t p8_to_p32( posit8_t );
 //posit64_t p8_to_p64( posit8_t );
+
+posit_1_t p8_to_pX1( posit8_t, int );
 posit_2_t p8_to_pX2( posit8_t, int );
 
 posit8_t p8_roundToInt( posit8_t );
@@ -186,6 +188,7 @@ posit8_t p16_to_p8( posit16_t );
 posit32_t p16_to_p32( posit16_t );
 //posit64_t p16_to_p64( posit16_t );
 
+posit_1_t p16_to_pX1( posit16_t, int );
 posit_2_t p16_to_pX2( posit16_t, int );
 
 posit16_t p16_roundToInt( posit16_t);
@@ -230,9 +233,9 @@ void printHexPX(uint32_t, int);
 })
 
 static inline quire16_t q16Clr(){
-        quire16_t q;
+    quire16_t q;
 	q.v[0]=0;
-        q.v[1]=0;
+	q.v[1]=0;
 	return q;
 }
 
@@ -289,6 +292,7 @@ bool p32_eq( posit32_t, posit32_t );
 bool p32_le( posit32_t, posit32_t );
 bool p32_lt( posit32_t, posit32_t );
 
+posit_1_t p32_to_pX1( posit32_t, int);
 posit_2_t p32_to_pX2( posit32_t, int );
 
 #define isNaRP32UI( a ) ( ((a) ^ 0x80000000) == 0 )
@@ -397,6 +401,7 @@ bool pX2_lt( posit_2_t, posit_2_t);
 posit8_t pX2_to_p8( posit_2_t );
 posit16_t pX2_to_p16( posit_2_t );
 posit_2_t pX2_to_pX2( posit_2_t, int);
+posit_1_t pX2_to_pX1( posit_2_t, int);
 static inline posit32_t pX2_to_p32(posit_2_t pA){
 	posit32_t p32 = {.v = pA.v};
 	return p32;
@@ -475,7 +480,110 @@ static inline quire_2_t qX2Clr(){
 		uiA.p; \
 })
 
+/*----------------------------------------------------------------------------
+| Dyanamic 2 to 32-bit Posits for es = 1
+*----------------------------------------------------------------------------*/
 
+posit_1_t pX1_add( posit_1_t, posit_1_t, int);
+posit_1_t pX1_sub( posit_1_t, posit_1_t, int);
+posit_1_t pX1_mul( posit_1_t, posit_1_t, int);
+posit_1_t pX1_div( posit_1_t, posit_1_t, int);
+posit_1_t pX1_mulAdd( posit_1_t, posit_1_t, posit_1_t, int);
+posit_1_t pX1_roundToInt( posit_1_t, int );
+posit_1_t ui32_to_pX1( uint32_t, int );
+posit_1_t ui64_to_pX1( uint64_t, int );
+posit_1_t i32_to_pX1( int32_t, int );
+posit_1_t i64_to_pX1( int64_t, int );
+posit_1_t pX1_sqrt( posit_1_t, int );
+
+uint_fast32_t pX1_to_ui32( posit_1_t );
+uint_fast64_t pX1_to_ui64( posit_1_t );
+int_fast32_t pX1_to_i32( posit_1_t );
+int_fast64_t pX1_to_i64( posit_1_t );
+int64_t pX1_int( posit_1_t );
+
+bool pX1_eq( posit_1_t, posit_1_t);
+bool pX1_le( posit_1_t, posit_1_t);
+bool pX1_lt( posit_1_t, posit_1_t);
+
+posit8_t pX1_to_p8( posit_1_t );
+posit16_t pX1_to_p16( posit_1_t );
+posit32_t pX1_to_p32( posit_1_t );
+posit_1_t pX1_to_pX1( posit_1_t, int);
+posit_2_t pX1_to_pX2( posit_1_t, int);
+
+
+#define isNaRpX1UI( a ) ( ((a) ^ 0x80000000) == 0 )
+
+//Helper
+posit_1_t convertDoubleToPX1(double, int);
+double convertPX1ToDouble(posit_1_t);
+
+#ifdef SOFTPOSIT_QUAD
+	__float128 convertPX1ToQuad(posit_1_t);
+	posit_1_t convertQuadToPX1(__float128, int);
+#endif
+
+
+quire_1_t qX1_fdp_add( quire_1_t q, posit_1_t pA, posit_1_t );
+quire_1_t qX1_fdp_sub( quire_1_t q, posit_1_t pA, posit_1_t );
+posit_1_t qX1_to_pX1(quire_1_t, int);
+#define isNaRqX1( q ) ( q.v[0]==0x8000000000000000ULL && q.v[1]==0 && q.v[2]==0 && q.v[3]==0 && q.v[4]==0 && q.v[5]==0 && q.v[6]==0 && q.v[7]==0)
+#define isqX1Zero(q) (q.v[0]==0 && q.v[1]==0 && q.v[2]==0 && q.v[3]==0 && q.v[4]==0 && q.v[5]==0 && q.v[6]==0 && q.v[7]==0)
+quire_1_t qX1_TwosComplement(quire_1_t);
+
+#define qX1_clr(q) ({\
+	q.v[0]=0;\
+	q.v[1]=0;\
+	q.v[2]=0;\
+	q.v[3]=0;\
+	q.v[4]=0;\
+	q.v[5]=0;\
+	q.v[6]=0;\
+	q.v[7]=0;\
+	q;\
+})
+
+static inline quire_1_t qX1Clr(){
+	quire_1_t q;
+	q.v[0]=0;
+    q.v[1]=0;
+	q.v[2]=0;
+    q.v[3]=0;
+	q.v[4]=0;
+    q.v[5]=0;
+	q.v[6]=0;
+    q.v[7]=0;
+	return q;
+}
+
+#define castqX1(l0, l1, l2, l3, l4, l5, l6, l7)({\
+		union ui512_qX1 uA;\
+		uA.ui[0] = l0; \
+		uA.ui[1] = l1; \
+		uA.ui[2] = l2; \
+		uA.ui[3] = l3; \
+		uA.ui[4] = l4; \
+		uA.ui[5] = l5; \
+		uA.ui[6] = l6; \
+		uA.ui[7] = l7; \
+		uA.q;\
+})
+
+
+#define castpX1(a)({\
+	posit_1_t pA = {.v = (a)};\
+	pA; \
+})
+
+
+
+#define negpX1(a)({\
+		union ui32_pX1 uA;\
+		uA.p = (a);\
+		uiA.ui = -uA.ui&0xFFFFFFFF;\
+		uiA.p; \
+})
 /*----------------------------------------------------------------------------
 | 64-bit (double-precision) floating-point operations.
 *----------------------------------------------------------------------------*/

@@ -31,8 +31,10 @@ SOFTWARE.
 //#include "positMath.h"
 
 #ifdef __cplusplus
+
 struct posit8{
 	uint8_t value;
+
 	posit8(double x=0) : value(castUI(convertDoubleToP8(x))) {
 	}
 
@@ -269,8 +271,6 @@ struct posit8{
 		value = 0x80;
 		return *this;
 	}
-
-
 };
 
 

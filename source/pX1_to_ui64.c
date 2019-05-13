@@ -87,7 +87,7 @@ uint_fast64_t pX1_to_ui64( posit_1_t pA ) {
 			if (bitLast | tmp) iZ += (mask << 1);
 		}
 
-		iZ = iZ >> (62 - scale);             // Right-justify the integer.
+		iZ = (uint64_t)iZ >> (62 - scale);             // Right-justify the integer.
 
 	}
 

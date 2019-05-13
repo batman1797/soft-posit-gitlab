@@ -54,6 +54,7 @@ int_fast32_t p8_to_i32( posit8_t pA ){
 	if (uiA==0x80) return 0;
 
 	sign = (uiA > 0x80);                   // sign is True if pA > NaR.
+
 	if (sign) uiA = -uiA & 0xFF;           // A is now |A|.
 
 	if (uiA <= 0x20) {                     // 0 <= |pA| <= 1/2 rounds to zero.
@@ -70,12 +71,14 @@ int_fast32_t p8_to_i32( posit8_t pA ){
 		}
 		uiA <<= 1;                           // Skip over termination bit, which is 0.
 
-		iZ = (uiA | 0x40) << 24;         // Left-justify fraction in 32-bit result (one left bit padding)
+		iZ = ((uint32_t)uiA | 0x40) << 24;         // Left-justify fraction in 32-bit result (one left bit padding)
+
 		mask = 0x40000000 >> scale;          // Point to the last bit of the integer part.
 
 		bitLast = (iZ & mask);               // Extract the bit, without shifting it.
 		mask >>= 1;
 		tmp = (iZ & mask);
+
 		bitNPlusOne = tmp;                   // "True" if nonzero.
 		iZ ^= tmp;                           // Erase the bit, if it was set.
 		tmp = iZ & (mask - 1);               // tmp has any remaining bits. // This is bitsMore
@@ -84,8 +87,7 @@ int_fast32_t p8_to_i32( posit8_t pA ){
 		if (bitNPlusOne) {                   // logic for round to nearest, tie to even
 			if (bitLast | tmp) iZ += (mask << 1);
 		}
-
-		iZ = iZ >> (30 - scale);             // Right-justify the integer.
+		iZ = (uint32_t)iZ >> (30 - scale);             // Right-justify the integer.
 	}
 
 	if (sign) iZ = -iZ;                      // Apply the sign of the input.

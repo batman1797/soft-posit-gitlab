@@ -76,7 +76,7 @@ uint_fast32_t pX1_to_ui32( posit_1_t pA ) {
 		}
 		uiA <<= 1;                           // Skip over termination bit, which is 0.
 		if (0x20000000 & uiA) scale++;           // If exponent is 1, increment the scale.
-		iZ64 = (uiA | 0x20000000) << 33;         // Left-justify fraction in 64-bit result (one left bit padding)
+		iZ64 = (uint64_t)(uiA | 0x20000000) << 33;         // Left-justify fraction in 64-bit result (one left bit padding)
 		mask = 0x4000000000000000 >> scale;          // Point to the last bit of the integer part.
 
 		bitLast = (iZ64 & mask);               // Extract the bit, without shifting it.
@@ -90,7 +90,7 @@ uint_fast32_t pX1_to_ui32( posit_1_t pA ) {
 		if (bitNPlusOne) {                   // logic for round to nearest, tie to even
 			if (bitLast | tmp) iZ64 += (mask << 1);
 		}
-		iZ = iZ64 >> (62 - scale);             // Right-justify the integer.
+		iZ = (uint64_t)iZ64 >> (62 - scale);             // Right-justify the integer.
 
 	}
 

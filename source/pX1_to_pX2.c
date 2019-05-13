@@ -132,7 +132,7 @@ posit_2_t pX1_to_pX2( posit_1_t pA, int x ){
 			}
 
 			uZ.ui &=((int32_t)0x80000000>>(x-1));*/
-			if (uZ.ui==0) uZ.ui = 0x1<<(32-x);
+			if (uZ.ui==0) uZ.ui = (uint32_t)0x1<<(32-x);
 			else if (bitNPlusOne){
 				uZ.ui += (uint32_t)(((uZ.ui>>(32-x))&1) | bitsMore) << (32-x) ;
 			}

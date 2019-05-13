@@ -55,21 +55,20 @@ int_fast32_t pX1_to_i32( posit_1_t pA ) {
 	if (uiA==0x80000000) return 0;
 
 	sign = (uiA > 0x80000000);                   // sign is True if pA > NaR.
-//printf("sign: %d\n", sign);
-//printBinary(&uiA, 32);
+
 	if (sign) uiA = -uiA & 0xFFFFFFFF;           // A is now |A|.
 
 	if (uiA <= 0x30000000) {                     // 0 <= |pA| <= 1/2 rounds to zero.
 		return 0;
 	}
 	else if (uiA < 0x48000000) {                 // 1/2 < x < 3/2 rounds to 1.
-		return 1;
+		iZ = 1;
 	}
 	else if (uiA <= 0x54000000) {                // 3/2 <= x <= 5/2 rounds to 2.
-		return 2;
+		iZ = 2;
 	}
-	else if (uiA>=0x7FFF9FFF){ //2147418112
-		return 2147483647;
+	else if (uiA>0x7FFF9FFF){ //2147418112
+		iZ = 2147483647;
 
 	}
 	else {                                   // Decode the posit, left-justifying as we go.
@@ -78,9 +77,10 @@ int_fast32_t pX1_to_i32( posit_1_t pA ) {
 			scale += 2;                      // Regime sign bit is always 1 in this range.
 			uiA = (uiA - 0x20000000) << 1;       // Remove the bit; line up the next regime bit.
 		}
+
 		uiA <<= 1;                           // Skip over termination bit, which is 0.
 		if (0x20000000 & uiA) scale++;           // If exponent is 1, increment the scale.
-		iZ64 = (uiA | 0x20000000) << 33;         // Left-justify fraction in 64-bit result (one left bit padding)
+		iZ64 = ((uint64_t)uiA | 0x20000000) << 33;         // Left-justify fraction in 64-bit result (one left bit padding)
 		mask = 0x4000000000000000 >> scale;          // Point to the last bit of the integer part.
 
 		bitLast = (iZ64 & mask);               // Extract the bit, without shifting it.
@@ -96,8 +96,7 @@ int_fast32_t pX1_to_i32( posit_1_t pA ) {
 		}
 
 		iZ = (uint64_t)iZ64 >> (62 - scale);             // Right-justify the integer.
-//printBinary(&iZ64, 64);
-//printBinary(&iZ, 32);
+
 	}
 	if (sign) iZ = -iZ;
 	return iZ;

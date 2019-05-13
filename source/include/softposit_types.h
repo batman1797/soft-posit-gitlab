@@ -1,3 +1,4 @@
+
 /*============================================================================
 
 This C header file is part of the SoftPosit Posit Arithmetic Package
@@ -72,8 +73,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	typedef struct { uint64_t v[8]; } quire32_t;
 
 	typedef struct { uint32_t v; } posit_2_t;
+	typedef struct { uint32_t v; } posit_1_t;
+	typedef struct { uint32_t v; } posit_0_t;
 
 	typedef struct { uint64_t v[8]; } quire_2_t;
+	typedef struct { uint64_t v[8]; } quire_1_t;
+	typedef struct { uint64_t v[8]; } quire_0_t;
 
 #endif
 
@@ -99,7 +104,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	union ui128_p128c {uint64_t ui[2]; posit128_t p;}; //c to differentiate from original implementation
 
 	union ui32_pX2 { uint32_t ui; posit_2_t p; };
-	
+	union ui32_pX1 { uint32_t ui; posit_1_t p; };
+	union ui32_pX0 { uint32_t ui; posit_1_t p; };
+
 	union ui64_double   { uint64_t ui; double d; };
 
 	union ui32_q8 {
@@ -119,6 +126,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	union ui512_qX2 {
 		uint64_t ui[8];
 		quire_2_t q;
+	};
+
+	union ui512_qX1 {
+		uint64_t ui[8];
+		quire_1_t q;
 	};
 #endif
 

@@ -64,7 +64,7 @@ __float128 convertP32ToQuad(posit32_t a){
 		return p32;
 	}
 	else if (uZ.ui == 0x80000000){
-		p32 = INFINITY;
+		p32 = NAN;
 		return p32;
 	}
 

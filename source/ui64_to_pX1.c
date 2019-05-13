@@ -45,7 +45,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "internals.h"
 
 posit_1_t ui64_to_pX1 ( uint64_t a, int x ) {
-	int_fast8_t k, log2 = 60;//length of bit (e.g. 576460752303423488 = 2^59) in int (64 but because we have only 64 bits, so one bit off to accommodate that fact)
+	int_fast8_t k, log2 = 63;//60;//length of bit (e.g. 576460752303423488 = 2^59) in int (64 but because we have only 64 bits, so one bit off to accommodate that fact)
 	union ui32_pX1 uZ;
 	uint_fast64_t uiA=0;
 	uint_fast64_t mask = 0x8000000000000000, frac64A;
@@ -57,37 +57,51 @@ posit_1_t ui64_to_pX1 ( uint64_t a, int x ) {
 	else if (x==2){
 		if (a>0) uiA=0x40000000;
 	}
-	else if ( a > 0x0800000000000000){//576460752303423488
+	else if ( a > 0x8000000000000000){//576460752303423488 -> wrong number need to change
+uint32_t test = ((uint32_t)0x80000000>>(x-1));
+printBinary(&test, 32);
 		uiA = 0x7FFFFFFF & ((uint32_t)0x80000000>>(x-1)); // 1152921504606847000
 	}
 	else if ( a < 0x2 )
 		uiA = (a << 30);
 	else {
 		frac64A = a;
+//printBinary(&frac64A, 64);
 		while ( !(frac64A & mask) ) {
 			log2--;
 			frac64A <<= 1;
 		}
-
+//printf("after regime:\n");
+//printBinary(&frac64A, 64);
 		k = (log2 >> 1);
 
 		expA = (log2 & 0x1) ;
-		frac64A = (frac64A ^ mask);
-printf("log2: %d k: %d\n", log2, k);
+//printf("expA:\n");
+//printBinary(&expA, 32);
+		frac64A = (frac64A ^ mask) <<1;
+//printf("frac64A:\n");
+//printBinary(&frac64A, 64);
+//printf("log2: %d k: %d\n", log2, k);
+
+
+
 		if(k>=(x-2)){//maxpos
 			uiA = 0x7FFFFFFF & ((int32_t)0x80000000>>(x-1));
 		}
 		else if (k==(x-3)){//bitNPlusOne-> exp bit //bitLast is zero
 			uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k));
+//printBinary(&a, 64);
+//printBinary(&uiA, 32);
 			if( (expA & 0x1) &&  frac64A ) //bitNPlusOne //bitsMore
 				 uiA |= ((uint32_t)0x80000000>>(x-1));
 		}
-		else if (k==(x-4)){ //bitLast = exp
-			uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k)) | (expA<< (27 - k));
-printBinary(&uiA, 32);
+		else if (k==(x-4)){ //bitLast = regime terminating bit
+			uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k)) | (expA<< (28 - k));
+//printBinary(&a, 64);
+//printBinary(&uiA, 32);
 			mask = (uint64_t)0x800000000 << (k + 32-x);
-printBinary(&mask, 64);
-printBinary(&frac64A, 64);
+//printBinary(&mask, 64);
+//printBinary(&frac64A, 64);
 			if (mask & frac64A){ //bitNPlusOne
 				if (((mask - 1) & frac64A) | (expA&0x1)) {
 					uiA+= ((uint32_t)0x80000000>>(x-1));
@@ -95,8 +109,8 @@ printBinary(&frac64A, 64);
 			}
 		}
 		else{
-			uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k)) | (expA<< (27 - k)) | ((frac64A>>(k+36)) & ((int32_t)0x80000000>>(x-1)));
-printBinary(&uiA, 32);
+			uiA = (0x7FFFFFFF ^ (0x3FFFFFFF >> k)) | (expA<< (28 - k)) | ((frac64A>>(k+36)) & ((int32_t)0x80000000>>(x-1)));
+//printBinary(&uiA, 32);
 			mask = (uint64_t)0x800000000 << (k + 32-x);  //bitNPlusOne position
 			if (mask & frac64A) {
 				if (((mask - 1) & frac64A) | ((mask << 1) & frac64A)) {

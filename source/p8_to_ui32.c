@@ -69,7 +69,7 @@ uint_fast32_t p8_to_ui32( posit8_t pA ) {
 		}
 		uiA <<= 1;                           // Skip over termination bit, which is 0.
 
-		iZ = (uiA | 0x40) << 24;         // Left-justify fraction in 32-bit result (one left bit padding)
+		iZ = ((uint32_t)uiA | 0x40) << 24;         // Left-justify fraction in 32-bit result (one left bit padding)
 
 		mask = 0x40000000 >> scale;          // Point to the last bit of the integer part.
 

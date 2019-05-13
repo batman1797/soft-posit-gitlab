@@ -65,9 +65,7 @@ int_fast64_t p32_to_i64( posit32_t pA ){
 
 	if (uiA <= 0x38000000)  return 0;  		// 0 <= |pA| <= 1/2 rounds to zero.
 	else if (uiA < 0x44000000) iZ = 1;		// 1/2 < x < 3/2 rounds to 1.
-	else if (uiA <= 0x4A000000) iZ = 2;		// 3/2 <= x <= 5/2 rounds to 2. // For speed. Can be commented out
-	//else if (uiA < 0x4E000000)	iZ = 3;		// 5/2 < x < 7/2 rounds to 3
-	//else if (uiA <= 0x51000000 ) iZ = 4;
+	else if (uiA <= 0x4A000000) iZ = 2;		// 3/2 <= x <= 5/2 rounds to 2.
 	//overflow so return max integer value
 	else if(uiA>0x7FFFAFFF) iZ=  0x7FFFFFFFFFFFFFFF;
 	else{
@@ -99,7 +97,7 @@ int_fast64_t p32_to_i64( posit32_t pA ){
 			iZ = ((uint64_t)iZ) >> (62 - scale);             // Right-justify the integer.
 		}
 		else if (scale>62)
-			iZ = iZ << (scale-62);
+			iZ = (uint64_t)iZ << (scale-62);
 
 	}
 

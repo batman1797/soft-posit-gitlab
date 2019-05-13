@@ -65,7 +65,7 @@ __float128 convertPX1ToQuad(posit_1_t a){
 		return p32;
 	}
 	else if (uZ.ui == 0x80000000){
-		p32 = INFINITY;
+		p32 = NAN;
 		return p32;
 	}
 
@@ -134,7 +134,7 @@ double convertPX1ToDouble(posit_1_t a){
 		return -1152921504606847000;
 	}
 	else if (uZ.ui == 0x80000000){
-		return INFINITY;
+		return NAN;
 	}
 
 	bool regS, sign;
