@@ -53,8 +53,8 @@ posit32_t ui64_to_p32( uint64_t a ) {
 	uint_fast32_t expA;
 
 
-	if ( a > 18445618173802708991ULL)//18445618173802708992  is the midpoint
-		uiA = 0x7FFFC000; // 18446744073709552000
+	if ( a > 18445618173802708991ULL)//0xFFFBFFFFFFFFFFFF  is the midpoint
+		uiA = 0x7FFFC000; // P32: 18446744073709552000
 	else if ( a < 0x2 )
 		uiA = (a << 30);
 	else {
