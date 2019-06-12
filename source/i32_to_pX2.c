@@ -44,30 +44,36 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "internals.h"
 
 
-posit_2_t i32_to_pX2( int32_t a, int x ) {
+posit_2_t i32_to_pX2( int32_t iA, int x ) {
 	int_fast8_t k, log2 = 31;//length of bit (e.g. 4294966271) in int (32 but because we have only 32 bits, so one bit off to accomdate that fact)
 	union ui32_pX2 uZ;
 	uint_fast32_t uiA=0;
 	uint_fast32_t expA, mask = 0x80000000, fracA;
 	bool sign;
 
-    sign = a>>31;
-    if(sign) a = -a &0xFFFFFFFF;
+	if (iA < -2147483135){
+		uZ.ui = 0x80500000;
+		return uZ.p;
+	}
+
+    sign = iA>>31;
+    if(sign) iA = -iA &0xFFFFFFFF;
 
 	//NaR
-	if (a == 0x80000000 || x<2 || x>32)
+	if (x<2 || x>32)
 		uiA = 0x80000000;
 	else if (x==2){
-		if (a>0) uiA=0x40000000;
+		if (iA>0) uiA=0x40000000;
 	}
-	else if ( a > 0xFFFFFBFF){//4294966271
-		uiA = 0x7FC00000; // 4294967296
-		if (x<12)  uiA&=((int32_t)0x80000000>>(x-1));
+	else if ( iA > 2147483135){//2147483136 to 2147483647 rounds to P32 value (2147483648)=> 0x7FB00000
+		uiA = 0x7FB00000; // 2147483648
+		if (x<10)  uiA&=((int32_t)0x80000000>>(x-1));
+		else if (x<12) uiA = 0x7FF00000&((int32_t)0x80000000>>(x-1));
 	}
-	else if ( a < 0x2 )
-		uiA = (a << 30);
+	else if ( iA < 0x2 )
+		uiA = (iA << 30);
 	else {
-		fracA = a;
+		fracA = iA;
 		while ( !(fracA & mask) ) {
 			log2--;
 			fracA <<= 1;

@@ -44,25 +44,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "internals.h"
 
 
-posit32_t i32_to_p32( int32_t a ) {
+posit32_t i32_to_p32( int32_t iA ) {
 	int_fast8_t k, log2 = 31;//length of bit (e.g. 4294966271) in int (32 but because we have only 32 bits, so one bit off to accommodate that fact)
 	union ui32_p32 uZ;
 	uint_fast32_t uiA;
 	uint_fast32_t expA, mask = 0x80000000, fracA;
 	bool sign;
 
-    sign = a>>31;
-    if(sign) a = -a &0xFFFFFFFF;
+	if (iA < -2147483135){ //-2147483648 to -2147483136 rounds to P32 value -2147483648
+		uZ.ui = 0x80500000;
+		return uZ.p;
+	}
 
-	//NaR
-	if (a == 0x80000000)
-		uiA = a;
-	else if ( a > 0xFFFFFBFF)//4294966271
-		uiA = 0x7FC00000; // 4294967296
-	else if ( a < 0x2 )
-		uiA = (a << 30);
+    sign = iA>>31;
+    if(sign) iA = -iA &0xFFFFFFFF;
+
+	if ( iA >2147483135)//2147483136 to 2147483647 rounds to P32 value (2147483648)=> 0x7FB00000
+		uiA = 0x7FB00000;
+	else if ( iA < 0x2 )
+		uiA = (iA << 30);
 	else {
-		fracA = a;
+		fracA = iA;
 		while ( !(fracA & mask) ) {
 			log2--;
 			fracA <<= 1;

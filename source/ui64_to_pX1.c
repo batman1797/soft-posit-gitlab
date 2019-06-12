@@ -58,9 +58,9 @@ posit_1_t ui64_to_pX1 ( uint64_t a, int x ) {
 		if (a>0) uiA=0x40000000;
 	}
 	else if ( a > 0x8000000000000000){//576460752303423488 -> wrong number need to change
-uint32_t test = ((uint32_t)0x80000000>>(x-1));
+uint64_t test = ((uint64_t)0x80000000>>(x-1));
 printBinary(&test, 32);
-		uiA = 0x7FFFFFFF & ((uint32_t)0x80000000>>(x-1)); // 1152921504606847000
+		uiA = 0x7FFFFFFF & ((uint64_t)0x80000000>>(x-1)); // 1152921504606847000
 	}
 	else if ( a < 0x2 )
 		uiA = (a << 30);

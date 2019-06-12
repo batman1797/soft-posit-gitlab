@@ -221,9 +221,11 @@ double convertP32ToDouble(posit32_t pA){
 		}
 		expA = tmp>>29; //to get 2 bits
 
-		fracA = (((uint64_t) tmp<<3)  & 0xFFFFFFFF)<<20;
+		fracA = (((uint64_t)tmp<<3)  & 0xFFFFFFFF)<<20;
+
 		expA = (((kA<<2)+expA) + 1023) << 52;
 		uiZ = expA + fracA + (((uint64_t)signA&0x1)<<63);
+
 		uZ.ui = uiZ;
 		return uZ.d;
 	}

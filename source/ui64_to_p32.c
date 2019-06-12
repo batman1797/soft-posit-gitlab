@@ -45,16 +45,15 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "internals.h"
 
 posit32_t ui64_to_p32( uint64_t a ) {
-	int_fast8_t k, log2 = 63;//length of bit (e.g. 18445618173802707967) in int (64 but because we have only 64 bits, so one bit off to accommodate that fact)
+
+	int_fast8_t k, log2 = 63;//length of bit (e.g. 18445618173802708992) in int (64 but because we have only 64 bits, so one bit off to accommodate that fact)
 	union ui32_p32 uZ;
 	uint_fast64_t uiA;
 	uint_fast64_t mask = 0x8000000000000000, fracA;
 	uint_fast32_t expA;
 
-	//NaR
-	if (a == 0x8000000000000000)
-		uiA = 0x80000000;
-	else if ( a > 0xFFFBFFFFFFFFFBFF)//18445618173802707967
+
+	if ( a > 18445618173802708991ULL)//18445618173802708992  is the midpoint
 		uiA = 0x7FFFC000; // 18446744073709552000
 	else if ( a < 0x2 )
 		uiA = (a << 30);

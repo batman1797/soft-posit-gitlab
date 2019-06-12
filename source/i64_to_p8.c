@@ -44,29 +44,31 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-posit8_t i64_to_p8( int64_t a ){
+posit8_t i64_to_p8( int64_t iA ){
     int_fast8_t k, log2 = 6;//length of bit
     union ui8_p8 uZ;
     uint_fast8_t uiA;
     uint_fast64_t mask = 0x40, fracA;
     bool sign;
 
-    sign = a>>63;
-    if(sign){
-    	a = -a;
-    }
-	if (a==0x8000000000000000){
-		uZ.ui=0x80;
+    if (iA < -48){ //-48 to -MAX_INT rounds to P32 value -268435456
+		uZ.ui = 0x81; //-maxpos
 		return uZ.p;
 	}
-	else if ( a > 48 ) {
+
+    sign = iA>>63;
+    if(sign){
+    	iA = -iA;
+    }
+
+    if ( iA > 48 ) {
         uiA = 0x7F;
     }
-    else if ( a < 2 ){
-        uiA = (a << 6);
+    else if ( iA < 2 ){
+        uiA = (iA << 6);
     }
     else {
-        fracA = a;
+        fracA = iA;
         while ( !(fracA & mask) ) {
             log2--;
             fracA <<= 1;

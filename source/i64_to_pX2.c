@@ -59,8 +59,8 @@ posit_2_t i64_to_pX2( int64_t a, int x ) {
 	else if (x==2){
 		if (a>0) uiA=0x40000000;
 	}
-	else if ( a > 0xFFFBFFFFFFFFFBFF){//18445618173802707967
-		uiA = 0x7FFFC000; // 18446744073709552000
+	else if ( a > 0x7FFDFFFFFFFFFFFF){//18445618173802707967
+		uiA = 0x7FFFB000; // 9223372036854775808
 		if (x<18)  uiA&=((int32_t)0x80000000>>(x-1));
 	}
 	else if ( a < 0x2 )

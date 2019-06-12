@@ -43,25 +43,27 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-posit32_t i64_to_p32( int64_t a ) {
-	int_fast8_t k, log2 = 63;//length of bit (e.g. 18445618173802707967) in int (64 but because we have only 64 bits, so one bit off to accomdate that fact)
+posit32_t i64_to_p32( int64_t iA ) {
+	int_fast8_t k, log2 = 63;//length of bit (e.g. 9222809086901354496) in int (64 but because we have only 64 bits, so one bit off to accomdate that fact)
 	union ui32_p32 uZ;
 	uint_fast64_t uiA;
 	uint_fast64_t mask = 0x8000000000000000, fracA;
 	uint_fast32_t expA;
 	bool sign;
 
-	sign = a>>63;
-	if(sign) a = -a;
-	//NaR
-	if (a == 0x8000000000000000)
-		uiA = 0x80000000;
-	else if ( a > 0xFFFBFFFFFFFFFBFF)//18445618173802707967
-		uiA = 0x7FFFC000; // 18446744073709552000
-	else if ( a < 0x2 )
-		uiA = (a << 30);
+	if (iA < -9222809086901354495){//-9222809086901354496 to -9223372036854775808 will be P32 value -9223372036854775808
+		uZ.ui = 0x80005000;
+		return uZ.p;
+	}
+	sign = iA>>63;
+	if(sign) iA = -iA;
+
+	if ( iA >9222809086901354495)//9222809086901354496 to 9223372036854775807 will be P32 value 9223372036854775808
+		uiA = 0x7FFFB000; // 9223372036854775808
+	else if ( iA < 0x2 )
+		uiA = (iA << 30);
 	else {
-		fracA = a;
+		fracA = iA;
 		while ( !(fracA & mask) ) {
 			log2--;
 			fracA <<= 1;

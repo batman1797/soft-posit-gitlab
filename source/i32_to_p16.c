@@ -42,7 +42,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "platform.h"
 #include "internals.h"
 
-posit16_t i32_to_p16( int32_t a ){
+posit16_t i32_to_p16( int32_t iA ){
     int_fast8_t k, log2 = 25;
     union ui16_p16 uZ;
     uint_fast16_t uiA;
@@ -50,26 +50,27 @@ posit16_t i32_to_p16( int32_t a ){
     bool sign;
 
 
+    if (iA < -134217728){ //-2147483648 to -134217729 rounds to P32 value -268435456
+		uZ.ui = 0x8001; //-maxpos
+		return uZ.p;
+	}
 
-    sign = a>>31;
+    sign = iA>>31;
     if(sign){
-    	a = -a &0xFFFFFFFF;
+    	iA = -iA &0xFFFFFFFF;
     }
-    if (a==0x80000000){
-    	uZ.ui=0x8000;
-    	return uZ.p;
+
+    if( iA > 134217728 ) { //134217729 to 2147483647 rounds to  P32 value 268435456
+        uiA = 0x7FFF; //maxpos
     }
-    else if( a > 0x08000000 ) {
-        uiA = 0x7FFF;
-    }
-    else if ( a > 0x02FFFFFF ){
+    else if ( iA > 0x02FFFFFF ){
         uiA = 0x7FFE;
     }
-    else if ( a < 2 ){
-        uiA = (a << 14);
+    else if ( iA < 2 ){
+        uiA = (iA << 14);
     }
     else {
-        fracA = a;
+        fracA = iA;
         while ( !(fracA & mask) ) {
             log2--;
             fracA <<= 1;
