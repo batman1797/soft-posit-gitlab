@@ -45,9 +45,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 int_fast64_t p8_int( posit8_t pA ) {
 
 	union ui8_p8 uA;
-	int_fast64_t mask, iZ, tmp;
+	int_fast64_t iZ;
 	uint_fast8_t scale = 0, uiA;
-	bool bitLast, bitNPlusOne, sign;
+	bool sign;
 
 	uA.p = pA;
 	uiA = uA.ui;
@@ -58,7 +58,7 @@ int_fast64_t p8_int( posit8_t pA ) {
 	if (sign) uiA = -uiA & 0xFF;
 
 	if (uiA < 0x40) return 0;
-	else if (uiA < 0x50)  iZ = 1;
+	else if (uiA < 0x60)  iZ = 1;
 	else {
 		uiA -= 0x40;
 		while (0x20 & uiA) {
@@ -76,9 +76,9 @@ int_fast64_t p8_int( posit8_t pA ) {
 
 int_fast64_t p16_int( posit16_t pA ){
 	union ui16_p16 uA;
-	int_fast64_t mask, tmp, iZ;
+	int_fast64_t iZ;
 	uint_fast16_t scale = 0, uiA;
-	bool sign, bitLast, bitNPlusOne;
+	bool sign;
 
 	uA.p = pA;
 	uiA = uA.ui;
@@ -91,7 +91,7 @@ int_fast64_t p16_int( posit16_t pA ){
 
 	if (uiA < 0x4000) return 0;
 	else if (uiA < 0x5000) iZ = 1;
-	else if (uiA <= 0x5800) iZ = 2;
+	else if (uiA < 0x5800) iZ = 2;
 	else{
 		uiA -= 0x4000;
 		while (0x2000 & uiA) {
@@ -111,10 +111,9 @@ int_fast64_t p16_int( posit16_t pA ){
 
 int64_t p32_int( posit32_t pA ){
  	union ui32_p32 uA;
-    uint_fast64_t mask, tmp;
     int_fast64_t iZ;
     uint_fast32_t scale = 0, uiA;
-    bool bitLast, bitNPlusOne, bitsMore, sign;
+    bool sign;
 
 	uA.p = pA;
 	uiA = uA.ui;
@@ -125,8 +124,8 @@ int64_t p32_int( posit32_t pA ){
 	if (sign) uiA = -uiA & 0xFFFFFFFF;
 
 	if (uiA < 0x40000000)  return 0;
-	else if (uiA < 0x4A000000) iZ = 1;
-	else if (uiA <= 0x4C000000) iZ = 2;
+	else if (uiA < 0x48000000) iZ = 1;
+	else if (uiA < 0x4C000000) iZ = 2;
 	else if(uiA>0x7FFFAFFF) iZ=  0x7FFFFFFFFFFFFFFF;
 	else{
 		uiA -= 0x40000000;
