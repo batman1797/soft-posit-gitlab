@@ -169,6 +169,13 @@ static inline quire8_t q8Clr(){
 		uA.p; \
 })
 
+#define absP8(a)({\
+		union ui8_p8 uA;\
+		uA.p = (a);\
+		int const mask = uA.ui >> 7;
+		uA.ui = ((uA.ui + mask) ^ mask)&0xFF;
+		uA.p; \
+})
 
 //Helper
 double convertP8ToDouble(posit8_t);
@@ -258,6 +265,14 @@ static inline quire16_t q16Clr(){
 		union ui16_p16 uA;\
 		uA.p = (a);\
 		uA.ui = -uA.ui&0xFFFF;\
+		uA.p; \
+})
+
+#define absP16(a)({\
+		union ui16_p16 uA;\
+		uA.p = (a);\
+		int const mask = uA.ui >> 15;
+		uA.ui = ((uA.ui + mask) ^ mask)&0xFFFF;
 		uA.p; \
 })
 
@@ -361,6 +376,14 @@ static inline quire32_t q32Clr(){
 		union ui32_p32 uA;\
 		uA.p = (a);\
 		uA.ui = -uA.ui&0xFFFFFFFF;\
+		uA.p; \
+})
+
+#define absP32(a)({\
+		union ui32_p32 uA;\
+		uA.p = (a);\
+		int const mask = uA.ui >> 31;
+		uA.ui = ((uA.ui + mask) ^ mask)&0xFFFFFFFF;
 		uA.p; \
 })
 
@@ -479,6 +502,14 @@ static inline quire_2_t qX2Clr(){
 		uA.p; \
 })
 
+#define absPX2(a)({\
+		union ui32_pX2 uA;\
+		uA.p = (a);\
+		int const mask = uA.ui >> 31;
+		uA.ui = ((uA.ui + mask) ^ mask)&0xFFFFFFFF;
+		uA.p; \
+})
+
 /*----------------------------------------------------------------------------
 | Dyanamic 2 to 32-bit Posits for es = 1
 *----------------------------------------------------------------------------*/
@@ -581,6 +612,14 @@ static inline quire_1_t qX1Clr(){
 		union ui32_pX1 uA;\
 		uA.p = (a);\
 		uA.ui = -uA.ui&0xFFFFFFFF;\
+		uA.p; \
+})
+
+#define absPX2(a)({\
+		union ui32_pX1 uA;\
+		uA.p = (a);\
+		int const mask = uA.ui >> 31;
+		uA.ui = ((uA.ui + mask) ^ mask)&0xFFFFFFFF;
 		uA.p; \
 })
 /*----------------------------------------------------------------------------
