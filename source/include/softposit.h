@@ -1,4 +1,3 @@
-
 /*============================================================================
 
 This C header file is part of the SoftPosit Posit Arithmetic Package
@@ -166,8 +165,8 @@ static inline quire8_t q8Clr(){
 #define negP8(a)({\
 		union ui8_p8 uA;\
 		uA.p = (a);\
-		uiA.ui = -uA.ui&0xFF;\
-		uiA.p; \
+		uA.ui = -uA.ui&0xFF;\
+		uA.p; \
 })
 
 
@@ -258,8 +257,8 @@ static inline quire16_t q16Clr(){
 #define negP16(a)({\
 		union ui16_p16 uA;\
 		uA.p = (a);\
-		uiA.ui = -uA.ui&0xFFFF;\
-		uiA.p; \
+		uA.ui = -uA.ui&0xFFFF;\
+		uA.p; \
 })
 
 //Helper
@@ -361,8 +360,8 @@ static inline quire32_t q32Clr(){
 #define negP32(a)({\
 		union ui32_p32 uA;\
 		uA.p = (a);\
-		uiA.ui = -uA.ui&0xFFFFFFFF;\
-		uiA.p; \
+		uA.ui = -uA.ui&0xFFFFFFFF;\
+		uA.p; \
 })
 
 //Helper
@@ -476,8 +475,8 @@ static inline quire_2_t qX2Clr(){
 #define negPX2(a)({\
 		union ui32_pX2 uA;\
 		uA.p = (a);\
-		uiA.ui = -uA.ui&0xFFFFFFFF;\
-		uiA.p; \
+		uA.ui = -uA.ui&0xFFFFFFFF;\
+		uA.p; \
 })
 
 /*----------------------------------------------------------------------------
@@ -581,8 +580,8 @@ static inline quire_1_t qX1Clr(){
 #define negpX1(a)({\
 		union ui32_pX1 uA;\
 		uA.p = (a);\
-		uiA.ui = -uA.ui&0xFFFFFFFF;\
-		uiA.p; \
+		uA.ui = -uA.ui&0xFFFFFFFF;\
+		uA.p; \
 })
 /*----------------------------------------------------------------------------
 | 64-bit (double-precision) floating-point operations.
