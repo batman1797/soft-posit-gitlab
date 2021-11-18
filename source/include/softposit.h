@@ -172,8 +172,8 @@ static inline quire8_t q8Clr(){
 #define absP8(a)({\
 		union ui8_p8 uA;\
 		uA.p = (a);\
-		int const mask = uA.ui >> 7;
-		uA.ui = ((uA.ui + mask) ^ mask)&0xFF;
+		int mask = uA.ui >> 7;\
+		uA.ui = ((uA.ui + mask) ^ mask)&0xFF;\
 		uA.p; \
 })
 
@@ -271,8 +271,8 @@ static inline quire16_t q16Clr(){
 #define absP16(a)({\
 		union ui16_p16 uA;\
 		uA.p = (a);\
-		int const mask = uA.ui >> 15;
-		uA.ui = ((uA.ui + mask) ^ mask)&0xFFFF;
+		int mask = uA.ui >> 15;\
+		uA.ui = ((uA.ui + mask) ^ mask)&0xFFFF;\
 		uA.p; \
 })
 
@@ -382,8 +382,8 @@ static inline quire32_t q32Clr(){
 #define absP32(a)({\
 		union ui32_p32 uA;\
 		uA.p = (a);\
-		int const mask = uA.ui >> 31;
-		uA.ui = ((uA.ui + mask) ^ mask)&0xFFFFFFFF;
+		int mask = uA.ui >> 31; \
+		uA.ui = ((uA.ui + mask) ^ mask)&0xFFFFFFFF; \
 		uA.p; \
 })
 
@@ -505,8 +505,8 @@ static inline quire_2_t qX2Clr(){
 #define absPX2(a)({\
 		union ui32_pX2 uA;\
 		uA.p = (a);\
-		int const mask = uA.ui >> 31;
-		uA.ui = ((uA.ui + mask) ^ mask)&0xFFFFFFFF;
+		int  mask = uA.ui >> 31; \
+		uA.ui = ((uA.ui + mask) ^ mask)&0xFFFFFFFF; \
 		uA.p; \
 })
 
@@ -615,11 +615,11 @@ static inline quire_1_t qX1Clr(){
 		uA.p; \
 })
 
-#define absPX2(a)({\
+#define absPX1(a)({\
 		union ui32_pX1 uA;\
 		uA.p = (a);\
-		int const mask = uA.ui >> 31;
-		uA.ui = ((uA.ui + mask) ^ mask)&0xFFFFFFFF;
+		int mask = uA.ui >> 31; \
+		uA.ui = ((uA.ui + mask) ^ mask)&0xFFFFFFFF;\
 		uA.p; \
 })
 /*----------------------------------------------------------------------------
