@@ -108,20 +108,20 @@ int main (int argc, char *argv[]){
 int main (int argc, char *argv[]){
 
     posit_2_t pA, pB, pZ;
-    pA = {.v = 0xF2}; //this is to set the bits (method 1)
+    pA.v = 0xF2; //this is to set the bits (method 1)
     pB = castPX2(0x23); //this is to set the bits (method 2)
 
     pZ = pX2_add(pA, pB, 24);
 
     //To check answer by converting it to double
     double dZ = convertPX2ToDouble(pZ);
-    printf("dZ: %.15f\n", dZ);
+    printf("dZ: %.40f\n", dZ);
 
     //To print result in binary
     printBinaryPX((uint32_t*)&pZ.v, 24);
     
     //To print result as double
-    printf("result: %.13f\n", convertPX2ToDouble(pZ));
+    printf("result: %.40f\n", convertPX2ToDouble(pZ));
     
     return 0;
 
