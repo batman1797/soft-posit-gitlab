@@ -325,7 +325,7 @@ posit_1_t
 			uZ.ui = packToP32UI(regime, expZ, fracZ);
 //printBinary(&uZ.ui, 32);
 			if (bitNPlusOne){
-				//(((uint64_t)0xFFFFFFFFFFFFFFFF>>(x+1)) & frac64Z) ? (bitsMore=1) : (bitsMore=0);
+				//if (((uint64_t)0xFFFFFFFFFFFFFFFF>>(x+1)) & frac64Z) bitsMore=1;
 				uZ.ui += (uint32_t)(((uZ.ui>>(32-x))&1) | bitsMore) << (32-x) ;
 			}
 

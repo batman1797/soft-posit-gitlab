@@ -163,7 +163,7 @@ posit16_t softposit_subMagsP16( uint_fast16_t uiA, uint_fast16_t uiB ){
 		if (regA==14 && expA) bitNPlusOne = 1;
 		uZ.ui = packToP16UI(regime, regA, expA, fracA);
 		if (bitNPlusOne){
-			( frac32A&0x7FFF ) ? (bitsMore=1) : (bitsMore=0);
+			if ( frac32A&0x7FFF ) bitsMore=1;
 			 //n+1 frac bit is 1. Need to check if another bit is 1 too if not round to even
 			uZ.ui += (uZ.ui&1) | bitsMore;
 		}

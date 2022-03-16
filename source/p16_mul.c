@@ -158,7 +158,7 @@ posit16_t p16_mul( posit16_t pA, posit16_t pB ){
 		uZ.ui = packToP16UI(regime, regA, expA, fracA);
 		//n+1 frac bit is 1. Need to check if another bit is 1 too if not round to even
 		if (bitNPlusOne){
-			(0x7FFF & frac32Z) ? (bitsMore=1) : (bitsMore=0);
+			if (0x7FFF & frac32Z) bitsMore=1;
 			uZ.ui += (uZ.ui&1) | bitsMore;
 		}
 	}

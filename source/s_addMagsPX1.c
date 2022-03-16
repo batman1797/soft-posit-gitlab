@@ -178,7 +178,7 @@ posit_1_t softposit_addMagsPX1( uint_fast32_t uiA, uint_fast32_t uiB, int x ) {
 
 			//n+1 frac bit is 1. Need to check if another bit is 1 too if not round to even
 			if (bitNPlusOne){
-				((0x7FFFFFFFFFFFFFFF>>x) & frac64A) ? (bitsMore=1) : (bitsMore=0);
+				if ((0x7FFFFFFFFFFFFFFF>>x) & frac64A) bitsMore=1;
 				uZ.ui += (uint32_t)(((uZ.ui>>(32-x))&1) | bitsMore) << (32-x) ;
 			}
 		}

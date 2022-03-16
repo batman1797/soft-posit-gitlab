@@ -163,7 +163,7 @@ posit32_t softposit_addMagsP32( uint_fast32_t uiA, uint_fast32_t uiB ) {
 		uZ.ui = packToP32UI(regime, expA, fracA);
 		//n+1 frac bit is 1. Need to check if another bit is 1 too if not round to even
 		if (bitNPlusOne){
-			(0x7FFFFFFF & frac64A) ? (bitsMore=1) : (bitsMore=0);
+			if (0x7FFFFFFF & frac64A) bitsMore=1;
 			uZ.ui += (uZ.ui&1) | bitsMore;
 		}
 	}

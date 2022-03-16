@@ -154,7 +154,7 @@ posit8_t p8_mul( posit8_t pA, posit8_t pB ){
 
 		//n+1 frac bit is 1. Need to check if another bit is 1 too if not round to even
 		if (bitNPlusOne){
-			(0x7F & frac16Z) ? (bitsMore=1) : (bitsMore=0);
+			if (0x7F & frac16Z)  bitsMore=1;
 			uZ.ui += (uZ.ui&1) | bitsMore;
 		}
 	}

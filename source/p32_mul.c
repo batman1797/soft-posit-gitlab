@@ -97,7 +97,6 @@ posit32_t p32_mul( posit32_t pA, posit32_t pB ){
 	regSA = signregP32UI(uiA);
 	regSB = signregP32UI(uiB);
 
-
 	tmp = (uiA<<2)&0xFFFFFFFF;
 	if (regSA){
 
@@ -163,7 +162,6 @@ posit32_t p32_mul( posit32_t pA, posit32_t pB ){
 	}
 
 
-
 	if(regA>30){
 		//max or min pos. exp and frac does not matter.
 		(regSA) ? (uZ.ui= 0x7FFFFFFF): (uZ.ui=0x1);
@@ -172,7 +170,6 @@ posit32_t p32_mul( posit32_t pA, posit32_t pB ){
 		//remove carry and rcarry bits and shift to correct position (2 bits exp, so + 1 than 16 bits)
 		frac64Z = (frac64Z&0xFFFFFFFFFFFFFFF) >> regA;
 		fracA = (uint_fast32_t) (frac64Z>>32);
-
 		if (regA<=28){
 			bitNPlusOne |= (0x80000000 & frac64Z);
 			expA<<= (28-regA);
@@ -197,7 +194,7 @@ posit32_t p32_mul( posit32_t pA, posit32_t pB ){
 		uZ.ui = packToP32UI(regime, expA, fracA);
 		//n+1 frac bit is 1. Need to check if another bit is 1 too if not round to even
 		if (bitNPlusOne){
-			(0x7FFFFFFF & frac64Z) ? (bitsMore=1) : (bitsMore=0);
+			if (0x7FFFFFFF & frac64Z)  bitsMore=1;
 			uZ.ui += (uZ.ui&1) | bitsMore;
 		}
 	}

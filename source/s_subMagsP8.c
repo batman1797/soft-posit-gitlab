@@ -149,7 +149,7 @@ posit8_t softposit_subMagsP8( uint_fast8_t uiA, uint_fast8_t uiB ){
 		uZ.ui = packToP8UI(regime, fracA);
 
 		if (bitNPlusOne){
-			(0x7F & frac16A) ? (bitsMore=1) : (bitsMore=0);
+			if (0x7F & frac16A) bitsMore=1;
 			uZ.ui += (uZ.ui&1) | bitsMore;
 		}
 	}
