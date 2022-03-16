@@ -71,6 +71,7 @@ posit_1_t pX1_roundToInt( posit_1_t pA, int x ){
 			bitLast = ((uint32_t)0x80000000>>(x-1)) & uiA;
 			if (bitNPlusOne)
 				if (bitLast | tmp) uiA += bitLast;
+			uA.ui = uiA;
 		}
 	}
 	else {                                   // 34% of the cases, we have to decode the posit.
