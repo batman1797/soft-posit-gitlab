@@ -38,6 +38,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 void printBinary(uint64_t * s, int size) {
 	int i;
+
 	uint64_t number = *s;
 	int bitSize = size -1;
 	for(i = 0; i < size; ++i) {
@@ -47,6 +48,65 @@ void printBinary(uint64_t * s, int size) {
 	}
 	printf("\n");
 
+}
+void printBinaryQuire32(quire32_t * s){
+	int size = 512;
+	int dotPos = 272;
+	int bitSize = 63;
+
+	int n = 0;
+	uint64_t number =  s->v[n];
+	for(int i = 0; i < size; ++i) {
+		if (i!=0 && i%64==0){
+			printf("\n");
+			n++;
+			number =  s->v[n];
+		}
+		if(i%8 == 0)
+			putchar(' ');
+		if (i==dotPos)
+			putchar('.');
+		printf("%llu", (number >> (bitSize-i))&1);
+	}
+	printf("\n");
+}
+
+void printBinaryQuire16(quire16_t * s){
+	int size = 128;
+	int dotPos = 72;
+	int bitSize = 63;
+
+	int n = 0;
+	uint64_t number =  s->v[n];
+	for(int i = 0; i < size; ++i) {
+		if (i!=0 && i%64==0){
+			printf("\n");
+			n++;
+			number =  s->v[n];
+		}
+		if(i%8 == 0)
+			putchar(' ');
+		if (i==dotPos)
+			putchar('.');
+		printf("%llu", (number >> (bitSize-i))&1);
+	}
+	printf("\n");
+}
+
+void printBinaryQuire8(quire8_t * s){
+	int size = 32;
+	uint32_t number = s->v;
+	int dotPos = 20;
+
+	int bitSize = size -1;
+	for(int i = 0; i < size; ++i) {
+		if(i%8 == 0)
+			putchar(' ');
+		if (i==dotPos)
+					putchar('.');
+		printf("%u", (number >> (bitSize-i))&1);
+	}
+	printf("\n");
 }
 
 void printBinaryPX(uint32_t * s, int size) {

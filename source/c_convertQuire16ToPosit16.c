@@ -79,7 +79,6 @@ posit16_t q16_to_p16(quire16_t qA){
 	}
 
 
-
 	int noLZ =0;
 
 	if (uZ.ui[0] == 0){
@@ -105,6 +104,7 @@ posit16_t q16_to_p16(quire16_t qA){
 		frac64A+= ( uZ.ui[1]>>(64-noLZtmp) );
 		if (uZ.ui[1]<<noLZtmp)bitsMore = 1;
 	}
+
 	//default dot is between bit 71 and 72, extreme left bit is bit 0. Last right bit is bit 127.
 	//Equations derived from quire16_mult  last_pos = 71 - (kA<<1) - expA and first_pos = last_pos - frac_len
 	int kA=(71-noLZ) >> 1;
@@ -134,15 +134,18 @@ posit16_t q16_to_p16(quire16_t qA){
 
 		if (regA!=14){
 			bitNPlusOne = (frac64A>>(shift-1)) & 0x1;
+			unsigned long long tmp = frac64A<<(65-shift);
 			if(frac64A<<(65-shift)) bitsMore = 1;
-
 		}
-		else if (fracA>0){
+		else if (frac64A>0){
 			fracA=0;
 			bitsMore=1;
 		}
+
 		if (regA==14 && expA) bitNPlusOne = 1;
+
 		uA.ui = packToP16UI(regime, regA, expA, fracA);
+
 		if (bitNPlusOne){
 			uA.ui += (uA.ui&1) |  bitsMore;
 		}

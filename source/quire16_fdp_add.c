@@ -66,7 +66,6 @@ quire16_t q16_fdp_add( quire16_t q, posit16_t pA, posit16_t pB ){
 	else if (uiA==0 || uiB==0)
 		return q;
 
-
 	//max pos (sign plus and minus)
 	signA = signP16UI( uiA );
 	signB = signP16UI( uiB );
@@ -136,6 +135,7 @@ quire16_t q16_fdp_add( quire16_t q, posit16_t pA, posit16_t pB ){
 		shiftRight = firstPos-99;//99 = 63+ 4+ 32
 
 		uZ2.ui[1] = (shiftRight<0) ? ((uint64_t)frac32Z << -shiftRight) : ((uint64_t) frac32Z >> shiftRight);
+
 	}
 	else{//frac32Z can be in both left64 and right64
 		shiftRight = firstPos - 35;// -35= -3-32
@@ -168,7 +168,6 @@ quire16_t q16_fdp_add( quire16_t q, posit16_t pA, posit16_t pB ){
 
 	uZ.ui[1] = (uZ.ui[1]<<1 | (b1^b2) );
 
-
 	b1 = uZ1.ui[0]&0x1;
 	b2 = uZ2.ui[0]&0x1;
 	rcarryb = b1 & b2 ;
@@ -176,7 +175,6 @@ quire16_t q16_fdp_add( quire16_t q, posit16_t pA, posit16_t pB ){
 
 	uZ.ui[0] = (uZ1.ui[0]>>1) + (uZ2.ui[0]>>1) + ((rcarryb3>>1)& 0x1);
 	//rcarrySignZ = uZ.ui[0]>>63;
-
 
 	uZ.ui[0] = (uZ.ui[0]<<1 | (rcarryb3 & 0x1) );
 
